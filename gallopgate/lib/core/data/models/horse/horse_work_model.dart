@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'horse_work_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab)
 class HorseWorkModel {
   const HorseWorkModel({
     required this.date,

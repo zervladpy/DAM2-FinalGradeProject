@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'institution_model.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, fieldRename: FieldRename.kebab)
 class InstitutionModel {
   const InstitutionModel({
     required this.uid,

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'address_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab)
 class AddressModel {
   const AddressModel({
     required this.country,

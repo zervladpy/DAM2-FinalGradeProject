@@ -4,7 +4,7 @@ import '../../../../utils/enums/week_day.dart';
 
 part 'schedule_cell_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab)
 class ScheduleCellModel {
   const ScheduleCellModel({
     required this.uid,

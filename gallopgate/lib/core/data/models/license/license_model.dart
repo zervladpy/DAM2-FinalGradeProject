@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'license_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab)
 class LicenseModel {
   const LicenseModel({
     required this.uid,

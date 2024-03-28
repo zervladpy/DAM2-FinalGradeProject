@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'horse_details_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab)
 class HorseDetailsModel {
   const HorseDetailsModel({
     required this.gender,

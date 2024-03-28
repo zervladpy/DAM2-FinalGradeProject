@@ -1,16 +1,17 @@
+import 'package:gallopgate/core/data/models/license/license_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'profile_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true, fieldRename: FieldRename.kebab)
 class ProfileModel {
   const ProfileModel({
     required this.uid,
     required this.name,
     required this.surname,
     required this.email,
-    this.riderLicenseUid,
-    this.instructorLicenseUid,
+    this.riderLicense,
+    this.instructorLicense,
     this.profilesUid,
   });
 
@@ -18,8 +19,8 @@ class ProfileModel {
   final String name;
   final String surname;
   final String email;
-  final String? riderLicenseUid;
-  final String? instructorLicenseUid;
+  final LicenseModel? riderLicense;
+  final LicenseModel? instructorLicense;
   final List<String>? profilesUid;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>

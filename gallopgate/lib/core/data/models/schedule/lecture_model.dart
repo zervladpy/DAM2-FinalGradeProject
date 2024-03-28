@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'lecture_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab)
 class LectureModel {
   const LectureModel({
     required this.uid,
