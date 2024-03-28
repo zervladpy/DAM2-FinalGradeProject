@@ -1,0 +1,21 @@
+{
+	"Flutter Screen Template": {
+		"prefix": "newmodel",
+		"body": [
+			"import 'package:json_annotation/json_annotation.dart';",
+			"",
+			"part '${1:file_name}.g.dart';",
+			"",
+			"@JsonSerializable()",
+			"class ${2:model_name}Model {",
+			"  const $2Model();",
+			"",
+			"",
+			"  factory $2Model.fromJson(Map<String, dynamic> json) => _$$2ModelFromJson(json);",
+			"",
+			"  Map<String, dynamic> toJson() => _$$2ModelToJson(this);",
+			"}"
+		],
+		"description": "JsonSerializable class template"
+	},
+}
