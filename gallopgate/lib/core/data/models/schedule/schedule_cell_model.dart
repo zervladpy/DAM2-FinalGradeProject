@@ -1,3 +1,4 @@
+import 'package:gallopgate/core/data/models/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../utils/enums/week_day.dart';
@@ -5,7 +6,7 @@ import '../../../../utils/enums/week_day.dart';
 part 'schedule_cell_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.kebab)
-class ScheduleCellModel {
+class ScheduleCellModel extends IModel {
   const ScheduleCellModel({
     required this.uid,
     required this.hStart,

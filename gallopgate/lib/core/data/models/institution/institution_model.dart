@@ -1,10 +1,11 @@
 import 'package:gallopgate/core/data/models/address/address_model.dart';
+import 'package:gallopgate/core/data/models/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'institution_model.g.dart';
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.kebab)
-class InstitutionModel {
+class InstitutionModel extends IModel {
   const InstitutionModel({
     required this.uid,
     required this.name,

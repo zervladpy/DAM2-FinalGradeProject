@@ -1,9 +1,10 @@
+import 'package:gallopgate/core/data/models/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'assistance_model.g.dart';
 
-@JsonSerializable()
-class AssistanceModel {
+@JsonSerializable(fieldRename: FieldRename.kebab)
+class AssistanceModel extends IModel {
   const AssistanceModel({
     required this.uid,
     required this.date,

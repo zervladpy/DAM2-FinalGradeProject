@@ -1,10 +1,11 @@
 import 'package:gallopgate/core/data/models/license/license_model.dart';
+import 'package:gallopgate/core/data/models/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'profile_model.g.dart';
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.kebab)
-class ProfileModel {
+class ProfileModel extends IModel {
   const ProfileModel({
     required this.uid,
     required this.name,

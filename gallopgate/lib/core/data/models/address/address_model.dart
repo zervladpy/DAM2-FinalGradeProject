@@ -1,9 +1,10 @@
+import 'package:gallopgate/core/data/models/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'address_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.kebab)
-class AddressModel {
+class AddressModel extends IModel {
   const AddressModel({
     required this.country,
     required this.city,

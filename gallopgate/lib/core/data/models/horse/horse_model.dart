@@ -1,12 +1,13 @@
 import 'package:gallopgate/core/data/models/horse/horse_details_model.dart';
 import 'package:gallopgate/core/data/models/horse/horse_work_model.dart';
 import 'package:gallopgate/core/data/models/license/license_model.dart';
+import 'package:gallopgate/core/data/models/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'horse_model.g.dart';
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.kebab)
-class HorseModel {
+class HorseModel extends IModel {
   const HorseModel({
     required this.uid,
     required this.fullName,

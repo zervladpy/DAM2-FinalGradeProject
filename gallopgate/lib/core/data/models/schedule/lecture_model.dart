@@ -1,9 +1,10 @@
+import 'package:gallopgate/core/data/models/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'lecture_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.kebab)
-class LectureModel {
+class LectureModel extends IModel {
   const LectureModel({
     required this.uid,
     required this.description,

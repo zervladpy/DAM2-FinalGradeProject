@@ -1,9 +1,10 @@
+import 'package:gallopgate/core/data/models/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'horse_work_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.kebab)
-class HorseWorkModel {
+class HorseWorkModel extends IModel {
   const HorseWorkModel({
     required this.date,
     required this.hTime,

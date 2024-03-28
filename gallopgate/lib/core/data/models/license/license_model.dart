@@ -1,10 +1,11 @@
+import 'package:gallopgate/core/data/models/model.dart';
 import 'package:gallopgate/utils/enums/license_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'license_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.kebab)
-class LicenseModel {
+class LicenseModel extends IModel {
   const LicenseModel({
     required this.uid,
     required this.serial,

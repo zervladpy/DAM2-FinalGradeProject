@@ -1,10 +1,11 @@
+import 'package:gallopgate/core/data/models/model.dart';
 import 'package:gallopgate/utils/enums/horse_gender.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'horse_details_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.kebab)
-class HorseDetailsModel {
+class HorseDetailsModel extends IModel {
   const HorseDetailsModel({
     required this.gender,
     required this.height,
