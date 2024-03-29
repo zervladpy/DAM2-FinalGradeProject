@@ -1,24 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gallopgate/features/app/app.dart';
 import 'package:gallopgate/utils/locator/locator.dart';
 
 void main() {
   GLocator().init();
 
-  runApp(const MyApp());
+  runApp(const GApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Placeholder(),
-    );
-  }
-}

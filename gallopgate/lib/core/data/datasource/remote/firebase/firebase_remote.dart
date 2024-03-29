@@ -16,7 +16,6 @@ abstract class FirebaseRemote<T extends IModel> extends IRemoteDatasource<T, Str
         .set(toJson(model))
         .then((value) => true)
         .onError((error, stackTrace) => false);
-
   }
 
   @override
