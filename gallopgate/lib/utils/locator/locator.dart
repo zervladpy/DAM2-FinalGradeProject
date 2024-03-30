@@ -29,14 +29,6 @@ class GLocator {
     );
   }
 
-  /// Register DataSources
-  void _registerDataSources() {}
-
-  /// Register Repositories
-  void _registerRepositories() {
-    // --- Institution Repository --- //
-  }
-
   // --- Dispose --- //
   void dispose() {
     _locator = null;

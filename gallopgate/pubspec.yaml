@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  build_runner: ^2.4.7
+  build_runner: ^2.4.9
 
   flutter_native_splash: ^2.3.2
   smooth_page_indicator: ^1.1.0
@@ -24,7 +24,7 @@ dependencies:
   intl: ^0.18.1
 
   # DI
-  get_it: ^7.6.4
+  get_it: ^7.6.7
 
   # FIREBASE
   firebase_core: ^2.24.2
@@ -33,22 +33,21 @@ dependencies:
   cloud_firestore: ^4.13.6
 
   # State
-  bloc: ^8.1.2
-  flutter_bloc: ^8.1.3
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.5
   equatable: ^2.0.5
 
   # JSON SERIALIZATION
   json_annotation: ^4.8.1
 
   # UID GENERATION
-  uuid: ^4.2.2
+  uuid: ^4.3.3
 
   # APP ROUTING
-  go_router: ^13.0.1
+  go_router: ^13.2.2
 
   # UI
   flutter_speed_dial: ^7.0.0
-
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +56,18 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   
   json_serializable: ^6.7.1
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.2
+
+flutter_launcher_icons:
+  image_path: "assets/images/logo/png/logo_light.png"
+  android: "launcher_icon"
+  ios: true
+  web:
+    generate: true
+  windows:
+    generate: true
+  macos:
+    generate: true
 
 flutter:
   generate: true

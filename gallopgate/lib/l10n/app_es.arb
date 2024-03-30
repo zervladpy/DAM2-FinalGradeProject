@@ -5,5 +5,13 @@
   "app_presentation": "GallopGate is a horse management app that allows you to manage your horses, your equestrian center, your competitions and your events.",
   "@app_presentation": {
     "description": "app_presentation"
-  }
+  },
+  "skip": "Saltar",
+  "next": "Siguiente",
+  "onboardPage1Title": "Título a bordo 1",
+  "onboardPage1Description": "Descripción a bordo 1",
+  "onboardPage2Title": "Título a bordo 2",
+  "onboardPage2Description": "Descripción a bordo 2",
+  "onboardPage3Title": "Título a bordo 3",
+  "onboardPage3Description": "Descripción a bordo 3"
 }

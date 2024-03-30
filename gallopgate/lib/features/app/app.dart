@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:gallopgate/features/onboard/on_board_screen.dart';
 import 'package:gallopgate/utils/locale/locale.dart';
 import 'package:gallopgate/utils/theme/theme.dart';
 
@@ -13,9 +14,12 @@ class GApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    GHeleper.setSystemOverlayStyle(GColor.lightBackground);
+    GHeleper.setSystemOverlayStyle(
+        GColor.darkBackground
+    );
 
     return MaterialApp(
+
       // --- Dont show debug labels --- //
       debugShowCheckedModeBanner: false,
       debugShowMaterialGrid: false,
@@ -26,10 +30,10 @@ class GApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
 
       // --- THEME --- //
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       theme: GTheme.light,
       darkTheme: GTheme.dark,
-
+      home: const OnBoardScreen(),
       // --- ROUTER --- //
       // TODO: Create a router
     );
