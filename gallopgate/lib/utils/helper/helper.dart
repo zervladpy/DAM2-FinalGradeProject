@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// A helper class that contains useful methods for the application.
-class GHeleper {
-  const GHeleper._();
+class GHelper {
+  const GHelper._();
 
   /// Check if the current theme is dark mode
   static bool isDarkMode(BuildContext context) {

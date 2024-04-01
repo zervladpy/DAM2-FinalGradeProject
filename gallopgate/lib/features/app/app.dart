@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:gallopgate/features/onboard/on_board_screen.dart';
+import 'package:gallopgate/features/main_shell/main_shell_screen.dart';
 import 'package:gallopgate/utils/locale/locale.dart';
 import 'package:gallopgate/utils/theme/theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../utils/constraints/colors.dart';
 import '../../utils/helper/helper.dart';
@@ -14,7 +14,7 @@ class GApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    GHeleper.setSystemOverlayStyle(
+    GHelper.setSystemOverlayStyle(
         GColor.darkBackground
     );
 
@@ -33,7 +33,7 @@ class GApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       theme: GTheme.light,
       darkTheme: GTheme.dark,
-      home: const OnBoardScreen(),
+      home: const MainShellScreen(),
       // --- ROUTER --- //
       // TODO: Create a router
     );

@@ -37,5 +37,21 @@
   "onboardPage3Description": "Onboard Description 3",
   "@onboardPage3Description": {
     "description": "Onboard 3 Page Description"
+  },
+  "dashboard": "Dashboard",
+  "@dashboard": {
+    "description": "Label for dashboard navigation item"
+  },
+  "schedule": "Schedule",
+  "@schedule": {
+    "description": "Label for schedule navigation item"
+  },
+  "chat": "Chat",
+  "@chat": {
+    "description": "Label for chat navigation item"
+  },
+  "account": "Account",
+  "@account": {
+    "description": "Label for account navigation item"
   }
 }

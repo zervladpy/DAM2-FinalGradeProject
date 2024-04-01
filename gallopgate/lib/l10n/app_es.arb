@@ -13,5 +13,10 @@
   "onboardPage2Title": "Título a bordo 2",
   "onboardPage2Description": "Descripción a bordo 2",
   "onboardPage3Title": "Título a bordo 3",
-  "onboardPage3Description": "Descripción a bordo 3"
+  "onboardPage3Description": "Descripción a bordo 3",
+  "dashboard": "Início",
+  "schedule": "Horario",
+  "chat": "Chat",
+  "account": "Cuenta"
+
 }

@@ -14,7 +14,7 @@ class OnboardPageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color color = GHeleper.isDarkMode(context)
+    final Color color = GHelper.isDarkMode(context)
         ? GColor.lightBackground
         : GColor.darkBackground;
 

@@ -16,7 +16,7 @@ class PageOnBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = GHeleper.isDarkMode(context);
+    final bool isDark = GHelper.isDarkMode(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
