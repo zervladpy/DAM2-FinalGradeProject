@@ -1,6 +1,6 @@
-import 'package:gallopgate/core/data/datasource/remote/firebase/firebase_remote.dart';
+import 'package:gallopgate/core/data/datasource/remote/firebase/base/firebase_remote.dart';
 
-import '../../../../domain/models/model_profile.dart';
+import '../../../../../domain/models/model_profile.dart';
 
 class FirebaseRemoteProfile extends FirebaseRemote<Profile> {
   const FirebaseRemoteProfile({required super.firebaseInstance, required super.collection});

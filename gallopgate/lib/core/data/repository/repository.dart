@@ -1,6 +1,6 @@
-import 'package:gallopgate/core/domain/datasource/i_remote_datasource.dart';
+import 'package:gallopgate/core/domain/datasource/base/i_remote_datasource.dart';
 import 'package:gallopgate/core/domain/models/i_model.dart';
-import 'package:gallopgate/core/domain/repository/i_repository.dart';
+import 'package:gallopgate/core/domain/repository/base/i_repository.dart';
 import 'package:gallopgate/utils/response/response.dart';
 
 abstract class Repository<T extends IModel, ID> extends IRepository<T, ID> {

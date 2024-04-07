@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gallopgate/core/domain/models/i_model.dart';
 
-import '../../../../domain/datasource/i_remote_datasource.dart';
+import '../../../../../domain/datasource/base/i_remote_datasource.dart';
 
 abstract class FirebaseRemote<T extends IModel> extends IRemoteDatasource<T, String> {
   const FirebaseRemote({required this.firebaseInstance, required this.collection});

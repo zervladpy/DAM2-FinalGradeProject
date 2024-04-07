@@ -1,7 +1,7 @@
 
 import 'package:gallopgate/utils/response/response.dart';
 
-import '../models/i_model.dart';
+import '../../models/i_model.dart';
 
 /// Domain Repository Contract
 abstract class IRepository<T extends IModel, ID> {
