@@ -11,6 +11,8 @@ class GElevatedButtonTheme {
           // --- Color --- //
           foregroundColor: GColor.darkTextColor,
           backgroundColor: GColor.darkBackground,
+          // --- Default Size --- //
+          minimumSize: Size(double.infinity, GSizes.defaultHeight),
           // --- Padding --- //
           padding: EdgeInsets.symmetric(
             vertical: GSizes.sm,
@@ -33,6 +35,8 @@ class GElevatedButtonTheme {
           // --- Color --- //
           backgroundColor: GColor.primary,
           foregroundColor: GColor.darkTextColor,
+          // --- Default Size --- //
+          minimumSize: Size(double.infinity, GSizes.defaultHeight),
           // --- Padding --- //
           padding: EdgeInsets.symmetric(
             vertical: GSizes.sm,

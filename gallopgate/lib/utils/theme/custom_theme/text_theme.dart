@@ -73,6 +73,23 @@ class GTextTheme {
           fontSize: GSizes.fontSm,
           fontWeight: GSizes.fontLight,
         ),
+
+        // --- Headline --- //
+        headlineLarge: const TextStyle().copyWith(
+          color: GColor.lightTextColor,
+          fontSize: GSizes.fontXl,
+          fontWeight: GSizes.fontLight,
+        ),
+        headlineMedium: const TextStyle().copyWith(
+          color: GColor.lightTextColor,
+          fontSize: GSizes.fontLg,
+          fontWeight: GSizes.fontLight,
+        ),
+        headlineSmall: const TextStyle().copyWith(
+          color: GColor.lightTextColor,
+          fontSize: GSizes.fontSm,
+          fontWeight: GSizes.fontLight,
+        ),
       );
 
   static TextTheme get dark => TextTheme(
@@ -147,17 +164,17 @@ class GTextTheme {
         // --- Headline --- //
         headlineLarge: const TextStyle().copyWith(
           color: GColor.darkTextColor,
+          fontSize: GSizes.fontXl,
+          fontWeight: GSizes.fontLight,
+        ),
+        headlineMedium: const TextStyle().copyWith(
+          color: GColor.darkTextColor,
           fontSize: GSizes.fontLg,
           fontWeight: GSizes.fontLight,
         ),
         headlineSmall: const TextStyle().copyWith(
           color: GColor.darkTextColor,
           fontSize: GSizes.fontSm,
-          fontWeight: GSizes.fontLight,
-        ),
-        headlineMedium: const TextStyle().copyWith(
-          color: GColor.darkTextColor,
-          fontSize: GSizes.fontMd,
           fontWeight: GSizes.fontLight,
         ),
       );

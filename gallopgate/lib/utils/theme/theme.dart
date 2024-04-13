@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../constraints/_constraints_library.dart';
 import 'custom_theme/_custom_themes_library.dart';
 
@@ -8,29 +9,32 @@ class GTheme {
 
   /// Light Theme
   static ThemeData get light => ThemeData(
-      // --- Brightness -- //
-      brightness: Brightness.light,
-      // --- Use Material -- //
-      useMaterial3: true,
-      // --- Color --- //
-      primaryColor: GColor.darkBackground,
-      scaffoldBackgroundColor: GColor.lightBackground,
-      // --- Font --- //
-      fontFamily: GFonts.roboto,
-      // --- Custom Themes --- //
-      textTheme: GTextTheme.light,
-      appBarTheme: GAppBarTheme.light,
-      navigationBarTheme: GNavigationBarTheme.light,
-      elevatedButtonTheme: GElevatedButtonTheme.light,
-      outlinedButtonTheme: GOutlinedButtonTheme.light,
-      textButtonTheme: GTextButtonTheme.light,
-      iconButtonTheme: GIconButtonTheme.light,
-      inputDecorationTheme: GInputTheme.light,
-      checkboxTheme: GCheckBoxTheme.light,
-      cardTheme: GCardTheme.light,
-      dividerTheme: GDividerTheme.light,
-      listTileTheme: GlistTimeTheme.light,
-      tabBarTheme: GTabBarTheme.light);
+        // --- Brightness -- //
+        brightness: Brightness.light,
+        // --- Use Material -- //
+        useMaterial3: true,
+        // --- Color --- //
+        primaryColor: GColor.darkBackground,
+        scaffoldBackgroundColor: GColor.lightBackground,
+        // --- Font --- //
+        fontFamily: GFonts.roboto,
+        // --- Custom Themes --- //
+        textTheme: GTextTheme.light,
+        appBarTheme: GAppBarTheme.light,
+        navigationBarTheme: GNavigationBarTheme.light,
+        elevatedButtonTheme: GElevatedButtonTheme.light,
+        outlinedButtonTheme: GOutlinedButtonTheme.light,
+        textButtonTheme: GTextButtonTheme.light,
+        iconButtonTheme: GIconButtonTheme.light,
+        inputDecorationTheme: GInputTheme.light,
+        checkboxTheme: GCheckBoxTheme.light,
+        cardTheme: GCardTheme.light,
+        dividerTheme: GDividerTheme.light,
+        listTileTheme: GlistTimeTheme.light,
+        tabBarTheme: GTabBarTheme.light,
+        drawerTheme: GDrawerTheme.light,
+        iconTheme: GIconTheme.light,
+      );
 
   /// Dark Theme
   static ThemeData get dark => ThemeData(
@@ -57,5 +61,7 @@ class GTheme {
         dividerTheme: GDividerTheme.dark,
         listTileTheme: GlistTimeTheme.dark,
         tabBarTheme: GTabBarTheme.dark,
+        drawerTheme: GDrawerTheme.dark,
+        iconTheme: GIconTheme.dark,
       );
 }

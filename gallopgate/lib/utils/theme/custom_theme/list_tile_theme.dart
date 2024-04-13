@@ -7,7 +7,7 @@ class GlistTimeTheme {
 
   static ListTileThemeData get light => ListTileThemeData(
         dense: true,
-        textColor: GColor.darkTextColor,
+        textColor: GColor.lightTextColor,
         iconColor: GColor.darkTextColor.withOpacity(0.6),
         titleTextStyle: const TextStyle().copyWith(
           fontSize: GSizes.fontLg,
