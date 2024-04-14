@@ -6,12 +6,16 @@ import 'package:gallopgate/features/onboard/presentation/widgets/onboard_page_in
 import 'package:gallopgate/features/onboard/presentation/widgets/onboard_skip_button.dart';
 import 'package:gallopgate/utils/constraints/_constraints_library.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import 'presentation/widgets/onboard_next_button.dart';
 
 /// On first app initialization
 class OnBoardScreen extends StatelessWidget {
   const OnBoardScreen({super.key});
+
+  static Page<Widget> get page => const MaterialPage(child: OnBoardScreen());
+
   @override
   Widget build(BuildContext context) {
     List<PageOnBoard> pages = [
@@ -34,7 +38,7 @@ class OnBoardScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext _) => OnBoardCubit(
           totalPages: pages.length,
-          onFinish: () {}
+          onFinish: () => context.go('/auth'),
       ),
       child: _OnBoardScreen(pages: pages),
     );
@@ -42,7 +46,7 @@ class OnBoardScreen extends StatelessWidget {
 }
 
 class _OnBoardScreen extends StatelessWidget {
-  const _OnBoardScreen({super.key, required this.pages});
+  const _OnBoardScreen({required this.pages});
 
   final List<PageOnBoard> pages;
 

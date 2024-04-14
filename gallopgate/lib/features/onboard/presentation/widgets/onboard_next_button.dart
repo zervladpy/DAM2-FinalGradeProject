@@ -15,6 +15,10 @@ class OnboardNextButton extends StatelessWidget {
       bottom: GSizes.bottomNavigationBarHeight,
       child: ElevatedButton(
         onPressed: controller.onNextPage,
+        style: ElevatedButton.styleFrom(
+          maximumSize: Size(GSizes.defaultHeight, GSizes.defaultHeight,),
+          minimumSize: Size(GSizes.defaultHeight, GSizes.defaultHeight,)
+        ),
         child: Icon(
           Iconsax.arrow_right_3,
           size: GSizes.iconLg,
