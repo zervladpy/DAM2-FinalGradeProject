@@ -1,0 +1,57 @@
+{
+  "@@locale": "en",
+  "@@context": "page name",
+  "@@author": "zervlad",
+  "app_presentation": "GallopGate is a horse management app that allows you to manage your horses, your equestrian center, your competitions and your events.",
+  "@app_presentation": {
+    "description": "app_presentation"
+  },
+  "skip": "Skip",
+  "@skip": {
+    "description": "Skip text"
+  },
+  "next": "Next",
+  "@next" : {
+    "description": "Next text"
+  },
+  "onboardPage1Title": "Onboard Title 1",
+  "@onboardPage1Title": {
+    "description": "Onboard 1 Page title"
+  },
+  "onboardPage1Description": "Onboard Description 1",
+  "@onboardPage1Description": {
+    "description": "Onboard 1 Page Description"
+  },
+  "onboardPage2Title": "Onboard Title 2",
+  "@onboardPage2Title": {
+    "description": "Onboard 2 Page title"
+  },
+  "onboardPage2Description": "Onboard Description 2",
+  "@onboardPage2Description": {
+    "description": "Onboard 2 Page Description"
+  },
+  "onboardPage3Title": "Onboard Title 3",
+  "@onboardPage3Title": {
+    "description": "Onboard 3 Page title"
+  },
+  "onboardPage3Description": "Onboard Description 3",
+  "@onboardPage3Description": {
+    "description": "Onboard 3 Page Description"
+  },
+  "dashboard": "Dashboard",
+  "@dashboard": {
+    "description": "Label for dashboard navigation item"
+  },
+  "schedule": "Schedule",
+  "@schedule": {
+    "description": "Label for schedule navigation item"
+  },
+  "chat": "Chat",
+  "@chat": {
+    "description": "Label for chat navigation item"
+  },
+  "account": "Account",
+  "@account": {
+    "description": "Label for account navigation item"
+  }
+}

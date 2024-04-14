@@ -1,26 +1,56 @@
-# Proyecto fin de ciclo
+# GallopGate
 
-> _TODO_: Este documento será a páxina de inicio do teu proxecto. Será o primeiro que vexa quen se interese por el. Coida a súa redacción e ortografía. Vai eliminando as liñas "_TODO_" a medida que completes a redacción de cada apartado. Inclúe neste apartado o título do proxecto e a autoría.
+<p align="center">
+  <img src="img/logo/logo_dark.png" alt="Image" width="300" height="300">
+</p>
 
-## Descrición
+## Description
 
-> _TODO_: Realiza unha breve descrición do proxecto (entre 100 e 300 palabras). Resalta o fundamental **coas túas propias palabras**. Utiliza unha linguaxe correcta, **pero natural**, que poida ser entendida pola maioría das persoas, incluso as que non teñan un coñecemento técnico da materia.
+> The idea behind this project is to make the life more easy in horse center managment.
+> This service will provide as base features:
+> - User Managment
+> - Horse Managment
+> - Schedule Managment 
 
-## Sobre a autoría
+## Author
 
-> _TODO_: Realiza unha breve descrición de quen es (perfil profesional), puntos fortes, tecnoloxías que máis dominas... e os motivos que te levaron a elaborar este proxecto. **Non máis de 200 palabras**.
+> Vladislav Zernov Kuznetsov
+> - [GitHub](https://github.com/zervladpy/)
 
-## Licencia
+## License
 
-> _TODO_: É requisito INDISPENSABLE licenciar explicitamente o proxecto. Crea un ficheiro `LICENSE` na raíz do repositorio, coa especificación da licencia.
+> This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-## Índice
+## Table of Contents
 
-1. [Estudo preliminar](doc/templates/1_estudo_preliminar.md)
-2. [Análise](doc/templates/2_analise.md)
-   - [Planificación](doc/templates/21_planificacion.md)
-   - [Orzamento](doc/templates/22_orzamento.md)
-3. [Deseño](doc/templates/3_deseño.md)
-4. [Codificación e probas](doc/templates/4_codificacion_probas.md)
-5. [Manuais do proxecto](doc/templates/5_manuais.md)
-   - [Referencias](doc/templates/51_referencias.md)
+1. [Preliminary study](docs/preliminary_study.md)
+2. [Analysis](docs/analysys.md)
+   - [Planning](docs/planning.md)
+   - [Budget](docs/budget.md)
+3. [Design](docs/design.md)
+4. [Coding and testing](docs/coding_testing.md)
+5. [Project manuals](docs/manuals.md)
+   - [References](docs/references.md)
+6. [Git Usage](docs/git_usage.md)
+
+## Powered by
+
+> Designed with the help of:
+
+![Excalidraw](https://img.shields.io/badge/excalidraw-%23000000.svg?style=for-the-badge&logo=excalidraw&logoColor=white)
+![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
+
+> Server side
+
+![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+
+> Client side
+
+![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
+![Flutter](https://img.shields.io/badge/flutter-%2302569B.svg?style=for-the-badge&logo=flutter&logoColor=white)
+
+> Version control
+
+![Git](https://img.shields.io/badge/git-%23F05032.svg?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+![GitLab](https://img.shields.io/badge/gitlab-%23FCA121.svg?style=for-the-badge&logo=gitlab&logoColor=white)
