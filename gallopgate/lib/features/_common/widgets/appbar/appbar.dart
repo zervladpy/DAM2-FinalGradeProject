@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../utils/constraints/colors.dart';
-import '../../../utils/constraints/sizes.dart';
-import '../../../utils/helper/helper.dart';
+import '../../../../utils/constraints/colors.dart';
+import '../../../../utils/constraints/sizes.dart';
+import '../../../../utils/helper/helper.dart';
 
 class GAppBar extends StatelessWidget implements PreferredSizeWidget {
   const GAppBar({
@@ -38,12 +38,12 @@ class GAppBar extends StatelessWidget implements PreferredSizeWidget {
                 icon: Icon(
                   Iconsax.arrow_left,
                   color:
-                  isDark ? GColor.darkBackground : GColor.lightBackground,
+                      isDark ? GColor.darkBackground : GColor.lightBackground,
                 ),
               )
             : leadingIcon != null
-            ? IconButton(onPressed: onLeadingTap, icon: Icon(leadingIcon))
-            : null,
+                ? IconButton(onPressed: onLeadingTap, icon: Icon(leadingIcon))
+                : null,
         title: title,
         actions: actions,
         bottom: bottom,
