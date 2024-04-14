@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gallopgate/features/_common/widgets/button/elevated_button_icon.dart';
 import 'package:gallopgate/features/_common/widgets/container/container_shadowed.dart';
 import 'package:gallopgate/features/_common/widgets/separator/separator_small.dart';
+import 'package:gallopgate/features/_common/widgets/text/text_card_title.dart';
 import 'package:iconsax/iconsax.dart';
 
 class HomeCreditsCard extends StatelessWidget {
@@ -15,9 +16,8 @@ class HomeCreditsCard extends StatelessWidget {
           // --- Title --- //
           Column(
             children: [
-              Text(
-                'Credits',
-                style: Theme.of(context).textTheme.headlineMedium,
+              const TextCardTitle(
+                text: 'Credits',
               ),
               SmallSeparator.vertical(),
               Row(
