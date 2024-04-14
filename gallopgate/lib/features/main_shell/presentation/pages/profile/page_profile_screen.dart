@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PageProfileScreen extends StatelessWidget {
-  const PageProfileScreen({Key? key}) : super(key: key);
+  const PageProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
