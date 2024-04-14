@@ -34,9 +34,9 @@ class ResponseStatus {
 }
 
 class Success extends ResponseStatus {
-  const Success(String code) : super(code);
+  const Success(super.code);
 }
 
 class Failure extends ResponseStatus {
-  const Failure(String code) : super(code);
+  const Failure(super.code);
 }
