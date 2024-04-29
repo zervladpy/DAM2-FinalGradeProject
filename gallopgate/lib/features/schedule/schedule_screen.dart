@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gallopgate/features/_common/widgets/appbar/appbar.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:gallopgate/features/schedule/domain/models/LecturePreview.dart';
+import 'package:gallopgate/features/schedule/widgets/schedule_appbar.dart';
+import 'package:gallopgate/features/schedule/widgets/schedule_page.dart';
+import 'package:gallopgate/features/schedule/widgets/schedule_weekday_page.dart';
 
 class ScheduleScreen extends StatelessWidget {
   const ScheduleScreen({super.key});
@@ -10,15 +12,25 @@ class ScheduleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GAppBar(
-        title: const Text("Schedule"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Iconsax.calendar),
-          )
-        ],
+    final List<Widget> weekDayPages = [
+      const ScheduleWeekdayPage(
+          previews: [LecturePreview("1", "Galop", "10:00", "45")]),
+      const ScheduleWeekdayPage(previews: []),
+      const ScheduleWeekdayPage(previews: []),
+      const ScheduleWeekdayPage(previews: []),
+      const ScheduleWeekdayPage(previews: []),
+      const ScheduleWeekdayPage(previews: []),
+      const ScheduleWeekdayPage(previews: []),
+    ];
+
+    return DefaultTabController(
+      initialIndex: 0,
+      length: weekDayPages.length,
+      child: Scaffold(
+        appBar: const ScheduleAppbar(),
+        body: SchedulePage(
+          weekDayPages: weekDayPages,
+        ),
       ),
     );
   }
