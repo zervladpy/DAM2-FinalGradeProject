@@ -15,7 +15,7 @@ class GApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GHelper.setSystemOverlayStyle(GColor.darkBackground);
+    GHelper.setSystemOverlayStyle(GColor.lightBackground);
 
     GoRouter router = GRouter(authCubit: context.read()).router;
 

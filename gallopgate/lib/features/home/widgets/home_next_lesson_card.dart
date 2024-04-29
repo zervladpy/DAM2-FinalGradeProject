@@ -82,12 +82,11 @@ class HomeNextLessonCard extends StatelessWidget {
                 ],
               ),
               DefaultSeparator.vertical(),
-              ElevatedButton.icon(
+              ElevatedButton(
                 onPressed: () {
                   // TODO: Add Go to lesson preview
                 },
-                icon: const Icon(Iconsax.arrow_right_3),
-                label: const Text("See More"),
+                child: const Text("See More"),
               ),
             ],
           ),
