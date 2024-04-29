@@ -151,5 +151,15 @@ Tambien se quiere hacer un siguimiento de las dietas
 
 ## Normativa
 
-No tengo ni idea de como hacer un aviso legal. Por lo que se buscará información y se intentará hacer lo mejor posible cerca de las fechas de presentación y de lanzamiento. Todavía no se muchos aspectos a realizar dentro de la aplicación como para saber que aspectos legales se deben tener en cuenta.
+En concordancia con las regulaciones de protección de datos, se llevará a cabo la recopilación de información personal de manera limitada y específica. Los datos que se recolectarán incluirán nombres, ubicaciones aproximadas, así como nombres y licencias.
+
+Es fundamental resaltar que esta recopilación se realiza con el objetivo de brindar un servicio más personalizado y eficiente, garantizando en todo momento la privacidad y seguridad de los individuos involucrados.
+
+En cumplimiento de las disposiciones legales, se implementarán medidas de seguridad adecuadas para proteger la confidencialidad de los datos recopilados. Asimismo, se seguirán las directrices establecidas por la Ley Orgánica de Protección de Datos Personales y garantía de los derechos digitales (LOPDPGDD) y el Reglamento General de Protección de Datos (GDPR), asegurando el cumplimiento de las normativas pertinentes en materia de protección de datos.
+
+Se proporcionará información clara y transparente sobre el uso y tratamiento de los datos personales recopilados, incluyendo la identificación de la persona responsable del tratamiento de los datos y los fines para los cuales serán utilizados.
+
+Además, se implementarán mecanismos para garantizar que los individuos puedan ejercer sus derechos de acceso, rectificación, cancelación y oposición respecto a sus datos personales, conforme a lo establecido por la legislación aplicable.
+
+Este enfoque garantiza el equilibrio entre la recopilación de datos necesaria para el funcionamiento del proyecto y el respeto a la privacidad y los derechos de los individuos.
 
