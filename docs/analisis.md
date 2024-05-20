@@ -163,3 +163,8 @@ Además, se implementarán mecanismos para garantizar que los individuos puedan 
 
 Este enfoque garantiza el equilibrio entre la recopilación de datos necesaria para el funcionamiento del proyecto y el respeto a la privacidad y los derechos de los individuos.
 
+## Problemas y Soluciones
+
+Durante el desarrollo me he encontrado con un grave problema de consistencia de datos utilizando una base de datos no relacional de **Firebase**. Por lo que he decidido cambiar a una base de datos relacional de **PostgreSQL** que ademas tambien actua como un `Backend as a Service`. Devido a esta migración se ha tenido que retrasar el desarrollo de la aplicación.
+
+El servicio es [Supabase](https://supabase.io/), incorpora casi las mismas funcionalidades que Firebase, pero con la ventaja de que es de código abierto y se puede instalar en un servidor propio o que además utiliza una base de datos relacional para la gestión de datos.

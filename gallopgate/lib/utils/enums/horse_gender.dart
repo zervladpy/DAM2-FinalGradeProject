@@ -1,4 +1,0 @@
-enum HorseGender {
-  male,
-  female;
-}
