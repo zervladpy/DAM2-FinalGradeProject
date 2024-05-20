@@ -1,55 +1,63 @@
 # GallopGate
 
-<p align="center">
+<details>
+  <summary>Modo Oscuro</summary>
   <img src="img/logo/logo_dark.png" alt="Image" width="300" height="300">
-</p>
+</details>
+<details>
+  <summary>Modo Claro</summary>
+  <img src="img/logo/logo_light.png" alt="Image" width="300" height="300">
+</details>
 
 ## Description
 
-> The idea behind this project is to make the life more easy in horse center managment.
-> This service will provide as base features:
-> - User Managment
-> - Horse Managment
-> - Schedule Managment 
+La idea detrás de este proyecto es hacer la vida más fácil en la gestión de centros ecuestres.
+Este servicio proporcionará las siguientes características básicas:
 
-## Author
+- Gestión de usuarios
+- Gestión de caballos
+- Gestión de horarios
+- Gestión de clases
+- Gestión de eventos
+- Gestión de organizaciones
+
+## Autor
 
 > Vladislav Zernov Kuznetsov
 > - [GitHub](https://github.com/zervladpy/)
 
-## License
+## Licencia
 
-> This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+> Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
-## Table of Contents
+##  Tabla de Contenidos
+1. [Estudio Preliminar](docs/preliminary_study.md)
+2. [Análisis](docs/analisis.md)
+   - [Planificación](docs/planificacion.md)
+   - [Presupuesto](docs/presupuesto.md)
+3. [Diseño](docs/diseno.md)
+4. [Codificación y Pruebas](docs/codificacion_pruebas.md)
+5. [Manuales del Proyecto](docs/manuales.md)
+   - [Referencias](docs/referencias.md)
+6. [Uso de Git](docs/uso_git.md)
 
-1. [Preliminary study](docs/preliminary_study.md)
-2. [Analysis](docs/analysys.md)
-   - [Planning](docs/planning.md)
-   - [Budget](docs/budget.md)
-3. [Design](docs/design.md)
-4. [Coding and testing](docs/coding_testing.md)
-5. [Project manuals](docs/manuals.md)
-   - [References](docs/references.md)
-6. [Git Usage](docs/git_usage.md)
+## Impulsado por
 
-## Powered by
-
-> Designed with the help of:
+> Diseñado con la ayuda de:
 
 ![Excalidraw](https://img.shields.io/badge/excalidraw-%23000000.svg?style=for-the-badge&logo=excalidraw&logoColor=white)
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 
-> Server side
+> Servidor
 
-![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+![Supabase](https://img.shields.io/badge/supabase-%23323330.svg?style=for-the-badge&logo=supabase&logoColor=white)
 
-> Client side
+> Cliente
 
 ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
 ![Flutter](https://img.shields.io/badge/flutter-%2302569B.svg?style=for-the-badge&logo=flutter&logoColor=white)
 
-> Version control
+> Control de versiones
 
 ![Git](https://img.shields.io/badge/git-%23F05032.svg?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)

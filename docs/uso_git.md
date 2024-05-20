@@ -1,39 +1,39 @@
-# [![git](https://img.shields.io/badge/--F05032?logo=git&logoColor=ffffff)](http://git-scm.com/) Git Usage
+# [![git](https://img.shields.io/badge/--F05032?logo=git&logoColor=ffffff)](http://git-scm.com/) Uso de Git
 
-Basic git usage rulset for this project.
+Reglas básicas de uso de Git para este proyecto.
 
-## Branch Description
+## Descripción de Ramas
 
-* `master` - main branch, contains only stable code
-* `dev` - development branch, contains code that is not ready for production
-* `dev-<feature>` - feature branches, contains code that is not ready for production and is related to a specific feature
+- `master` - rama principal, contiene solo código estable
+- `dev` - rama de desarrollo, contiene código que no está listo para producción
+- `dev-<característica>` - ramas de características, contiene código que no está listo para producción y está relacionado con una característica específica
 
-## Commit Rulset
+## Reglas de Commit
 
-### Commit Prefixes
+### Prefijos de Commit
 
-* `-a` - add
-* `-u` - update
-* `-d` - delete
-* `-r` - refactor
-* `-f` - fix
+- `-a` - agregar
+- `-u` - actualizar
+- `-d` - eliminar
+- `-r` - refactorizar
+- `-f` - corregir
 
-### Commit Message
+### Mensaje de Commit
 
-* `<prefix> <message>`
+- `<prefijo> <mensaje>`
 
-### Commit Example
+### Ejemplo de Commit
 
-* `-a: add git usage rulset`
-* `-u: update git usage rulset`
-* `-d: delete git usage rulset`
-* `-r: refactor git usage rulset`
-* `-f: fix git usage rulset`
+- `-a: agregar reglas de uso de Git`
+- `-u: actualizar reglas de uso de Git`
+- `-d: eliminar reglas de uso de Git`
+- `-r: refactorizar reglas de uso de Git`
+- `-f: corregir reglas de uso de Git`
 
-## Tag Rulset
+## Reglas de Etiquetas
 
-* `v<version>` - version tag
+- `v<versión>` - etiqueta de versión
 
-### Tag Example
+### Ejemplo de Etiqueta
 
-* `v0.1.0` - version 0.1.0
+- `v0.1.0` - versión 0.1.0

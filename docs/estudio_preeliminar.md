@@ -1,106 +1,91 @@
-# Preliminary Study
+Aquí está la traducción del texto en formato Markdown:
 
-## Table of Contents
+# Estudio Preliminar
 
-1. [Project Description](#1-project-description)
-    1. [Justification of the Project](#11-justification-of-the-project)
-    2. [Project Functionality](#12-project-functionality)
-    3. [Study of Needs](#13-study-of-needs)
-    4. [Target Audience](#14-target-audience)
-    5. [Business Model](#15-business-model)
-2. [Requirements](#2-requirements)
+## Tabla de Contenidos
 
-## 1. Project Description
+1. [Descripción del Proyecto](#1-descripción-del-proyecto)
+    1. [Justificación del Proyecto](#11-justificación-del-proyecto)
+    2. [Funcionalidad del Proyecto](#12-funcionalidad-del-proyecto)
+    3. [Estudio de Necesidades](#13-estudio-de-necesidades)
+    4. [Público Objetivo](#14-público-objetivo)
+    5. [Modelo de Negocio](#15-modelo-de-negocio)
+2. [Requisitos](#2-requisitos)
 
-### 1.1 Justification of the Project
+## 1. Descripción del Proyecto
 
-The Equestrian Center Management App is born out of the necessity to streamline the operations and enhance user experience within equestrian facilities. Traditional methods of managing schedules, horse care, and event appointments often lack efficiency and accessibility. This app aims to bridge the gap by providing a comprehensive solution tailored to the specific needs of equestrian centers and their users.
+### 1.1 Justificación del Proyecto
 
-### 1.2 Project Functionality
+La Aplicación de Gestión de Centros Ecuestres nace de la necesidad de agilizar las operaciones y mejorar la experiencia del usuario dentro de las instalaciones ecuestres. Los métodos tradicionales para gestionar horarios, cuidado de los caballos y citas para eventos a menudo carecen de eficiencia y accesibilidad. Esta aplicación tiene como objetivo cerrar la brecha proporcionando una solución integral adaptada a las necesidades específicas de los centros ecuestres y sus usuarios.
 
-The app will offer a range of features including but not limited to:
-1. **User Authentication and Profiles**
-   - Secure user registration and login functionality.
-   - User profile management, including editing personal information and preferences.
+### 1.2 Funcionalidad del Proyecto
 
-2. **Scheduling Features**
-   - Ability to create, view, edit, and cancel riding sessions, lessons, and events.
-   - Option to set recurring schedules for regular activities.
-   - Notification system to remind users of upcoming appointments.
+La aplicación ofrecerá una variedad de características, incluyendo pero no limitado a:
+1. **Autenticación y Perfiles de Usuario**
+   - Registro seguro de usuarios y funcionalidad de inicio de sesión.
+   - Gestión de perfiles de usuario, incluida la edición de información personal y preferencias.
 
-3. **Horse Care Management**
-   - Database to store information about each horse, including health records, feeding schedules, and work hours.
-   - Tracking system to monitor the well-being and workload of each horse.
-   - Alerts for veterinary appointments, vaccinations, and other important events related to horse care.
+2. **Funciones de Programación**
+   - Capacidad para crear, ver, editar y cancelar sesiones de equitación, lecciones y eventos.
+   - Opción para establecer horarios recurrentes para actividades regulares.
+   - Sistema de notificación para recordar a los usuarios las citas próximas.
 
-4. **Event Management**
-   - Booking system for events such as competitions, clinics, and workshops.
-   - Event calendar to display upcoming events and availability.
-   - Integration with external event management tools or platforms for larger events.
+3. **Gestión del Cuidado de los Caballos**
+   - Base de datos para almacenar información sobre cada caballo, incluidos registros de salud, horarios de alimentación y horas de trabajo.
+   - Sistema de seguimiento para monitorear el bienestar y la carga de trabajo de cada caballo.
+   - Alertas para citas veterinarias, vacunaciones y otros eventos importantes relacionados con el cuidado de los caballos.
 
-5. **Communication Tools**
-   - Messaging system for users to communicate with equestrian center staff, trainers, and other users.
-   - Announcement feature for equestrian centers to share important updates, news, and promotions with users.
+4. **Gestión de Eventos**
+   - Sistema de reservas para eventos como competiciones, clínicas y talleres.
+   - Calendario de eventos para mostrar eventos próximos y disponibilidad.
+   - Integración con herramientas o plataformas externas de gestión de eventos para eventos más grandes.
 
-6. **Admin Dashboard**
-   - Dashboard for equestrian center managers to monitor and manage bookings, user accounts, and payments.
-   - Reporting tools to track usage metrics, revenue, and customer feedback.
+5. **Herramientas de Comunicación**
+   - Sistema de mensajería para que los usuarios se comuniquen con el personal del centro ecuestre, entrenadores y otros usuarios.
+   - Función de anuncios para que los centros ecuestres compartan actualizaciones importantes, noticias y promociones con los usuarios.
 
-7. **Accessibility and Usability**
-   - Intuitive user interface design that is easy to navigate for users of all experience levels.
-   - Compatibility with multiple devices and screen sizes, including smartphones, tablets, and desktop computers.
-   - Accessibility features to accommodate users with disabilities, such as screen reader compatibility and alternative input methods.
+6. **Tablero de Administración**
+   - Tablero para que los administradores del centro ecuestre monitoreen y administren reservas, cuentas de usuario y pagos.
+   - Herramientas de informes para rastrear métricas de uso, ingresos y comentarios de los clientes.
 
-### 1.3 Study of Needs
+7. **Accesibilidad y Usabilidad**
+   - Diseño de interfaz de usuario intuitivo que sea fácil de navegar para usuarios de todos los niveles de experiencia.
+   - Compatibilidad con múltiples dispositivos y tamaños de pantalla, incluidos teléfonos inteligentes, tabletas y computadoras de escritorio.
+   - Funciones de accesibilidad para usuarios con discapacidades, como compatibilidad con lectores de pantalla y métodos de entrada alternativos.
 
-A thorough analysis of the existing market revealed a notable gap in the availability of a comprehensive equestrian center management app. Current solutions often lack the necessary features or user-friendliness required to meet the demands of both equestrian center managers and users. This app seeks to address these shortcomings by offering a user-centric and feature-rich platform.
+### 1.3 Estudio de Necesidades
 
-### 1.4 Target Audience
+Un análisis exhaustivo del mercado existente reveló una brecha notable en la disponibilidad de una aplicación integral de gestión de centros ecuestres. Las soluciones actuales a menudo carecen de las características necesarias o la facilidad de uso requerida para satisfacer las demandas tanto de los gerentes de centros ecuestres como de los usuarios. Esta aplicación busca abordar estas deficiencias ofreciendo una plataforma centrada en el usuario y rica en características.
 
-The primary recipients of this app are equestrian center users including riders, trainers, and horse owners. Secondary recipients include equestrian center managers and staff who will utilize the app to streamline operations and enhance customer service.
+### 1.4 Público Objetivo
 
-### 1.5 Business Model
+Los principales destinatarios de esta aplicación son los usuarios de centros ecuestres, incluidos jinetes, entrenadores y propietarios de caballos. Los destinatarios secundarios incluyen a los gerentes y personal del centro ecuestre que utilizarán la aplicación para agilizar las operaciones y mejorar el servicio al cliente.
 
-The app will operate on a subscription-based model, offering both monthly and yearly subscription plans for equestrian center businesses. Users will have access to basic features for free, with premium features unlocked through subscription. In-app payments will facilitate seamless transactions between users and equestrian centers for services such as booking riding sessions and events.
+### 1.5 Modelo de Negocio
 
-## 2. Requirements
+La aplicación funcionará bajo un modelo de suscripción, ofreciendo planes de suscripción mensuales y anuales para empresas de centros ecuestres. Los usuarios tendrán acceso a características básicas de forma gratuita, con características premium desbloqueadas mediante suscripción. Los pagos dentro de la aplicación facilitarán transacciones sin problemas entre los usuarios y los centros ecuestres para servicios como reservar sesiones de equitación y eventos.
 
-1. **User Authentication and Profiles**
-   - Users should be able to create accounts and log in securely.
-   - Profile management features, including editing personal information and preferences.
+## 2. Requisitos
 
-2. **Scheduling Features**
-   - Ability to create, view, edit, and cancel riding sessions, lessons, and events.
-   - Option to set recurring schedules for regular activities.
-   - Notification system to remind users of upcoming appointments.
+1. **Autenticación y Perfiles de Usuario**
+   - Los usuarios deben poder crear cuentas e iniciar sesión de forma segura.
+   - Funciones de gestión de perfiles, incluida la edición de información personal y preferencias.
 
-3. **Horse Care Management**
-   - Database to store information about each horse, including health records, feeding schedules, and work hours.
-   - Tracking system to monitor the well-being and workload of each horse.
-   - Alerts for veterinary appointments, vaccinations, and other important events related to horse care.
+2. **Funciones de Horarios**
+   - Capacidad para crear, ver, editar y cancelar sesiones de equitación, lecciones y eventos.
+   - Opción para establecer horarios recurrentes para actividades regulares.
+   - Sistema de notificación para recordar a los usuarios citas próximas.
 
-4. **Event Management**
-   - Booking system for events such as competitions, clinics, and workshops.
-   - Event calendar to display upcoming events and availability.
-   - Integration with external event management tools or platforms for larger events.
+3. **Gestión del Cuidado de los Caballos**
+   - Base de datos para almacenar información sobre cada caballo, incluidos registros de salud, horarios de alimentación y horas de trabajo.
+   - Sistema de seguimiento para monitorear el bienestar y la carga de trabajo de cada caballo.
+   - Alertas para citas veterinarias, vacunaciones y otros eventos importantes relacionados con el cuidado de los caballos.
 
-5. **Payment Integration**
-   - Secure payment gateway for in-app transactions, including subscription fees, booking fees, and purchases within the app.
-   - Option for users to save payment methods and manage billing information securely.
+4. **Gestión de Eventos**
+   - Sistema de reservas para eventos como competiciones, clínicas y talleres.
+   - Calendario de eventos para mostrar eventos próximos y disponibilidad.
+   - Integración con herramientas o plataformas externas de gestión de eventos para eventos más grandes.
 
-6. **Communication Tools**
-   - Messaging system for users to communicate with equestrian center staff, trainers, and other users.
-   - Announcement feature for equestrian centers to share important updates, news, and promotions with users.
-
-7. **Admin Dashboard**
-   - Dashboard for equestrian center managers to monitor and manage bookings, user accounts, and payments.
-   - Reporting tools to track usage metrics, revenue, and customer feedback.
-
-8. **Accessibility and Usability**
-   - Intuitive user interface design that is easy to navigate for users of all experience levels.
-   - Compatibility with multiple devices and screen sizes, including smartphones, tablets, and desktop computers.
-   - Accessibility features to accommodate users with disabilities, such as screen reader compatibility and alternative input methods.
-
-9. **Scalability and Performance**
-    - Architecture designed for scalability to accommodate growth in user base and feature expansion.
-    - Optimization for performance to ensure fast loading times and responsiveness, even during peak usage periods.
+5. **Integración de Pagos (NO INCLUIDO EN MVP)**
+   - Pasarela de pago segura para transacciones dentro de la aplicación, incluidas tarifas de suscripción, tarifas de reserva y compras dentro de la aplicación.
+   - Opción para que los usuarios guarden métodos de pago y administren información

@@ -153,3 +153,8 @@ Tambien se quiere hacer un siguimiento de las dietas
 
 No tengo ni idea de como hacer un aviso legal. Por lo que se buscará información y se intentará hacer lo mejor posible cerca de las fechas de presentación y de lanzamiento. Todavía no se muchos aspectos a realizar dentro de la aplicación como para saber que aspectos legales se deben tener en cuenta.
 
+## Problemas y Soluciones
+
+Durante el desarrollo me he encontrado con un grave problema de consistencia de datos utilizando una base de datos no relacional de **Firebase**. Por lo que he decidido cambiar a una base de datos relacional de **PostgreSQL** que ademas tambien actua como un `Backend as a Service`. Devido a esta migración se ha tenido que retrasar el desarrollo de la aplicación.
+
+El servicio es [Supabase](https://supabase.io/), incorpora casi las mismas funcionalidades que Firebase, pero con la ventaja de que es de código abierto y se puede instalar en un servidor propio o que además utiliza una base de datos relacional para la gestión de datos.
