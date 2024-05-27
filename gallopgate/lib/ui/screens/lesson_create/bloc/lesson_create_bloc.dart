@@ -25,6 +25,7 @@ class LessonCreateBloc extends Bloc<LessonCreateEvent, LessonCreateState> {
     on<LessonTriggerEnabled>(_onTriggerEnable);
     on<LessonUpdateSchedule>(_onUpdateSchedule);
     on<LessonAddNewScheduleToDay>(_onAddNewSchedule);
+    on<LessonRemoveSchedule>(_onRemoveSchedule);
     on<LessonSubmit>(_onSubmitt);
   }
 
@@ -95,12 +96,22 @@ class LessonCreateBloc extends Bloc<LessonCreateEvent, LessonCreateState> {
       instructorId: '',
       organizationId: '',
       startTime: DateTime.now(),
-      duration: DateTime.now().add(const Duration(minutes: 30)),
+      end: DateTime.now().add(const Duration(minutes: 30)),
       lectureId: '',
     );
 
     var schedules = List.of(state.lesson.schedules);
     schedules.add(schedule);
+    emit(state.copyWith(lesson: state.lesson.copyWith(schedules: schedules)));
+  }
+
+  FutureOr<void> _onRemoveSchedule(
+    LessonRemoveSchedule event,
+    Emitter<LessonCreateState> emit,
+  ) {
+    var schedules = List.of(state.lesson.schedules);
+    schedules.remove(event.value);
+
     emit(state.copyWith(lesson: state.lesson.copyWith(schedules: schedules)));
   }
 }

@@ -19,16 +19,29 @@ class ScheduleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Wrap(
-          spacing: 5.0,
-          runSpacing: 5.0,
+        Column(
           children: [
-            const Row(
+            Row(
               children: [
-                TimeInputField(label: "Start"),
-                TimeInputField(label: "Duration"),
+                TimeInputField(
+                  label: "Start",
+                  initialValue: item.startTime,
+                  onChange: (newDate) {
+                    var copy = item.copyWith(startTime: newDate);
+                    onChange?.call(copy);
+                  },
+                ),
+                const SizedBox(width: 16.0),
+                TimeInputField(
+                  label: "Duration",
+                  initialValue: item.end,
+                  onChange: (newDate) {
+                    var copy = item.copyWith(startTime: newDate);
+                    onChange?.call(copy);
+                  },
+                ),
               ],
             ),
             const Row(
@@ -37,14 +50,14 @@ class ScheduleItem extends StatelessWidget {
                 Text("Riders"),
               ],
             ),
-            IconButton(
-              onPressed: () => onDelete?.call(item),
-              icon: Icon(
-                Iconsax.trash,
-                color: context.colorScheme.onError,
-              ),
-            ),
           ],
+        ),
+        IconButton(
+          onPressed: () => onDelete?.call(item),
+          icon: Icon(
+            Iconsax.trash,
+            color: context.colorScheme.onError,
+          ),
         ),
       ],
     );

@@ -165,7 +165,7 @@ class _DayDetails extends StatelessWidget {
       children: [
         _ScheduleForm(
           start: DateTime.now(),
-          duration: DateTime.now().add(
+          end: DateTime.now().add(
             const Duration(minutes: 30),
           ),
         ),
@@ -177,19 +177,19 @@ class _DayDetails extends StatelessWidget {
 class _ScheduleForm extends StatelessWidget {
   const _ScheduleForm({
     required this.start,
-    required this.duration,
+    required this.end,
   });
 
   final DateTime start;
-  final DateTime duration;
+  final DateTime end;
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
-        TimeInputField(label: 'Start'),
-        SizedBox(width: 16.0),
-        TimeInputField(label: 'End'),
+        TimeInputField(label: 'Start', initialValue: start),
+        const SizedBox(width: 16.0),
+        TimeInputField(label: 'End', initialValue: end),
       ],
     );
   }

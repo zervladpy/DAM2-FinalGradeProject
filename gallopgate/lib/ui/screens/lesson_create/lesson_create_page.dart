@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
+import 'package:gallopgate/ui/screens/lesson_create/widgets/schedule_day_item.dart';
 import 'package:gallopgate/ui/screens/lesson_create/widgets/schedule_item.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
@@ -105,6 +106,11 @@ class _WeekLessonSchedule extends StatelessWidget {
       children: days.map((day) {
         final dayIndex = days.indexOf(day);
 
+        var daySchedules =
+            context.watch<LessonCreateBloc>().state.lesson.schedules.where((e) {
+          return e.weekDay == dayIndex;
+        }).toList();
+
         return ExpansionPanel(
           isExpanded:
               context.watch<LessonCreateBloc>().state.opened.contains(dayIndex),
@@ -129,28 +135,18 @@ class _WeekLessonSchedule extends StatelessWidget {
               ],
             );
           },
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  context
-                      .read<LessonCreateBloc>()
-                      .add(LessonAddNewScheduleToDay(dayIndex));
-                },
-                child: const Text("Add Schedule"),
-              ),
-              ...context
-                  .watch<LessonCreateBloc>()
-                  .state
-                  .lesson
-                  .schedules
-                  .where((e) {
-                return e.weekDay == dayIndex;
-              }).map((schedule) {
-                return ScheduleItem(item: schedule);
-              }),
-            ],
+          body: ScheduleDayItem(
+            items: daySchedules,
+            onAdd: () {
+              context.read<LessonCreateBloc>().add(
+                    LessonAddNewScheduleToDay(dayIndex),
+                  );
+            },
+            onRemove: (value) {
+              context.read<LessonCreateBloc>().add(
+                    LessonRemoveSchedule(value),
+                  );
+            },
           ),
         );
       }).toList(),
