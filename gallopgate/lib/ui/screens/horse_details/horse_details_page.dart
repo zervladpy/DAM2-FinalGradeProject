@@ -7,6 +7,15 @@ class HorseDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return const _HorseDetailsPage();
+  }
+}
+
+class _HorseDetailsPage extends StatelessWidget {
+  const _HorseDetailsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return const Placeholder();
   }
 }

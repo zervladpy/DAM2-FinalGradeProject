@@ -97,4 +97,9 @@ class Profile extends Equatable {
 
     return [];
   }
+
+  String get fullName => {
+        if (firstName.isNotEmpty) firstName,
+        if (lastName.isNotEmpty) lastName,
+      }.join(' ');
 }

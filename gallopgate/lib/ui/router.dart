@@ -213,21 +213,32 @@ class ApplicationRouter {
       GoRoute(
         path: '/horses',
         pageBuilder: (context, state) => HorseDetailsPage.page,
-      ),
-      GoRoute(
-        path: '/horses/create',
-        pageBuilder: (context, state) => HorseCreatePage.page,
-      ),
-      GoRoute(
-        path: '/horses/:id',
-        pageBuilder: (context, state) {
-          String? id = state.pathParameters['id'];
-          if (id == null) {
-            return ErrorNotFoundPage.page;
-          } else {
-            return HorseDetailsPage.page;
-          }
-        },
+        routes: [
+          GoRoute(
+            path: 'create',
+            pageBuilder: (context, state) {
+              String? id =
+                  (state.extra as Map<String, String>)['organization_id'];
+
+              if (id == null) {
+                return ErrorNotFoundPage.page;
+              }
+
+              return HorseCreatePage.page(id);
+            },
+          ),
+          GoRoute(
+            path: ':id',
+            pageBuilder: (context, state) {
+              String? id = state.pathParameters['id'];
+              if (id == null) {
+                return ErrorNotFoundPage.page;
+              } else {
+                return HorseDetailsPage.page;
+              }
+            },
+          )
+        ],
       ),
     ],
   );

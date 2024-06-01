@@ -1,5 +1,6 @@
 import 'package:gallopgate/common/interfaces/initializer.dart';
 import 'package:gallopgate/repositories/auth_repository.dart';
+import 'package:gallopgate/repositories/horse_repository.dart';
 import 'package:gallopgate/repositories/lecture_repository.dart';
 import 'package:gallopgate/repositories/organization_repository.dart';
 import 'package:gallopgate/repositories/profile_repository.dart';
@@ -34,5 +35,7 @@ class LocatorInitializer extends Initializer {
     ));
 
     locator.registerSingleton(RoleRepository(locator.get()));
+
+    locator.registerSingleton(HorseRepository(locator.get()));
   }
 }

@@ -109,4 +109,12 @@ class ProfileRepository {
       return null;
     });
   }
+
+  Future<List<Profile>> fetchAllProfiles(String organizationId) {
+    return client
+        .from(Profile.table)
+        .select()
+        .eq('organization_id', organizationId)
+        .withConverter((v) => v.map(Profile.fromJson).toList());
+  }
 }
