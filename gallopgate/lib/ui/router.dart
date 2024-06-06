@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gallopgate/ui/screens/auth_login/auth_login_page.dart';
 import 'package:gallopgate/ui/screens/auth_onboard/auth_onboard_page.dart';
 import 'package:gallopgate/ui/screens/auth_otp/auth_otp_page.dart';
@@ -19,9 +18,14 @@ import 'package:gallopgate/ui/screens/main_home/main_home_page.dart';
 import 'package:gallopgate/ui/screens/main_manage/main_manage_page.dart';
 import 'package:gallopgate/ui/screens/main_schedule/main_schedule_page.dart';
 import 'package:gallopgate/ui/screens/main_settings/main_settings_page.dart';
+import 'package:gallopgate/ui/screens/manage_horses/manage_horses_page.dart';
+import 'package:gallopgate/ui/screens/manage_lessons/manage_lessons_page.dart';
+import 'package:gallopgate/ui/screens/manage_organization/manage_organization_page.dart';
+import 'package:gallopgate/ui/screens/manage_users/manage_users_page.dart';
 import 'package:gallopgate/ui/screens/org_create/org_create_page.dart';
 import 'package:gallopgate/ui/screens/org_details/org_details_page.dart';
 import 'package:gallopgate/ui/screens/org_explore/org_explore_page.dart';
+import 'package:gallopgate/ui/screens/schedule_create/schedule_create_page.dart';
 import 'package:gallopgate/ui/screens/user_create/user_create_page.dart';
 import 'package:gallopgate/ui/screens/user_details/user_details_page.dart';
 import 'package:gallopgate/ui/screens/user_edit/user_edit_page.dart';
@@ -97,10 +101,91 @@ class ApplicationRouter {
           GoRoute(
             path: '/schedule',
             pageBuilder: (context, state) => MainSchedulePage.page,
+            routes: [
+              GoRoute(
+                path: 'add',
+                pageBuilder: (context, state) {
+                  String? id =
+                      (state.extra as Map<String, String>)['organization-id'];
+
+                  if (id == null) {
+                    return ErrorNotFoundPage.page;
+                  }
+
+                  return ScheduleCreatePage.page(id);
+                },
+              ),
+              GoRoute(
+                path: ':id',
+                pageBuilder: (context, state) => const MaterialPage(
+                  child: ErrorNotFoundPage(),
+                ),
+              ),
+            ],
           ),
           GoRoute(
-            path: '/management',
+            path: '/managment',
             pageBuilder: (context, state) => MainManagePage.page,
+            routes: <GoRoute>[
+              GoRoute(
+                path: 'users',
+                pageBuilder: (context, state) => ManageUsersPage.page,
+                routes: <GoRoute>[
+                  GoRoute(
+                    path: 'create',
+                    pageBuilder: (context, state) =>
+                        ErrorNotFoundPage.page, // UserCreatePage.page,
+                  ),
+                  GoRoute(
+                    path: ':id',
+                    pageBuilder: (context, state) =>
+                        ErrorNotFoundPage.page, // UserCreatePage.page,
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'horses',
+                pageBuilder: (context, state) => ManageHorsesPage.page,
+                routes: <GoRoute>[
+                  GoRoute(
+                    path: 'create',
+                    pageBuilder: (context, state) =>
+                        ErrorNotFoundPage.page, // HorseCreatePage.page,
+                  ),
+                  GoRoute(
+                    path: ':id',
+                    pageBuilder: (context, state) =>
+                        ErrorNotFoundPage.page, // HorseDetailsPage.page,
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'lessons',
+                pageBuilder: (context, state) => ManageLessonsPage.page,
+                routes: <GoRoute>[
+                  GoRoute(
+                    path: 'create',
+                    pageBuilder: (context, state) => LessonCreatePage.page,
+                  ),
+                  GoRoute(
+                    path: ':id',
+                    pageBuilder: (context, state) {
+                      String? id = state.pathParameters['id'];
+                      log(id.toString());
+                      if (id == null) {
+                        return ErrorNotFoundPage.page;
+                      } else {
+                        return LessonDetailsPage.page(id);
+                      }
+                    },
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'organization',
+                pageBuilder: (context, state) => ManageOrganizationPage.page,
+              ),
+            ],
           ),
           GoRoute(
             path: '/account',
@@ -176,39 +261,6 @@ class ApplicationRouter {
         },
       ),
 
-      /// Lessons
-      GoRoute(
-        path: '/lessons',
-        pageBuilder: (context, state) => ErrorNotFoundPage.page,
-        routes: [
-          GoRoute(
-            path: 'create',
-            pageBuilder: (context, state) {
-              String? id =
-                  (state.extra as Map<String, String>)['organizationId'];
-
-              if (id == null) {
-                return ErrorNotFoundPage.page;
-              } else {
-                return LessonCreatePage.page(id);
-              }
-            },
-          ),
-          GoRoute(
-            path: ':id',
-            pageBuilder: (context, state) {
-              String? id = state.pathParameters['id'];
-              log(id.toString());
-              if (id == null) {
-                return ErrorNotFoundPage.page;
-              } else {
-                return LessonDetailsPage.page(id);
-              }
-            },
-          ),
-        ],
-      ),
-
       /// Horses
       GoRoute(
         path: '/horses',
@@ -218,7 +270,7 @@ class ApplicationRouter {
             path: 'create',
             pageBuilder: (context, state) {
               String? id =
-                  (state.extra as Map<String, String>)['organization_id'];
+                  (state.extra as Map<String, String>)['organization-id'];
 
               if (id == null) {
                 return ErrorNotFoundPage.page;

@@ -10,6 +10,14 @@ class HorseRepository extends CrudRepository<Horse, String> {
   final SupabaseClient client;
   late SupabaseQueryBuilder query;
 
+  Stream<List<Horse>> streamAll(String organizaitonId) {
+    return query
+        .select()
+        .eq('organization_id', organizaitonId)
+        .withConverter(_fromRemoteList)
+        .asStream();
+  }
+
   @override
   Future<Horse> create(Horse model) async {
     return query

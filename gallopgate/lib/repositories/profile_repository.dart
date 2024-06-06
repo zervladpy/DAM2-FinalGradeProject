@@ -37,33 +37,12 @@ class ProfileRepository {
   }
 
   Future<Profile?> fetchProfile(String id) async {
-    Profile profile = await client
+    return await client
         .from(Profile.table)
-        .select('*')
+        .select('*, profile_role ( roles (id, name))')
         .eq('id', id)
         .single()
         .withConverter(Profile.fromJson);
-
-    List<Role> roles = await client
-        .from('profile_role')
-        .select('roles (*)')
-        .eq('profile_id', profile.id!)
-        .withConverter(
-      (records) {
-        log(records.toString());
-        return records.map(
-          (record) {
-            var role = Role.fromJson(record['roles']);
-            log(role.toString());
-            return role;
-          },
-        ).toList();
-      },
-    );
-
-    profile = profile.copyWith(roles: roles);
-
-    return profile..copyWith(roles: roles);
   }
 
   Future<Profile?> updateProfile(Profile profile) async {
@@ -81,11 +60,8 @@ class ProfileRepository {
   Future<Profile?> fetchProfileByOrganization(String organizationId) async {
     return client
         .from(Profile.table)
-        .select()
-        .eq(
-          'organization_id',
-          organizationId,
-        )
+        .select('*, profile_role ( roles (id, name))')
+        .eq('organization_id', organizationId)
         .single()
         .withConverter(Profile.fromJson);
   }
@@ -110,10 +86,11 @@ class ProfileRepository {
     });
   }
 
-  Future<List<Profile>> fetchAllProfiles(String organizationId) {
+  Future<List<Profile>> fetchProfiles(String organizationId) {
+    log('fetching profiles');
     return client
         .from(Profile.table)
-        .select()
+        .select('*, profile_role ( roles (id, name))')
         .eq('organization_id', organizationId)
         .withConverter((v) => v.map(Profile.fromJson).toList());
   }

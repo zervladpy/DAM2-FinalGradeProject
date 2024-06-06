@@ -1,154 +1,79 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
-import 'package:gallopgate/ui/screens/lesson_create/widgets/schedule_day_item.dart';
+import 'package:gallopgate/models/organization/organization.dart';
+import 'package:gallopgate/ui/screens/lesson_create/widgets/lesson_sliver_appbar.dart';
+import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
+import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'bloc/lesson_create_bloc.dart';
 
 class LessonCreatePage extends StatelessWidget {
-  const LessonCreatePage(this.organizationId, {super.key});
+  const LessonCreatePage({super.key});
 
-  static page(String organizationId) => MaterialPage(
-          child: LessonCreatePage(
-        organizationId,
-      ));
-
-  final String organizationId;
+  static get page => const MaterialPage(child: LessonCreatePage());
 
   @override
   Widget build(BuildContext context) {
+    final organization = context.watch<MainBloc>().state.organization;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create Lesson'),
-      ),
       body: BlocProvider(
-        create: (_) => LessonCreateBloc(
-          organizationId,
-          locator.get(),
-        ),
-        child: const _LessonCreatePage(),
+        create: (_) => LessonCreateBloc(organization.id, locator.get()),
+        child: _LessonCreatePage(organization: organization),
       ),
     );
   }
 }
 
 class _LessonCreatePage extends StatelessWidget {
-  const _LessonCreatePage();
+  const _LessonCreatePage({required this.organization});
+
+  final Organization organization;
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LessonCreateBloc, LessonCreateState>(
-      listenWhen: (prev, curr) => prev.status != curr.status,
+    return BlocConsumer<LessonCreateBloc, LessonCreateState>(
       listener: (context, state) {
         if (state.status == Status.success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              backgroundColor: Colors.green,
-              content: Text('Lesson created successfully'),
-            ),
+          GSnackbar.success(
+            context: context,
+            message: '${state.lesson.title} created successfully',
           );
           context.pop();
         } else if (state.status == Status.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Colors.red,
-              content: Text('Failed to create lesson: ${state.error}'),
-            ),
+          GSnackbar.error(
+            context: context,
+            message: state.error ?? "An error occurred",
           );
         }
       },
-      child: const SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _TitleField(),
-              SizedBox(height: 16.0),
-              _DescriptionField(),
-              SizedBox(height: 16.0),
-              _WeekLessonSchedule(),
-              SizedBox(height: 16.0),
-              _SaveButton(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _WeekLessonSchedule extends StatelessWidget {
-  const _WeekLessonSchedule();
-
-  @override
-  Widget build(BuildContext context) {
-    List<String> days = [
-      "Monday",
-      "Tuesday",
-      "Wendsday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ];
-
-    return ExpansionPanelList(
-      expansionCallback: (index, value) {
-        context.read<LessonCreateBloc>().add(LessonTiggerOpen(index));
-      },
-      children: days.map((day) {
-        final dayIndex = days.indexOf(day);
-
-        var daySchedules =
-            context.watch<LessonCreateBloc>().state.lesson.schedules.where((e) {
-          return e.weekDay == dayIndex;
-        }).toList();
-
-        return ExpansionPanel(
-          isExpanded:
-              context.watch<LessonCreateBloc>().state.opened.contains(dayIndex),
-          headerBuilder: (context, value) {
-            return Row(
-              children: [
-                Switch(
-                  value: context
-                          .watch<LessonCreateBloc>()
-                          .state
-                          .enabled[dayIndex] ??
-                      false,
-                  onChanged: (newValue) {
-                    log("toggle open");
-                    context
-                        .read<LessonCreateBloc>()
-                        .add(LessonTriggerEnabled(dayIndex, newValue));
-                  },
+      builder: (context, state) {
+        return CustomScrollView(
+          slivers: [
+            LessonSliverAppbar(organization: organization),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            const SliverFillRemaining(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _TitleField(),
+                    SizedBox(height: 16),
+                    _DescriptionField(),
+                    SizedBox(height: 16),
+                    _SaveButton(),
+                  ],
                 ),
-                const SizedBox(width: 8.0),
-                Text(day)
-              ],
-            );
-          },
-          body: ScheduleDayItem(
-            items: daySchedules,
-            onAdd: () {
-              context.read<LessonCreateBloc>().add(
-                    LessonAddNewScheduleToDay(dayIndex),
-                  );
-            },
-            onRemove: (value) {
-              context.read<LessonCreateBloc>().add(
-                    LessonRemoveSchedule(value),
-                  );
-            },
-          ),
+              ),
+            ),
+          ],
         );
-      }).toList(),
+      },
     );
   }
 }
@@ -202,6 +127,7 @@ class _SaveButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LessonCreateBloc, LessonCreateState>(
+      buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         bool isLoading = state.status == Status.loading;
 
@@ -209,7 +135,9 @@ class _SaveButton extends StatelessWidget {
           onPressed: !isLoading
               ? () => context.read<LessonCreateBloc>().add(const LessonSubmit())
               : null,
-          child: const Text('Save'),
+          child: !isLoading
+              ? const Text('Save')
+              : const CircularProgressIndicator(),
         );
       },
     );

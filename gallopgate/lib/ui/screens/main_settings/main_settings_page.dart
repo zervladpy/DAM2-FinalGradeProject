@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/repositories/auth_repository.dart';
-import 'package:gallopgate/ui/screens/main_settings/widgets/settings_profile_card.dart';
+import 'package:gallopgate/ui/screens/main_settings/widgets/settings_sliver_appbar.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
@@ -14,13 +14,22 @@ class MainSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profile = context.watch<MainBloc>().state.profile;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Account'),
+      body: CustomScrollView(
+        slivers: [
+          SettingsSliverAppbar(profile: profile),
+          const SliverToBoxAdapter(child: SizedBox(height: 8.0)),
+          const _MainSettingsPage(),
+        ],
       ),
-      body: const _MainSettingsPage(),
     );
   }
+}
+
+class _SettingsSliverAppbar {
+  const _SettingsSliverAppbar();
 }
 
 class _MainSettingsPage extends StatelessWidget {
@@ -31,14 +40,14 @@ class _MainSettingsPage extends StatelessWidget {
     final profile = context.watch<MainBloc>().state.profile;
     final addBadge = profile.firstName.isEmpty || profile.lastName.isEmpty;
 
-    return SingleChildScrollView(
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      fillOverscroll: false,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SettingsProfileCard(profile: profile),
-            const Divider(),
             const SizedBox(height: 16.0),
             const Text("Account settings"),
             ListTile(

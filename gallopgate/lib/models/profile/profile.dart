@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:gallopgate/models/role/role.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -69,8 +71,10 @@ class Profile extends Equatable {
         birthDate: birthDate ?? this.birthDate,
       );
 
-  factory Profile.fromJson(Map<String, dynamic> json) =>
-      _$ProfileFromJson(json);
+  factory Profile.fromJson(Map<String, dynamic> json) {
+    log('Profile.fromJson: $json');
+    return _$ProfileFromJson(json);
+  }
 
   Map<String, dynamic> toJson() => _$ProfileToJson(this);
 
@@ -92,14 +96,12 @@ class Profile extends Equatable {
     return 'Profile{id: $id, firstName: $firstName, lastName: $lastName, email: $email, avatarUrl: $avatarUrl, createdAt: $createdAt, roles: $roles, organizationId: $organizationId, birthDate: $birthDate}';
   }
 
-  static List<Role> mapRoles(Map<String, dynamic>? json) {
-    if (json == null) return [];
-
-    return [];
+  static List<Role> mapRoles(List<dynamic> json) {
+    return json.map((e) => Role.fromJson(e["roles"])).toList();
   }
 
   String get fullName => {
         if (firstName.isNotEmpty) firstName,
         if (lastName.isNotEmpty) lastName,
-      }.join(' ');
+      }.join(', ');
 }

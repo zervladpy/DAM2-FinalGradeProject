@@ -35,7 +35,7 @@ class HorseCreateBloc extends Bloc<HorseCreateEvent, HorseCreateState> {
   ) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final profiles = await profileRepository.fetchAllProfiles(organizationId);
+      final profiles = await profileRepository.fetchProfiles(organizationId);
       emit(state.copyWith(
         status: Status.initial,
         profiles: profiles,

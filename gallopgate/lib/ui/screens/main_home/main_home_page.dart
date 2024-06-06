@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
+
+import 'widgets/home_sliver_appbar.dart';
 
 class MainHomePage extends StatelessWidget {
   const MainHomePage({super.key});
@@ -7,12 +11,20 @@ class MainHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profile = context.watch<MainBloc>().state.profile;
+    final organization = context.watch<MainBloc>().state.organization;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Main Home Page'),
-      ),
-      body: const Center(
-        child: Text('Main Home Page'),
+      body: CustomScrollView(
+        slivers: [
+          HomeSliverAppbar(profile: profile, organization: organization),
+          const SliverToBoxAdapter(
+            child: Placeholder(),
+          ),
+          const SliverToBoxAdapter(
+            child: Placeholder(),
+          ),
+        ],
       ),
     );
   }

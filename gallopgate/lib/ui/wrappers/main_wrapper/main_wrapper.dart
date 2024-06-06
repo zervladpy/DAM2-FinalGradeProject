@@ -30,7 +30,7 @@ class MainWrapper extends StatelessWidget {
       0: '/home',
       1: '/calendar',
       2: '/schedule',
-      3: '/management',
+      3: '/managment',
       4: '/account',
     };
 
@@ -147,7 +147,7 @@ class _MainWrapper extends StatelessWidget {
           label: "Manage",
           icon: Iconsax.setting_3,
           iconSelected: Iconsax.setting_3,
-          route: '/management',
+          route: '/managment',
         ),
       const NavigationItem(
         label: "Account",

@@ -1,196 +1,145 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gallopgate/common/enums/status.dart';
+import 'package:gallopgate/common/utils/date_utils.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
-import 'package:gallopgate/config/extensions/context.dart';
-import 'package:gallopgate/models/schedule/schedule.dart';
-import 'package:gallopgate/ui/screens/error_not_found/error_not_found_page.dart';
 import 'package:gallopgate/ui/screens/lesson_details/bloc/lesson_bloc.dart';
-import 'package:gallopgate/ui/screens/loading_page/loading_page.dart';
-import 'package:gallopgate/ui/widgets/inputs/time_input_field.dart';
+import 'package:gallopgate/ui/screens/lesson_details/widgets/lesson_detail_sliver_appbar.dart';
+import 'package:gallopgate/ui/widgets/loading/sliver_linear_loading.dart';
+import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
+import 'package:gallopgate/ui/widgets/tiles/list_tile.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 
 class LessonDetailsPage extends StatelessWidget {
-  const LessonDetailsPage(this.lessonId, {super.key});
+  const LessonDetailsPage(this.id, {super.key});
 
-  final String lessonId;
+  final String id;
 
   static page(String id) => MaterialPage(child: LessonDetailsPage(id));
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LessonBloc(locator.get())
-        ..add(
-          LessonEventFetch(lessonId),
-        ),
-      child: const _LessonDetailsPage(),
+    return Scaffold(
+      body: BlocProvider(
+        create: (_) => LessonBloc(
+          profileRepository: locator.get(),
+          lectureRepository: locator.get(),
+        )..add(Fetch(id)),
+        child: const _LessonDetailsPage(),
+      ),
     );
   }
 }
 
 class _LessonDetailsPage extends StatelessWidget {
-  const _LessonDetailsPage();
+  const _LessonDetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LessonBloc, LessonState>(
+    return BlocConsumer<LessonBloc, LessonState>(
+      listener: (context, state) {
+        if (state.status == Status.error) {
+          GSnackbar.error(
+            context: context,
+            message: state.error ?? 'Failed to load lesson details.',
+          );
+          context.pop();
+        }
+      },
       builder: (context, state) {
-        if (state.status == LessonStatus.loading) {
-          return const LoadingPage();
-        }
-
-        if (state.status == LessonStatus.error) {
-          return const ErrorNotFoundPage();
-        }
-
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(state.lesson.title),
-          ),
-          body: const SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _LessonDeescription(),
-                  LessonDeails(),
-                ],
-              ),
+        return CustomScrollView(
+          slivers: [
+            const LessonDetailSliverAppbar(),
+            if (state.status == Status.loading) const SliverLinearLoading(),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 16.0),
             ),
-          ),
+            const _CreatorListTile(),
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _TitleTextField(),
+                    SizedBox(height: 16.0),
+                    _DescriptionTextField(),
+                  ],
+                ),
+              ),
+            )
+          ],
         );
       },
     );
   }
 }
 
-class _LessonDeescription extends StatelessWidget {
-  const _LessonDeescription();
+class _TitleTextField extends StatelessWidget {
+  const _TitleTextField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    String description = context.read<LessonBloc>().state.lesson.description;
+    final bloc = context.read<LessonBloc>();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const Text(
-          'Description',
-        ),
-        const SizedBox(height: 8),
-        Text(
-          description,
-          style: context.textTheme.bodyLarge,
-        ),
-      ],
+    return TextFormField(
+      initialValue: bloc.state.lesson.title,
+      onChanged: (value) {},
+      decoration: const InputDecoration(
+        labelText: 'Title',
+        hintText: 'Enter lesson title',
+      ),
     );
   }
 }
 
-class LessonDeails extends StatefulWidget {
-  const LessonDeails({super.key});
-
-  @override
-  State<LessonDeails> createState() => _LessonDeailsState();
-}
-
-class _LessonDeailsState extends State<LessonDeails> {
-  Set<int> opendPanels = {};
-
-  void toggleOpen(int index) {
-    if (opendPanels.contains(index)) {
-      opendPanels.remove(index);
-    } else {
-      opendPanels.add(index);
-    }
-
-    updateState(opendPanels);
-  }
-
-  void updateState(Set<int> newOpenedPannels) {
-    setState(() {
-      opendPanels = newOpenedPannels;
-    });
-  }
+class _DescriptionTextField extends StatelessWidget {
+  const _DescriptionTextField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final schedules = context.read<LessonBloc>().state.lesson.schedules;
+    final bloc = context.read<LessonBloc>();
 
-    final List<String> daysOfWeek = [
-      "Monday",
-      "Tuesday",
-      "Wenesday",
-      "Thursdaay",
-      "Friday",
-      "Saturday",
-      "Sunday"
-    ];
-
-    return ExpansionPanelList(
-      expansionCallback: (index, value) {
-        toggleOpen(index);
+    return TextFormField(
+      initialValue: bloc.state.lesson.description,
+      onChanged: (value) {},
+      maxLines: 5,
+      maxLength: 250,
+      buildCounter: (
+        context, {
+        required currentLength,
+        required isFocused,
+        required maxLength,
+      }) {
+        return Text('$currentLength/$maxLength');
       },
-      children: daysOfWeek.map((day) {
-        final dayIndex = daysOfWeek.indexOf(day);
-
-        return ExpansionPanel(
-          isExpanded: opendPanels.contains(dayIndex),
-          headerBuilder: (context, value) {
-            return Row(
-              children: [
-                Switch(value: value, onChanged: (_) => toggleOpen(dayIndex)),
-                const SizedBox(width: 16.0),
-                Text(day),
-              ],
-            );
-          },
-          body: _DayDetails(
-            schedules.where((s) => s.weekDay == dayIndex).toList(),
-          ),
-        );
-      }).toList(),
+      decoration: const InputDecoration(
+        labelText: 'Description',
+        hintText: 'Description',
+      ),
     );
   }
 }
 
-class _DayDetails extends StatelessWidget {
-  const _DayDetails(this.schedules);
-
-  final List<Schedule> schedules;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _ScheduleForm(
-          start: DateTime.now(),
-          end: DateTime.now().add(
-            const Duration(minutes: 30),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ScheduleForm extends StatelessWidget {
-  const _ScheduleForm({
-    required this.start,
-    required this.end,
+class _CreatorListTile extends StatelessWidget {
+  const _CreatorListTile({
+    super.key,
   });
 
-  final DateTime start;
-  final DateTime end;
-
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        TimeInputField(label: 'Start', initialValue: start),
-        const SizedBox(width: 16.0),
-        TimeInputField(label: 'End', initialValue: end),
-      ],
+    final profile = context.watch<LessonBloc>().state.creator;
+    final creationDate = context.watch<LessonBloc>().state.lesson.createdAt;
+
+    final item = ListTileItem(
+      title: profile.fullName,
+      subtitle: 'Created at ${GDateUtils.formatDateToString(
+        creationDate ?? DateTime.now(),
+      )}',
+      leading: const Icon(Iconsax.user),
     );
+
+    return SliverToBoxAdapter(child: GListTile(item: item));
   }
 }

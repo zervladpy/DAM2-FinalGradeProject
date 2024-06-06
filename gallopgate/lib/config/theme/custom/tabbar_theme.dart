@@ -3,8 +3,7 @@ import 'package:gallopgate/config/theme/utils/colors.dart';
 
 abstract class GTabBarTheme {
   static const light = TabBarTheme(
-    splashFactory: NoSplash.splashFactory,
-    tabAlignment: TabAlignment.start,
+    splashFactory: InkSplash.splashFactory,
     indicator: BoxDecoration(
       color: GColor.primaryLight,
       borderRadius: BorderRadius.all(
@@ -20,7 +19,7 @@ abstract class GTabBarTheme {
     dividerColor: Colors.transparent,
   );
   static const dark = TabBarTheme(
-    splashFactory: NoSplash.splashFactory,
+    splashFactory: InkSplash.splashFactory,
     tabAlignment: TabAlignment.start,
     indicator: BoxDecoration(
       color: GColor.primaryDark,

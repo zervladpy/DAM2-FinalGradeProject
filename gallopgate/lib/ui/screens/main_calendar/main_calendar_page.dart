@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gallopgate/models/organization/organization.dart';
+import 'package:gallopgate/models/profile/profile.dart';
 import 'package:gallopgate/ui/screens/main_calendar/bloc/calendar_bloc.dart';
+import 'package:gallopgate/ui/screens/main_calendar/widgets/calendar_sliver_appbar.dart';
+import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MainCalendarPage extends StatelessWidget {
@@ -10,13 +14,23 @@ class MainCalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Profile profile = context.watch<MainBloc>().state.profile;
+    final Organization organization =
+        context.watch<MainBloc>().state.organization;
+
+    final bool isAdmin = profile.roles.any((r) => r.name == 'admin');
+
     return BlocProvider(
       create: (context) => CalendarBloc(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Main Calendar Page'),
+        body: CustomScrollView(
+          slivers: [
+            CalendarSliverAppbar(
+              organization: organization,
+              isAdmin: isAdmin,
+            ),
+          ],
         ),
-        body: const _MainCalendarPage(),
       ),
     );
   }

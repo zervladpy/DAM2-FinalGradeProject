@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gallopgate/config/theme/custom/appbar_theme.dart';
 import 'package:gallopgate/config/theme/custom/bottom_navigation_theme.dart';
 import 'package:gallopgate/config/theme/custom/eleveated_button_theme.dart';
+import 'package:gallopgate/config/theme/custom/icon_button_theme.dart';
 import 'package:gallopgate/config/theme/custom/navigation_rail_theme.dart';
 import 'package:gallopgate/config/theme/custom/tabbar_theme.dart';
 import 'package:gallopgate/config/theme/custom/text_button_theme.dart';
@@ -17,6 +18,7 @@ class AppTheme {
         inputDecorationTheme: GTextInputTheme.light,
         elevatedButtonTheme: GElevatedButtonTheme.light,
         textButtonTheme: GTextButtonTheme.light,
+        iconButtonTheme: GIconButtonTheme.light,
         navigationBarTheme: GNavigationBarTheme.light,
         appBarTheme: GAppbarTheme.light,
         navigationRailTheme: GNavigationRailTheme.light,
@@ -30,6 +32,7 @@ class AppTheme {
         inputDecorationTheme: GTextInputTheme.dark,
         elevatedButtonTheme: GElevatedButtonTheme.dark,
         textButtonTheme: GTextButtonTheme.dark,
+        iconButtonTheme: GIconButtonTheme.dark,
         navigationBarTheme: GNavigationBarTheme.dark,
         appBarTheme: GAppbarTheme.dark,
         navigationRailTheme: GNavigationRailTheme.dark,

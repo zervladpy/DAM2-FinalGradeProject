@@ -7,8 +7,8 @@ class LessonEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LessonEventFetch extends LessonEvent {
-  const LessonEventFetch(this.lessonId);
+class Fetch extends LessonEvent {
+  const Fetch(this.lessonId);
 
   final String lessonId;
 

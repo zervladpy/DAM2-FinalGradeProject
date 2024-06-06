@@ -22,7 +22,7 @@ class ApplicationV2 extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: const AppTheme().light,
-      darkTheme: const AppTheme().dark,
+      // darkTheme: const AppTheme().dark,
       routerConfig: ApplicationRouter.router,
     );
   }
