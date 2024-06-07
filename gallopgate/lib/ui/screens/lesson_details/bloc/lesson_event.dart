@@ -15,3 +15,25 @@ class Fetch extends LessonEvent {
   @override
   List<Object> get props => [lessonId];
 }
+
+class TitleChanged extends LessonEvent {
+  const TitleChanged(this.title);
+
+  final String title;
+
+  @override
+  List<Object> get props => [title];
+}
+
+class DescriptionChanged extends LessonEvent {
+  const DescriptionChanged(this.description);
+
+  final String description;
+
+  @override
+  List<Object> get props => [description];
+}
+
+class Update extends LessonEvent {
+  const Update();
+}

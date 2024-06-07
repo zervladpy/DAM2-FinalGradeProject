@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:gallopgate/common/enums/status.dart';
@@ -23,6 +21,8 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
         _profileRepository = profileRepository,
         super(LessonState.initial()) {
     on<Fetch>(_fetch);
+    on<TitleChanged>(_titleChanged);
+    on<DescriptionChanged>(_descriptionChanged);
   }
 
   FutureOr<void> _fetch(
@@ -38,6 +38,7 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
       emit(state.copyWith(
         status: Status.success,
         lesson: lesson,
+        intitial: lesson,
         creator: creator,
       ));
     } catch (e) {
@@ -45,5 +46,23 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
     }
 
     emit(state.copyWith(status: Status.initial, error: null));
+  }
+
+  FutureOr<void> _titleChanged(
+    TitleChanged event,
+    Emitter<LessonState> emit,
+  ) {
+    emit(state.copyWith(
+      lesson: state.lesson.copyWith(title: event.title),
+    ));
+  }
+
+  FutureOr<void> _descriptionChanged(
+    DescriptionChanged event,
+    Emitter<LessonState> emit,
+  ) {
+    emit(state.copyWith(
+      lesson: state.lesson.copyWith(description: event.description),
+    ));
   }
 }

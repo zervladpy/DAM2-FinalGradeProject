@@ -32,6 +32,24 @@ class Organization extends Equatable {
 
   Map<String, dynamic> toJson() => _$OrganizationToJson(this);
 
+  Organization copyWith({
+    String? id,
+    String? name,
+    String? description,
+    String? logoUrl,
+    String? creatorId,
+    DateTime? createdAt,
+  }) {
+    return Organization(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      logoUrl: logoUrl ?? this.logoUrl,
+      creatorId: creatorId ?? this.creatorId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
   @override
   List<Object?> get props => [
         id,

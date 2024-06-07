@@ -5,11 +5,13 @@ class LessonState extends Equatable {
     this.status = Status.initial,
     this.creator = Profile.empty,
     this.lesson = Lesson.empty,
+    this.intitial = Lesson.empty,
     this.error,
   });
 
   final Status status;
   final Profile creator;
+  final Lesson intitial;
   final Lesson lesson;
   final String? error;
 
@@ -19,16 +21,20 @@ class LessonState extends Equatable {
     Status? status,
     Profile? creator,
     Lesson? lesson,
+    Lesson? intitial,
     String? error,
   }) {
     return LessonState._(
       status: status ?? this.status,
       creator: creator ?? this.creator,
       lesson: lesson ?? this.lesson,
+      intitial: intitial ?? this.intitial,
       error: error,
     );
   }
 
+  bool get isEdited => lesson != intitial;
+
   @override
-  List<Object?> get props => [status, lesson, creator, error];
+  List<Object?> get props => [status, lesson, intitial, creator, error];
 }

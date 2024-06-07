@@ -55,20 +55,21 @@ class _LessonDetailsPage extends StatelessWidget {
             const SliverToBoxAdapter(
               child: SizedBox(height: 16.0),
             ),
-            const _CreatorListTile(),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _TitleTextField(),
-                    SizedBox(height: 16.0),
-                    _DescriptionTextField(),
-                  ],
+            if (state.status != Status.loading) const _CreatorListTile(),
+            if (state.status != Status.loading)
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _TitleTextField(),
+                      SizedBox(height: 16.0),
+                      _DescriptionTextField(),
+                    ],
+                  ),
                 ),
-              ),
-            )
+              )
           ],
         );
       },
@@ -81,15 +82,18 @@ class _TitleTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<LessonBloc>();
-
-    return TextFormField(
-      initialValue: bloc.state.lesson.title,
-      onChanged: (value) {},
-      decoration: const InputDecoration(
-        labelText: 'Title',
-        hintText: 'Enter lesson title',
-      ),
+    return BlocBuilder<LessonBloc, LessonState>(
+      buildWhen: (prev, curr) => prev.lesson.title != curr.lesson.title,
+      builder: (context, state) {
+        return TextFormField(
+          initialValue: state.lesson.title,
+          onChanged: (value) {},
+          decoration: const InputDecoration(
+            labelText: 'Title',
+            hintText: 'Enter lesson title',
+          ),
+        );
+      },
     );
   }
 }
@@ -99,25 +103,29 @@ class _DescriptionTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<LessonBloc>();
-
-    return TextFormField(
-      initialValue: bloc.state.lesson.description,
-      onChanged: (value) {},
-      maxLines: 5,
-      maxLength: 250,
-      buildCounter: (
-        context, {
-        required currentLength,
-        required isFocused,
-        required maxLength,
-      }) {
-        return Text('$currentLength/$maxLength');
+    return BlocBuilder<LessonBloc, LessonState>(
+      buildWhen: (prev, curr) =>
+          prev.lesson.description != curr.lesson.description,
+      builder: (context, state) {
+        return TextFormField(
+          initialValue: state.lesson.description,
+          maxLines: 5,
+          maxLength: 250,
+          buildCounter: (
+            context, {
+            required currentLength,
+            required isFocused,
+            required maxLength,
+          }) {
+            return Text('$currentLength/$maxLength');
+          },
+          onChanged: (value) {},
+          decoration: const InputDecoration(
+            labelText: 'Description',
+            hintText: 'Enter lesson description',
+          ),
+        );
       },
-      decoration: const InputDecoration(
-        labelText: 'Description',
-        hintText: 'Description',
-      ),
     );
   }
 }
@@ -141,5 +149,24 @@ class _CreatorListTile extends StatelessWidget {
     );
 
     return SliverToBoxAdapter(child: GListTile(item: item));
+  }
+}
+
+class _UpdateButton extends StatelessWidget {
+  const _UpdateButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LessonBloc, LessonState>(
+      buildWhen: (previous, current) => previous.isEdited != current.isEdited,
+      builder: (context, state) {
+        return ElevatedButton(
+          onPressed: () {
+            context.read<LessonBloc>().add(const Update());
+          },
+          child: const Text("Update"),
+        );
+      },
+    );
   }
 }
