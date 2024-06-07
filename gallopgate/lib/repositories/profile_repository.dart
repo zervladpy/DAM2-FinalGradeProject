@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:gallopgate/models/profile/profile.dart';
 import 'package:gallopgate/models/profile/profile_preview_dto.dart';
-import 'package:gallopgate/models/role/role.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileRepository {

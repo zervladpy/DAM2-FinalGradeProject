@@ -5,6 +5,7 @@ import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/models/organization/organization.dart';
 import 'package:gallopgate/ui/screens/manage_lessons/bloc/lessons_bloc.dart';
 import 'package:gallopgate/ui/screens/manage_lessons/widgets/lessons_sliver_appbar.dart';
+import 'package:gallopgate/ui/widgets/buttons/g_icon_button.dart';
 import 'package:gallopgate/ui/widgets/tiles/list_tile.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -64,6 +65,25 @@ class _ManageLessonsPage extends StatelessWidget {
                   children: [LinearProgressIndicator()],
                 ),
               ),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: 'Filter',
+                        prefixIcon: Icon(Iconsax.search_normal_1),
+                      ),
+                    )),
+                    const SizedBox(width: 5),
+                    const GIconButton.filled(icon: Iconsax.filter),
+                  ],
+                ),
+              ),
+            ),
             const SliverToBoxAdapter(child: SizedBox(height: 16)),
             SliverList.separated(
               itemCount: state.filtered.length,

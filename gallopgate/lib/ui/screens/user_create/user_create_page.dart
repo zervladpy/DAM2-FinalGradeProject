@@ -6,32 +6,29 @@ import 'package:gallopgate/config/extensions/context.dart';
 import 'package:gallopgate/config/theme/utils/colors.dart';
 import 'package:gallopgate/models/role/role.dart';
 import 'package:gallopgate/ui/screens/user_create/bloc/create_user_bloc.dart';
+import 'package:gallopgate/ui/screens/user_create/widgets/user_creat_sliver_appbar.dart';
+import 'package:gallopgate/ui/widgets/loading/sliver_linear_loading.dart';
+import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
 class UserCreatePage extends StatelessWidget {
-  const UserCreatePage({super.key, required this.organizationId});
+  const UserCreatePage({super.key});
 
-  static page(String organizaitonId) => MaterialPage(
-          child: UserCreatePage(
-        organizationId: organizaitonId,
-      ));
-
-  final String organizationId;
+  static get page => const MaterialPage(child: UserCreatePage());
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CreateUserBloc(
-        organizationId: organizationId,
-        profileRepository: locator.get(),
-        roleRepository: locator.get(),
-      )..add(CreateUserInitialize()),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Create User'),
-        ),
-        body: const _UserCreatePage(),
+    final organizationId = context.read<MainBloc>().state.organization.id;
+
+    return Scaffold(
+      body: BlocProvider(
+        create: (_) => CreateUserBloc(
+          organizationId: organizationId,
+          profileRepository: locator.get(),
+          roleRepository: locator.get(),
+        )..add(CreateUserInitialize()),
+        child: const _UserCreatePage(),
       ),
     );
   }
@@ -42,7 +39,7 @@ class _UserCreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CreateUserBloc, CreateUserState>(
+    return BlocConsumer<CreateUserBloc, CreateUserState>(
       listenWhen: (prev, curr) => prev.status != curr.status,
       listener: (context, state) {
         if (state.status == Status.error) {
@@ -65,25 +62,39 @@ class _UserCreatePage extends StatelessWidget {
           context.pop();
         }
       },
-      child: const SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _NameField(),
-              SizedBox(height: 16.0),
-              _LastNameField(),
-              SizedBox(height: 16.0),
-              _EmailField(),
-              SizedBox(height: 16.0),
-              _RoleSelection(),
-              SizedBox(height: 32.0),
-              _SubmittButton(),
+      builder: (context, state) {
+        if (state.status == Status.loading) {
+          return const CustomScrollView(
+            slivers: [
+              UserCreatSliverAppbar(),
+              SliverLinearLoading(),
             ],
-          ),
-        ),
-      ),
+          );
+        }
+
+        return CustomScrollView(
+          slivers: [
+            const UserCreatSliverAppbar(),
+            if (state.status == Status.loading) const SliverLinearLoading(),
+            SliverPadding(
+              padding: const EdgeInsets.all(16.0),
+              sliver: SliverList.list(
+                children: const [
+                  _NameField(),
+                  SizedBox(height: 16.0),
+                  _LastNameField(),
+                  SizedBox(height: 16.0),
+                  _EmailField(),
+                  SizedBox(height: 16.0),
+                  _RoleSelection(),
+                  SizedBox(height: 16.0),
+                  _SubmittButton(),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -104,7 +115,7 @@ class _NameField extends StatelessWidget {
                 CreateUserFirstNameChanged(value),
               ),
           decoration: InputDecoration(
-            labelText: 'Last Name',
+            labelText: 'Fist Name',
             errorText: errorText,
             prefixIcon: const Icon(Iconsax.user),
           ),

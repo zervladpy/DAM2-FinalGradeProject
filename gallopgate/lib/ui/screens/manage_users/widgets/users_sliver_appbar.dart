@@ -31,7 +31,11 @@ class UsersSliverAppbar extends StatelessWidget {
               ))
           : null,
       actions: [
-        if (isAdmin) const GIconButton.filled(icon: Iconsax.add),
+        if (isAdmin)
+          GIconButton.filled(
+            icon: Iconsax.add,
+            onPressed: () => context.push('/managment/users/create'),
+          ),
       ],
       title: Column(
         mainAxisAlignment: MainAxisAlignment.start,
