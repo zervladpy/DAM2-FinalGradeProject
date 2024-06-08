@@ -31,7 +31,7 @@ class ProfileRepository {
 
   Future<Profile?> currentProfile() async {
     return client.auth.currentUser != null
-        ? fetchProfile(client.auth.currentUser!.id)
+        ? await fetchProfile(client.auth.currentUser!.id)
         : null;
   }
 

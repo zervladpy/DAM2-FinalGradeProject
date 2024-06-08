@@ -59,7 +59,7 @@ class _MainSettingsPage extends StatelessWidget {
                 child: const Icon(Iconsax.arrow_right_3),
               ),
               onTap: () {
-                context.push('/users/${profile.id}/edit');
+                context.push('/account/${profile.id}');
               },
             ),
             const ListTile(

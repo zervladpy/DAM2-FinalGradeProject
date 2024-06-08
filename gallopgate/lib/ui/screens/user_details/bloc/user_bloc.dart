@@ -7,16 +7,17 @@ import 'package:gallopgate/models/profile/profile.dart';
 import 'package:gallopgate/models/role/role.dart';
 import 'package:gallopgate/repositories/profile_repository.dart';
 
-part 'user_details_event.dart';
-part 'user_details_state.dart';
+part 'user_event.dart';
+part 'user_state.dart';
 
-class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
-  final ProfileRepository repository;
+class UserBloc extends Bloc<UserEvent, UserState> {
+  final ProfileRepository _repository;
 
-  UserDetailsBloc(
-    this.repository,
-  ) : super(UserDetailsState.initial()) {
-    on<UserDetailsInitialize>(_initialize);
+  UserBloc({
+    required ProfileRepository repository,
+  })  : _repository = repository,
+        super(UserState.initial()) {
+    on<Fetch>(_initialize);
     on<UserDetailFirstNameChangedEvent>(_firstNameChanged);
     on<UserDetailLastNameChangedEvent>(_lastNameChanged);
     on<UserDetailEmailChangedEvent>(_emailChanged);
@@ -25,12 +26,12 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   }
 
   FutureOr<void> _initialize(
-    UserDetailsInitialize event,
-    Emitter<UserDetailsState> emit,
+    Fetch event,
+    Emitter<UserState> emit,
   ) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final profile = await repository.fetchProfile(event.profileId);
+      final profile = await _repository.fetchProfile(event.id);
       emit(state.copyWith(status: Status.success, profile: profile));
     } catch (e) {
       emit(state.copyWith(status: Status.error, error: e.toString()));
@@ -39,7 +40,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
 
   FutureOr<void> _firstNameChanged(
     UserDetailFirstNameChangedEvent event,
-    Emitter<UserDetailsState> emit,
+    Emitter<UserState> emit,
   ) {
     emit(state.copyWith(
         profile: state.profile.copyWith(
@@ -49,7 +50,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
 
   FutureOr<void> _lastNameChanged(
     UserDetailLastNameChangedEvent event,
-    Emitter<UserDetailsState> emit,
+    Emitter<UserState> emit,
   ) {
     emit(state.copyWith(
         profile: state.profile.copyWith(
@@ -59,7 +60,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
 
   FutureOr<void> _emailChanged(
     UserDetailEmailChangedEvent event,
-    Emitter<UserDetailsState> emit,
+    Emitter<UserState> emit,
   ) {
     emit(state.copyWith(
         profile: state.profile.copyWith(
@@ -69,7 +70,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
 
   FutureOr<void> _roleChanged(
     UserDetailRoleChangedEvent event,
-    Emitter<UserDetailsState> emit,
+    Emitter<UserState> emit,
   ) {
     final profileRoles = state.profile.roles;
 
@@ -88,12 +89,12 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
 
   FutureOr<void> _submit(
     UserDetailSubmittedEvent event,
-    Emitter<UserDetailsState> emit,
+    Emitter<UserState> emit,
   ) async {
     emit(state.copyWith(status: Status.loading));
 
     try {
-      await repository.updateProfile(state.profile);
+      await _repository.updateProfile(state.profile);
       emit(state.copyWith(status: Status.success));
     } catch (e) {
       emit(state.copyWith(status: Status.error, error: e.toString()));

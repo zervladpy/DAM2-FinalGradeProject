@@ -3,10 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/config/extensions/context.dart';
-import 'package:gallopgate/config/theme/utils/colors.dart';
-import 'package:gallopgate/models/role/role.dart';
 import 'package:gallopgate/ui/screens/user_create/bloc/create_user_bloc.dart';
 import 'package:gallopgate/ui/screens/user_create/widgets/user_creat_sliver_appbar.dart';
+import 'package:gallopgate/ui/widgets/inputs/selection.dart';
 import 'package:gallopgate/ui/widgets/loading/sliver_linear_loading.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -75,7 +74,6 @@ class _UserCreatePage extends StatelessWidget {
         return CustomScrollView(
           slivers: [
             const UserCreatSliverAppbar(),
-            if (state.status == Status.loading) const SliverLinearLoading(),
             SliverPadding(
               padding: const EdgeInsets.all(16.0),
               sliver: SliverList.list(
@@ -177,6 +175,31 @@ class _EmailField extends StatelessWidget {
   }
 }
 
+class _RoleSelection extends StatelessWidget {
+  const _RoleSelection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CreateUserBloc, CreateUserState>(
+      buildWhen: (prev, curr) => prev.selectedRoles != curr.selectedRoles,
+      builder: (context, state) {
+        if (state.roles.isEmpty) {
+          return const SizedBox();
+        }
+
+        return Selection(
+          selected: state.selectedRoles.map((e) => e.name).toList(),
+          onSelect: (value) {
+            final role = state.roles.firstWhere((e) => e.name == value);
+            context.read<CreateUserBloc>().add(CreateUserRoleChanged(role));
+          },
+          items: state.roles.map((e) => e.name).toList(),
+        );
+      },
+    );
+  }
+}
+
 class _SubmittButton extends StatelessWidget {
   const _SubmittButton();
 
@@ -192,83 +215,6 @@ class _SubmittButton extends StatelessWidget {
           child: const Text('Submit'),
         );
       },
-    );
-  }
-}
-
-class _RoleSelection extends StatelessWidget {
-  const _RoleSelection();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<CreateUserBloc, CreateUserState>(
-      buildWhen: (prev, curr) =>
-          prev.selectedRoles != curr.selectedRoles || prev.roles != curr.roles,
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text('Roles: '),
-            const SizedBox(height: 8.0),
-            Wrap(
-              spacing: 8.0,
-              runSpacing: 8.0,
-              children: state.roles.map((role) {
-                return _RoleItem(
-                  role: role,
-                  isSelected: state.selectedRoles.contains(role),
-                  onSelected: (value) {
-                    context
-                        .read<CreateUserBloc>()
-                        .add(CreateUserRoleChanged(role));
-                  },
-                );
-              }).toList(),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class _RoleItem extends StatelessWidget {
-  const _RoleItem({
-    required this.role,
-    this.isSelected = false,
-    this.onSelected,
-  });
-
-  final Role role;
-  final bool isSelected;
-  final Function(Role)? onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = context.colorScheme;
-    final textTheme = context.textTheme;
-
-    final isTriggable = onSelected != null;
-
-    return GestureDetector(
-      onTap: isTriggable ? () => onSelected!(role) : null,
-      child: AnimatedContainer(
-        duration: Durations.medium1,
-        decoration: BoxDecoration(
-          color: isSelected ? GColor.primaryLight : GColor.surfaceLight,
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 8.0,
-        ),
-        child: Text(
-          role.name,
-          style: textTheme.bodyLarge?.copyWith(
-            color: isSelected ? colorScheme.onPrimary : colorScheme.onSurface,
-          ),
-        ),
-      ),
     );
   }
 }

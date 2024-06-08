@@ -7,10 +7,10 @@ import 'package:gallopgate/ui/screens/auth_otp/auth_otp_page.dart';
 import 'package:gallopgate/ui/screens/auth_register/auth_register_page.dart';
 import 'package:gallopgate/ui/screens/auth_reset_password_page/auth_reset_password_page.dart';
 import 'package:gallopgate/ui/screens/error_not_found/error_not_found_page.dart';
-import 'package:gallopgate/ui/screens/event_create/event_create_page.dart';
-import 'package:gallopgate/ui/screens/event_details/event_details_page.dart';
-import 'package:gallopgate/ui/screens/lesson_create/lesson_create_page.dart';
-import 'package:gallopgate/ui/screens/lesson_details/lesson_details_page.dart';
+import 'package:gallopgate/ui/screens/horse_create/horse_create_page.dart';
+import 'package:gallopgate/ui/screens/horse_details/horse_details_page.dart';
+import 'package:gallopgate/ui/screens/category_create/lesson_create_page.dart';
+import 'package:gallopgate/ui/screens/category_details/lesson_details_page.dart';
 import 'package:gallopgate/ui/screens/main_calendar/main_calendar_page.dart';
 import 'package:gallopgate/ui/screens/main_home/main_home_page.dart';
 import 'package:gallopgate/ui/screens/main_manage/main_manage_page.dart';
@@ -25,6 +25,7 @@ import 'package:gallopgate/ui/screens/org_details/org_details_page.dart';
 import 'package:gallopgate/ui/screens/org_explore/org_explore_page.dart';
 import 'package:gallopgate/ui/screens/schedule_create/schedule_create_page.dart';
 import 'package:gallopgate/ui/screens/user_create/user_create_page.dart';
+import 'package:gallopgate/ui/screens/user_details/user_details_page.dart';
 import 'package:gallopgate/ui/wrappers/auth_wrapper/auth_wrapper.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_wrapper.dart';
 import 'package:go_router/go_router.dart';
@@ -99,7 +100,7 @@ class ApplicationRouter {
             pageBuilder: (context, state) => MainSchedulePage.page,
             routes: [
               GoRoute(
-                path: 'add',
+                path: 'create',
                 pageBuilder: (context, state) {
                   String? id =
                       (state.extra as Map<String, String>)['organization-id'];
@@ -135,8 +136,13 @@ class ApplicationRouter {
                   ),
                   GoRoute(
                     path: ':id',
-                    pageBuilder: (context, state) =>
-                        ErrorNotFoundPage.page, // UserCreatePage.page,
+                    pageBuilder: (context, state) {
+                      String? id = state.pathParameters['id'];
+
+                      if (id == null) return ErrorNotFoundPage.page;
+
+                      return ProfileDetailsPage.page(id);
+                    },
                   ),
                 ],
               ),
@@ -147,12 +153,17 @@ class ApplicationRouter {
                   GoRoute(
                     path: 'create',
                     pageBuilder: (context, state) =>
-                        ErrorNotFoundPage.page, // HorseCreatePage.page,
+                        HorseCreatePage.page, // HorseCreatePage.page,
                   ),
                   GoRoute(
                     path: ':id',
-                    pageBuilder: (context, state) =>
-                        ErrorNotFoundPage.page, // HorseDetailsPage.page,
+                    pageBuilder: (context, state) {
+                      String? id = state.pathParameters['id'];
+
+                      if (id == null) return ErrorNotFoundPage.page;
+
+                      return HorseDetailsPage.page(id);
+                    },
                   ),
                 ],
               ),
@@ -187,18 +198,20 @@ class ApplicationRouter {
           GoRoute(
             path: '/account',
             pageBuilder: (context, state) => MainSettingsPage.page,
+            routes: [
+              GoRoute(
+                path: ':id',
+                pageBuilder: (context, state) {
+                  String? id = state.pathParameters['id'];
+                  if (id == null) {
+                    return ErrorNotFoundPage.page;
+                  }
+                  return ProfileDetailsPage.page(id);
+                },
+              ),
+            ],
           ),
         ],
-      ),
-
-      /// Event
-      GoRoute(
-        path: '/event',
-        pageBuilder: (context, state) => EventDetailsPage.page,
-      ),
-      GoRoute(
-        path: '/create-event',
-        pageBuilder: (context, state) => EventCreatePage.page,
       ),
 
       /// Org

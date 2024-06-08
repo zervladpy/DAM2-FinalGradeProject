@@ -8,6 +8,7 @@ import 'package:gallopgate/ui/screens/manage_users/widgets/users_sliver_appbar.d
 import 'package:gallopgate/ui/widgets/buttons/g_icon_button.dart';
 import 'package:gallopgate/ui/widgets/tiles/list_tile.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ManageUsersPage extends StatelessWidget {
@@ -96,7 +97,9 @@ class _ManageProfilesPage extends StatelessWidget {
                   title: profile.fullName,
                   subtitle: profile.email,
                   leading: const Icon(Iconsax.user),
-                  navigate: () {},
+                  navigate: () => context.push(
+                    '/managment/users/${profile.id}',
+                  ),
                 );
                 return GListTile(item: item);
               },

@@ -1,22 +1,22 @@
-part of 'user_details_bloc.dart';
+part of 'user_bloc.dart';
 
-abstract class UserDetailsEvent extends Equatable {
-  const UserDetailsEvent();
+abstract class UserEvent extends Equatable {
+  const UserEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class UserDetailsInitialize extends UserDetailsEvent {
-  final String profileId;
+class Fetch extends UserEvent {
+  final String id;
 
-  const UserDetailsInitialize(this.profileId);
+  const Fetch({required this.id});
 
   @override
-  List<Object> get props => [profileId];
+  List<Object> get props => [id];
 }
 
-class UserDetailFirstNameChangedEvent extends UserDetailsEvent {
+class UserDetailFirstNameChangedEvent extends UserEvent {
   const UserDetailFirstNameChangedEvent(this.firstName);
 
   final String firstName;
@@ -25,7 +25,7 @@ class UserDetailFirstNameChangedEvent extends UserDetailsEvent {
   List<Object> get props => [firstName];
 }
 
-class UserDetailLastNameChangedEvent extends UserDetailsEvent {
+class UserDetailLastNameChangedEvent extends UserEvent {
   const UserDetailLastNameChangedEvent(this.lastName);
 
   final String lastName;
@@ -34,7 +34,7 @@ class UserDetailLastNameChangedEvent extends UserDetailsEvent {
   List<Object> get props => [lastName];
 }
 
-class UserDetailEmailChangedEvent extends UserDetailsEvent {
+class UserDetailEmailChangedEvent extends UserEvent {
   const UserDetailEmailChangedEvent(this.email);
 
   final String email;
@@ -43,7 +43,7 @@ class UserDetailEmailChangedEvent extends UserDetailsEvent {
   List<Object> get props => [email];
 }
 
-class UserDetailRoleChangedEvent extends UserDetailsEvent {
+class UserDetailRoleChangedEvent extends UserEvent {
   const UserDetailRoleChangedEvent(this.role);
 
   final Role role;
@@ -52,7 +52,7 @@ class UserDetailRoleChangedEvent extends UserDetailsEvent {
   List<Object> get props => [role];
 }
 
-class UserDetailSubmittedEvent extends UserDetailsEvent {
+class UserDetailSubmittedEvent extends UserEvent {
   const UserDetailSubmittedEvent();
 
   @override

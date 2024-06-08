@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/models/organization/organization.dart';
-import 'package:gallopgate/ui/screens/lesson_create/widgets/lesson_sliver_appbar.dart';
+import 'package:gallopgate/ui/screens/category_create/widgets/lesson_sliver_appbar.dart';
 import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:go_router/go_router.dart';
