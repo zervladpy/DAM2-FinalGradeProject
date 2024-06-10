@@ -1,25 +1,23 @@
 part of 'org_details_bloc.dart';
 
-enum OrgDetailsStatus { initial, loading, success, error }
-
 class OrgDetailsState extends Equatable {
-  const OrgDetailsState._(this.status, this.item);
+  const OrgDetailsState._({
+    this.status = Status.initial,
+    this.item = Organization.empty,
+  });
 
-  final OrgDetailsStatus status;
-  final OrgDetailsDto item;
+  final Status status;
+  final Organization item;
 
-  factory OrgDetailsState.initial() => const OrgDetailsState._(
-        OrgDetailsStatus.initial,
-        OrgDetailsDto.empty,
-      );
+  factory OrgDetailsState.initial() => const OrgDetailsState._();
 
   OrgDetailsState copyWith({
-    OrgDetailsStatus? status,
-    OrgDetailsDto? item,
+    Status? status,
+    Organization? item,
   }) {
     return OrgDetailsState._(
-      status ?? this.status,
-      item ?? this.item,
+      status: status ?? this.status,
+      item: item ?? this.item,
     );
   }
 

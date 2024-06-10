@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/ui/screens/org_explore/bloc/org_explore_bloc.dart';
+import 'package:gallopgate/ui/screens/org_explore/widgets/org_explore.library.dart';
+import 'package:gallopgate/ui/widgets/loading/sliver_linear_loading.dart';
 import 'package:go_router/go_router.dart';
 
 class OrgExplorePage extends StatelessWidget {
@@ -15,9 +18,8 @@ class OrgExplorePage extends StatelessWidget {
       create: (context) => OrgExploreBloc(
         locator.get(),
       )..add(const OrgExploreFetch()),
-      child: Scaffold(
-        appBar: AppBar(),
-        body: const _OrgExplorePage(),
+      child: const Scaffold(
+        body: _OrgExplorePage(),
       ),
     );
   }
@@ -45,31 +47,25 @@ class _ExploreContent extends StatelessWidget {
     return BlocBuilder<OrgExploreBloc, OrgExploreState>(
       buildWhen: (curr, prev) => curr.status != prev.status,
       builder: (context, state) {
-        if (state.status == OrgExploreStatus.loading) {
-          return const Center(
-            child: CircularProgressIndicator(),
+        if (state.status == Status.loading) {
+          return const CustomScrollView(
+            slivers: [
+              OrgExploreAppbar(),
+              SliverLinearLoading(),
+            ],
           );
         }
-        if (state.items.isEmpty) {
-          return const Center(
-            child: Text("No organizations found"),
-          );
-        }
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView.builder(
-            itemCount: state.items.length,
-            itemBuilder: (context, index) {
-              final item = state.items[index];
-              return ListTile(
-                title: Text(item.name),
-                subtitle: Text(item.description),
-                onTap: () {
-                  context.push('/organizations/${item.id}');
-                },
-              );
-            },
-          ),
+
+        return CustomScrollView(
+          slivers: [
+            const OrgExploreAppbar(),
+            SliverPadding(
+              padding: const EdgeInsets.all(16),
+              sliver: OrgExploreListView(
+                items: context.watch<OrgExploreBloc>().state.items,
+              ),
+            )
+          ],
         );
       },
     );

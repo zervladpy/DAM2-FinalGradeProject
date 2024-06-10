@@ -1,11 +1,11 @@
 import 'package:gallopgate/common/interfaces/initializer.dart';
 import 'package:gallopgate/repositories/auth_repository.dart';
 import 'package:gallopgate/repositories/horse_repository.dart';
-import 'package:gallopgate/repositories/lecture_repository.dart';
+import 'package:gallopgate/repositories/lesson_category_repository.dart';
+import 'package:gallopgate/repositories/lesson_repository.dart';
 import 'package:gallopgate/repositories/organization_repository.dart';
 import 'package:gallopgate/repositories/profile_repository.dart';
 import 'package:gallopgate/repositories/role_repository.dart';
-import 'package:gallopgate/repositories/schedule_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -25,14 +25,11 @@ class LocatorInitializer extends Initializer {
 
     locator.registerSingleton(authRepo);
 
-    locator.registerSingleton(OrganizationRepository(locator.get()));
+    locator.registerSingleton(OrganizationRepository(client: locator.get()));
 
-    locator.registerSingleton(ScheduleRepository(client: locator.get()));
+    locator.registerSingleton(LessonCategoryRepository(client: locator.get()));
 
-    locator.registerSingleton(LectureRepository(
-      client: locator.get(),
-      scheduleRepository: locator.get(),
-    ));
+    locator.registerSingleton(LessonRepository(client: locator.get()));
 
     locator.registerSingleton(RoleRepository(locator.get()));
 

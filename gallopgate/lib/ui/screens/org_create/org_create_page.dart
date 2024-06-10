@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
-import 'package:gallopgate/ui/screens/org_create/bloc/org_create_bloc.dart';
+import 'package:gallopgate/ui/screens/org_create/library.dart';
+import 'package:gallopgate/ui/widgets/containers/image_picker_container.dart';
+import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
+import 'package:gallopgate/ui/wrappers/auth_wrapper/cubit/auth_cubit.dart';
+import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 
 class OrgCreatePage extends StatelessWidget {
   const OrgCreatePage({super.key});
@@ -12,145 +15,130 @@ class OrgCreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => OrgCreateBloc(
-        locator.get(),
-      ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Create Organization'),
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => OrgCreateBloc(
+          locator.get(),
         ),
-        body: const _OrgCreatePage(),
+        child: const _Content(),
       ),
     );
   }
 }
 
-class _OrgCreatePage extends StatelessWidget {
-  const _OrgCreatePage();
+class _Content extends StatelessWidget {
+  const _Content({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-
     return BlocListener<OrgCreateBloc, OrgCreateState>(
       listenWhen: (prev, curr) => prev.status != curr.status,
       listener: (context, state) {
-        if (state.status == OrgCreateStatus.success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Colors.green[600],
-              content: Text(
-                'Organization created successfully',
-                style: TextStyle(color: colorScheme.onSurface),
-              ),
-            ),
-          );
-          context.go('/home');
+        if (state.status == Status.error) {
+          GSnackbar.error(context: context, message: state.error);
         }
 
-        if (state.status == OrgCreateStatus.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: colorScheme.error,
-              content: Text(
-                'Error: ${state.error}',
-                style: TextStyle(color: colorScheme.onError),
-              ),
-            ),
+        if (state.status == Status.success) {
+          GSnackbar.success(
+            context: context,
+            message: 'Organizatoin ${state.name} created!',
           );
+
+          context.go('/');
         }
       },
-      child: const Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _OrgNameField(),
-                SizedBox(height: 16.0),
-                _OrgDescriptionField(),
-                SizedBox(height: 16.0),
-                _OrgCreateButton(),
-              ],
-            ),
+      child: const Stack(
+        children: [
+          CustomScrollView(
+            slivers: [
+              OrgCreateAppbar(),
+              SliverPadding(
+                padding: EdgeInsets.all(16.0),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          ImagePickerContainer(
+                            editable: true,
+                          ),
+                          SizedBox(width: 16.0),
+                          Expanded(
+                            child: _TitleField(),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 16.0),
+                      _DescriptionField(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
+          Positioned(
+            bottom: 16.0,
+            left: 16.0,
+            right: 16.0,
+            child: _CreateButton(),
+          )
+        ],
       ),
     );
   }
 }
 
-class _OrgNameField extends StatelessWidget {
-  const _OrgNameField();
+class _TitleField extends StatelessWidget {
+  const _TitleField({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      initialValue: context.watch<OrgCreateBloc>().state.name,
-      onChanged: (value) {
-        context.read<OrgCreateBloc>().add(OrgCreateOnNameChanged(value));
-      },
-      decoration: const InputDecoration(
-        labelText: 'Name',
-        prefixIcon: Icon(Iconsax.tag_2),
-      ),
+    final bloc = context.read<OrgCreateBloc>();
+
+    return TitleField(
+      initialValue: bloc.state.name,
+      onChanged: (v) => bloc.add(OrgCreateOnNameChanged(v)),
     );
   }
 }
 
-class _OrgDescriptionField extends StatelessWidget {
-  const _OrgDescriptionField();
+class _DescriptionField extends StatelessWidget {
+  const _DescriptionField({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final bloc = context.read<OrgCreateBloc>();
+    return DescriptionTextField(
+      initialValue: bloc.state.description,
+      onChanged: (v) => bloc.add(OrgCreateOnDescriptionChanged(v)),
+    );
+  }
+}
 
-    return TextFormField(
-      initialValue: context.watch<OrgCreateBloc>().state.description,
-      onChanged: (value) {
-        context.read<OrgCreateBloc>().add(OrgCreateOnDescriptionChanged(value));
-      },
-      decoration: const InputDecoration(
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 16.0,
-        ),
-        labelText: 'Description',
-        hintText: 'Enter a description',
-      ),
-      maxLines: 7,
-      maxLength: 250,
-      buildCounter: (
-        context, {
-        required currentLength,
-        required isFocused,
-        required maxLength,
-      }) {
-        return Text(
-          '$currentLength/$maxLength',
-          style: TextStyle(
-            color: currentLength < (maxLength! - 10)
-                ? colorScheme.onSurface
-                : colorScheme.error,
-          ),
+class _CreateButton extends StatelessWidget {
+  const _CreateButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.read<OrgCreateBloc>();
+
+    return BlocBuilder<OrgCreateBloc, OrgCreateState>(
+      buildWhen: (prev, curr) => prev.status != curr.status,
+      builder: (context, state) {
+        return CreateButton(
+          enabled: state.status != Status.loading,
+          loading: state.status == Status.loading,
+          onPressed: () => bloc.add(const OrgCreateSubmit()),
         );
       },
-    );
-  }
-}
-
-class _OrgCreateButton extends StatelessWidget {
-  const _OrgCreateButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        context.read<OrgCreateBloc>().add(const OrgCreateSubmit());
-      },
-      child: const Text("Submit"),
     );
   }
 }

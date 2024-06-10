@@ -1,36 +1,57 @@
+import 'dart:developer';
+
+import 'package:gallopgate/common/interfaces/crud_repository.dart';
 import 'package:gallopgate/models/organization/organization.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class OrganizationRepository {
-  OrganizationRepository(SupabaseClient client)
-      : query = client.from(Organization.table);
+class OrganizationRepository extends CrudRepository<Organization, String> {
+  OrganizationRepository({
+    required SupabaseClient client,
+  })  : _client = client,
+        _query = client.from(Organization.table);
 
-  final SupabaseQueryBuilder query;
+  final SupabaseClient _client; // ignore: unused_field
+  final SupabaseQueryBuilder _query;
 
-  Future<Organization?> fetch(String id) async {
-    var response =
-        await query.select().eq('id', id).maybeSingle().withConverter((record) {
-      if (record == null) return null;
-      return Organization.fromJson(record);
-    });
+  @override
+  Future<Organization> create(Organization model) async {
+    log(model.toJson().toString());
 
-    return response;
-  }
-
-  Future<Organization> create(String name, String description) async {
-    return query
-        .insert({"name": name, "description": description})
+    return await _query
+        .insert(model.toJson())
         .select()
         .single()
-        .withConverter((record) => Organization.fromJson(record));
+        .withConverter(Organization.fromJson);
   }
 
-  Future<void> update(String? name, String? description) async {
-    Map<String, Object> newValues = {};
+  @override
+  Future<void> delete(String id) async {
+    await _query.delete().eq('id', id);
+  }
 
-    if (name != null) newValues.addAll({'name': name});
-    if (description != null) newValues.addAll({'description': description});
+  @override
+  Future<Organization?> read(String id) async {
+    return await _query
+        .select()
+        .eq('id', id)
+        .single()
+        .withConverter(Organization.fromJson);
+  }
 
-    query.update(newValues);
+  Future<List<Organization>> readAll() async {
+    return await _query
+        .select()
+        .withConverter((rows) => rows.map(Organization.fromJson).toList());
+  }
+
+  @override
+  Future<Organization?> update(Organization model) async {
+    assert(model.id != null, 'Id is Required');
+    return await _query
+        .update(model.toJson())
+        .eq('id', model.id!)
+        .select()
+        .single()
+        .withConverter(Organization.fromJson);
   }
 }

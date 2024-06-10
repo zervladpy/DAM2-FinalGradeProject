@@ -30,7 +30,7 @@ class ManageHorsesPage extends StatelessWidget {
       body: BlocProvider(
         create: (context) => HorsesBloc(
           horseRepository: locator.get(),
-          id: organization.id,
+          id: organization.id!,
         )..add(Fetch()),
         child: _ManageHorsesPage(organization: organization, isAdmin: isAdmin),
       ),

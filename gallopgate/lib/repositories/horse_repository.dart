@@ -58,11 +58,15 @@ class HorseRepository extends CrudRepository<Horse, String> {
   }
 
   @override
-  Future<void> update(Horse model) {
+  Future<Horse?> update(Horse model) {
     if (model.id == null) {
       throw Exception('id-no-present');
     }
-    return query.update(_toRemote(model)).eq('id', model.id!);
+    return query
+        .update(model.toJson())
+        .eq('id', model.id!)
+        .maybeSingle()
+        .withConverter((v) => v != null ? Horse.fromJson(v) : null);
   }
 
   Horse _fromRemote(Map<String, dynamic> json) {

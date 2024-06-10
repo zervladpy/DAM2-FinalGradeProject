@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:gallopgate/common/enums/status.dart';
+import 'package:gallopgate/models/organization/organization.dart';
 import 'package:gallopgate/repositories/organization_repository.dart';
-import 'package:gallopgate/ui/screens/org_explore/models/explore_organizations_dto.dart';
 
 part 'org_explore_event.dart';
 part 'org_explore_state.dart';
@@ -20,18 +21,18 @@ class OrgExploreBloc extends Bloc<OrgExploreEvent, OrgExploreState> {
     OrgExploreFetch event,
     Emitter<OrgExploreState> emit,
   ) async {
-    emit(state.copyWith(status: OrgExploreStatus.loading));
+    emit(state.copyWith(status: Status.loading));
 
     try {
-      final organizations = await repository.fetchAll();
+      final organizations = await repository.readAll();
       emit(
         state.copyWith(
-          status: OrgExploreStatus.success,
+          status: Status.success,
           items: organizations,
         ),
       );
     } catch (e) {
-      emit(state.copyWith(status: OrgExploreStatus.error));
+      emit(state.copyWith(status: Status.error));
     }
   }
 
@@ -39,28 +40,18 @@ class OrgExploreBloc extends Bloc<OrgExploreEvent, OrgExploreState> {
     OrgExploreRefresh event,
     Emitter<OrgExploreState> emit,
   ) async {
-    emit(state.copyWith(status: OrgExploreStatus.loading));
+    emit(state.copyWith(status: Status.loading));
 
     try {
-      final organizations = await repository.fetchAll();
+      final organizations = await repository.readAll();
       emit(
         state.copyWith(
-          status: OrgExploreStatus.success,
+          status: Status.success,
           items: organizations,
         ),
       );
     } catch (e) {
-      emit(state.copyWith(status: OrgExploreStatus.error));
+      emit(state.copyWith(status: Status.error));
     }
-  }
-}
-
-extension on OrganizationRepository {
-  Future<List<ExploreOrganizationDto>> fetchAll() async {
-    return query.select('id, name, description').withConverter((recods) {
-      return recods
-          .map((record) => ExploreOrganizationDto.fromJson(record))
-          .toList();
-    });
   }
 }

@@ -3,31 +3,31 @@ part of 'lesson_create_bloc.dart';
 class LessonCreateState extends Equatable {
   const LessonCreateState._({
     required this.status,
-    required this.lesson,
+    required this.category,
     this.error,
   });
 
   final Status status;
-  final Lesson lesson;
+  final LessonCategory category;
   final String? error;
 
   factory LessonCreateState.initial() => const LessonCreateState._(
         status: Status.initial,
-        lesson: Lesson.empty,
+        category: LessonCategory.empty,
       );
 
   LessonCreateState copyWith({
     Status? status,
-    Lesson? lesson,
+    LessonCategory? lesson,
     String? error,
   }) {
     return LessonCreateState._(
       status: status ?? this.status,
-      lesson: lesson ?? this.lesson,
+      category: lesson ?? this.category,
       error: error ?? this.error,
     );
   }
 
   @override
-  List<Object?> get props => [status, lesson, error];
+  List<Object?> get props => [status, category, error];
 }

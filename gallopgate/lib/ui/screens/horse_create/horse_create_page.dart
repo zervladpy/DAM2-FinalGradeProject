@@ -24,7 +24,7 @@ class HorseCreatePage extends StatelessWidget {
       create: (context) => HorseCreateBloc(
         horseRepository: locator.get(),
         profileRepository: locator.get(),
-        organizationId: organizaitonId,
+        organizationId: organizaitonId!,
       )..add(const HorseCreateInitialize()),
       child: const Scaffold(body: _HorseCreatePage()),
     );

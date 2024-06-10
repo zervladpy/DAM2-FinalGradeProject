@@ -29,7 +29,7 @@ class HorseDetailsPage extends StatelessWidget {
           profileRepository: locator.get(),
         )..add(Fetch(
             id: id,
-            organizationId: organizationId,
+            organizationId: organizationId!,
           )),
         child: const _HorseDetailsPage(),
       ),

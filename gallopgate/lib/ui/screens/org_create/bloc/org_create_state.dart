@@ -1,18 +1,16 @@
 part of 'org_create_bloc.dart';
 
-enum OrgCreateStatus { initial, loading, success, error }
-
 class OrgCreateState extends Equatable {
   const OrgCreateState._(this.status, this.name, this.description, this.error);
 
-  final OrgCreateStatus status;
+  final Status status;
   final String name, description, error;
 
   factory OrgCreateState.initial() =>
-      const OrgCreateState._(OrgCreateStatus.initial, '', '', '');
+      const OrgCreateState._(Status.initial, '', '', '');
 
   OrgCreateState copyWith({
-    OrgCreateStatus? status,
+    Status? status,
     String? name,
     String? description,
     String? error,

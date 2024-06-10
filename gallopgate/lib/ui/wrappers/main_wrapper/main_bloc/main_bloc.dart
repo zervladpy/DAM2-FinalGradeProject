@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:gallopgate/models/lesson/lesson.dart';
+import 'package:gallopgate/models/lesson_category/lesson_category.dart';
 import 'package:gallopgate/models/organization/organization.dart';
 import 'package:gallopgate/models/profile/profile.dart';
-import 'package:gallopgate/repositories/lecture_repository.dart';
+import 'package:gallopgate/repositories/lesson_category_repository.dart';
 import 'package:gallopgate/repositories/organization_repository.dart';
 import 'package:gallopgate/repositories/profile_repository.dart';
 
@@ -15,7 +15,7 @@ part 'main_state.dart';
 class MainBloc extends Bloc<MainEvent, MainState> {
   final ProfileRepository profileRepository;
   final OrganizationRepository organizationRepository;
-  final LectureRepository lectureRepository;
+  final LessonCategoryRepository lectureRepository;
 
   MainBloc({
     required this.profileRepository,
@@ -40,7 +40,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
 
       if (profile.organizationId == null) throw Exception('No Organization');
 
-      final Organization? organization = await organizationRepository.fetch(
+      final Organization? organization = await organizationRepository.read(
         profile.organizationId!,
       );
 

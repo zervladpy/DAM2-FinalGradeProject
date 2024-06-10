@@ -20,7 +20,15 @@ class GSliverAppBar extends StatelessWidget {
     final canPop = context.canPop();
     return SliverAppBar.medium(
       leading: canPop && leading == null ? const _BackArrow() : leading,
-      actions: actions,
+      actions: [
+        if (actions != null)
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Row(
+              children: [...actions!],
+            ),
+          )
+      ],
       title: title,
     );
   }

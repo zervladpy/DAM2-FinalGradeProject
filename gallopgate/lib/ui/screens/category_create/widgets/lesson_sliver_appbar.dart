@@ -29,9 +29,9 @@ class LessonSliverAppbar extends StatelessWidget {
             )
           : null,
       title: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const GAppbarTitle('Create new lesson'),
+          const GAppbarTitle('Create new Category'),
           GAppbarSubtitle(organization.name),
         ],
       ),

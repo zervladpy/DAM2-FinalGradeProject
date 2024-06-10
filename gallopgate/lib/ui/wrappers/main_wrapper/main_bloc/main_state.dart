@@ -13,7 +13,7 @@ class MainState extends Equatable {
   final MainStatus status;
   final Profile profile;
   final Organization organization;
-  final List<Lesson> lectures;
+  final List<LessonCategory> lectures;
 
   factory MainState.initial() => const MainState._(
         MainStatus.initial,
@@ -26,7 +26,7 @@ class MainState extends Equatable {
     MainStatus? status,
     Profile? profile,
     Organization? organization,
-    List<Lesson>? lectures,
+    List<LessonCategory>? lectures,
   }) =>
       MainState._(
         status ?? this.status,

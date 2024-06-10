@@ -27,12 +27,6 @@ dependencies:
   # Supabase
   supabase_flutter: ^2.5.3
 
-  # FIREBASE
-  # firebase_core: ^2.24.2
-  # firebase_auth: ^4.15.3
-  # firebase_storage: ^11.5.6
-  # cloud_firestore: ^4.13.6
-
   # State
   bloc: ^8.1.4
   flutter_bloc: ^8.1.5

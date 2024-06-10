@@ -1,53 +1,74 @@
 import 'package:equatable/equatable.dart';
-import 'package:gallopgate/models/schedule/schedule.dart';
+import 'package:gallopgate/models/lesson_category/lesson_category.dart';
+import 'package:gallopgate/models/lesson_member/lesson_member.dart';
+import 'package:gallopgate/models/organization/organization.dart';
+import 'package:gallopgate/models/profile/profile.dart';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'lesson.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class Lesson extends Equatable {
   const Lesson({
-    required this.id,
+    this.id,
     required this.title,
-    required this.description,
-    required this.creatorId,
-    this.schedules = const [],
-    this.createdAt,
+    required this.organization,
+    required this.category,
+    required this.creator,
+    this.capacity = 0,
+    this.startAt,
+    this.weekday = 0,
+    this.duration = 0,
+    this.members = const [],
   });
 
-  final String id, title, description, creatorId;
-  final DateTime? createdAt;
-  @JsonKey(includeToJson: false, includeFromJson: false)
-  final List<Schedule> schedules;
+  final String? id;
+  final String title;
+  @JsonKey(toJson: _getOrganizationId, includeIfNull: false)
+  final Organization organization;
+  @JsonKey(toJson: _getCategoryId, includeIfNull: false)
+  final LessonCategory category;
+  @JsonKey(toJson: _getProfileId, includeIfNull: false)
+  final Profile creator;
+  final int capacity;
+  final DateTime? startAt;
+  final int weekday;
+  final int duration;
+  final List<LessonMember> members;
 
-  static const table = 'lectures';
+  static const table = 'lessons';
 
-  static const empty = Lesson(
-    id: '',
+  static const Lesson empty = Lesson(
     title: '',
-    description: '',
-    creatorId: '',
+    organization: Organization.empty,
+    category: LessonCategory.empty,
+    creator: Profile.empty,
   );
-
-  factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
-
-  Map<String, dynamic> toJson() => _$LessonToJson(this);
 
   Lesson copyWith({
     String? id,
     String? title,
-    String? description,
-    String? creatorId,
-    List<Schedule>? schedules,
-    DateTime? createdAt,
+    Organization? organization,
+    LessonCategory? category,
+    Profile? creator,
+    int? capacity,
+    DateTime? startAt,
+    int? weekday,
+    int? duration,
+    List<LessonMember>? members,
   }) {
     return Lesson(
       id: id ?? this.id,
       title: title ?? this.title,
-      description: description ?? this.description,
-      creatorId: creatorId ?? this.creatorId,
-      schedules: schedules ?? this.schedules,
-      createdAt: createdAt ?? this.createdAt,
+      organization: organization ?? this.organization,
+      category: category ?? this.category,
+      creator: creator ?? this.creator,
+      capacity: capacity ?? this.capacity,
+      startAt: startAt ?? this.startAt,
+      weekday: weekday ?? this.weekday,
+      duration: duration ?? this.duration,
+      members: members ?? this.members,
     );
   }
 
@@ -55,9 +76,23 @@ class Lesson extends Equatable {
   List<Object?> get props => [
         id,
         title,
-        description,
-        creatorId,
-        schedules,
-        createdAt,
+        organization,
+        category,
+        creator,
+        capacity,
+        startAt,
+        weekday,
+        duration,
+        members,
       ];
+
+  factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LessonToJson(this);
+
+  static _getOrganizationId(Organization? organization) => organization?.id;
+
+  static _getCategoryId(LessonCategory? category) => category?.id;
+
+  static _getProfileId(Profile? profile) => profile?.id;
 }

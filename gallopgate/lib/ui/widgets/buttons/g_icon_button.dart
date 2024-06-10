@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gallopgate/config/theme/utils/colors.dart';
 
-abstract class GIconButton extends StatelessWidget {
+class GIconButton extends StatelessWidget {
   const GIconButton({
     super.key,
     required this.icon,
@@ -16,6 +16,17 @@ abstract class GIconButton extends StatelessWidget {
     required IconData icon,
     void Function()? onPressed,
   }) = _GIconButtonFilled;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onPressed,
+      icon: Icon(
+        icon,
+        color: GColor.primaryLight,
+      ),
+    );
+  }
 }
 
 class _GIconButtonFilled extends GIconButton {

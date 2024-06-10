@@ -1,24 +1,23 @@
 part of 'org_explore_bloc.dart';
 
-enum OrgExploreStatus { initial, loading, success, error }
-
 class OrgExploreState extends Equatable {
-  const OrgExploreState(this.status, this.items);
+  const OrgExploreState._({
+    this.status = Status.initial,
+    this.items = const [],
+  });
 
-  final OrgExploreStatus status;
-  final List<ExploreOrganizationDto> items;
+  final Status status;
+  final List<Organization> items;
 
-  factory OrgExploreState.initial() {
-    return const OrgExploreState(OrgExploreStatus.initial, []);
-  }
+  factory OrgExploreState.initial() => const OrgExploreState._();
 
   OrgExploreState copyWith({
-    OrgExploreStatus? status,
-    List<ExploreOrganizationDto>? items,
+    Status? status,
+    List<Organization>? items,
   }) {
-    return OrgExploreState(
-      status ?? this.status,
-      items ?? this.items,
+    return OrgExploreState._(
+      status: status ?? this.status,
+      items: items ?? this.items,
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
@@ -6,6 +8,7 @@ import 'package:gallopgate/models/organization/organization.dart';
 import 'package:gallopgate/ui/screens/user_details/bloc/user_bloc.dart';
 import 'package:gallopgate/ui/screens/user_details/widgets/profile_sliver_appbar.dart';
 import 'package:gallopgate/ui/widgets/containers/image_picker_container.dart';
+import 'package:gallopgate/ui/widgets/inputs/date_field.dart';
 import 'package:gallopgate/ui/widgets/inputs/selection.dart';
 import 'package:gallopgate/ui/widgets/loading/sliver_linear_loading.dart';
 import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
@@ -64,35 +67,49 @@ class _Content extends StatelessWidget {
 
         final canEdit = isAdmin || (state.profile.id == currentProfile.id);
 
-        return CustomScrollView(
-          slivers: [
-            ProfileSliverAppbar(organization: organization),
-            const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              sliver: SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+        log(canEdit.toString());
+
+        return Stack(
+          children: [
+            CustomScrollView(
+              slivers: [
+                ProfileSliverAppbar(organization: organization),
+                const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  sliver: SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        ImagePickerContainer(onSelect: canEdit ? () {} : null),
-                        const SizedBox(width: 16.0),
-                        Expanded(child: _NameFiled(editable: canEdit)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            ImagePickerContainer(
+                                onSelect: canEdit ? () {} : null),
+                            const SizedBox(width: 16.0),
+                            Expanded(child: _NameFiled(editable: canEdit)),
+                          ],
+                        ),
+                        const SizedBox(height: 16.0),
+                        _LastNameField(editable: canEdit),
+                        const SizedBox(height: 16.0),
+                        _BirthDateField(editable: canEdit),
+                        const SizedBox(height: 16.0),
+                        _RolesFieldSelection(editable: isAdmin),
                       ],
                     ),
-                    const SizedBox(height: 16.0),
-                    _LastNameField(editable: canEdit),
-                    const SizedBox(height: 16.0),
-                    _BirthDateField(editable: canEdit),
-                    const SizedBox(height: 16.0),
-                    _RolesFieldSelection(editable: isAdmin),
-                  ],
-                ),
-              ),
-            )
+                  ),
+                )
+              ],
+            ),
+            if (canEdit)
+              const Positioned(
+                left: 16.0,
+                right: 16.0,
+                bottom: 16.0,
+                child: _SubmittButton(),
+              )
           ],
         );
       },
@@ -136,9 +153,8 @@ class _NameFiled extends StatelessWidget {
           decoration: const InputDecoration(
             labelText: 'Name',
           ),
-          onChanged: (value) => context
-              .read<UserBloc>()
-              .add(UserDetailFirstNameChangedEvent(value)),
+          onChanged: (value) =>
+              context.read<UserBloc>().add(FirstNameChanged(value)),
         );
       },
     );
@@ -164,16 +180,14 @@ class _LastNameField extends StatelessWidget {
           decoration: const InputDecoration(
             labelText: 'Last Name',
           ),
-          onChanged: (value) => context
-              .read<UserBloc>()
-              .add(UserDetailLastNameChangedEvent(value)),
+          onChanged: (value) =>
+              context.read<UserBloc>().add(LastNameChanged(value)),
         );
       },
     );
   }
 }
 
-/// TODO : Implement the following fields
 class _BirthDateField extends StatelessWidget {
   const _BirthDateField({
     super.key,
@@ -184,9 +198,17 @@ class _BirthDateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 48.0,
-      child: Placeholder(),
+    log(editable.toString());
+
+    return DateField(
+      label: "Birth Date",
+      editable: editable,
+      onChanged: editable
+          ? (value) {
+              context.read<UserBloc>().add(BirthDateChanged(value));
+            }
+          : null,
+      initialValue: context.watch<UserBloc>().state.profile.birthDate,
     );
   }
 }
@@ -213,15 +235,31 @@ class _RolesFieldSelection extends StatelessWidget {
             return Selection(
               items: state.profile.roles.map((e) => e.name).toList(),
               selected: state.profile.roles.map((e) => e.name).toList(),
-              onSelect: editable
-                  ? (value) {
-                      /// TODO : Handle role update
-                    }
-                  : null,
+              onSelect: editable ? (value) {} : null,
             );
           },
         )
       ],
+    );
+  }
+}
+
+class _SubmittButton extends StatelessWidget {
+  const _SubmittButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.watch<UserBloc>();
+
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        return ElevatedButton(
+          onPressed: state.edited ? () => bloc.add(const Update()) : null,
+          child: state.status == Status.loading
+              ? const LinearProgressIndicator()
+              : const Text('Update'),
+        );
+      },
     );
   }
 }

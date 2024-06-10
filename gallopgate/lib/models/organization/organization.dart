@@ -3,24 +3,24 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'organization.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class Organization extends Equatable {
   const Organization({
-    required this.id,
+    this.id,
     required this.name,
     required this.description,
-    required this.logoUrl,
-    required this.creatorId,
+    this.logoUrl,
+    this.creatorId,
     this.createdAt,
   });
 
-  final String id, name, description, logoUrl, creatorId;
+  final String? id, logoUrl, creatorId;
+  final String name, description;
   final DateTime? createdAt;
 
   static const table = "organizations";
 
   static const empty = Organization(
-    id: '',
     name: '',
     description: '',
     logoUrl: '',

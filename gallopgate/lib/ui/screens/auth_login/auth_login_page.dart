@@ -5,8 +5,8 @@ import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/config/extensions/context.dart';
 import 'package:gallopgate/config/theme/utils/colors.dart';
 import 'package:gallopgate/ui/screens/auth_login/bloc/login_bloc.dart';
+import 'package:gallopgate/ui/screens/auth_login/widgets/auth_login.library.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 
 class AuthLoginPage extends StatelessWidget {
   const AuthLoginPage({super.key});
@@ -47,11 +47,8 @@ class AuthLoginPage extends StatelessWidget {
               );
             }
           },
-          child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Login'),
-            ),
-            body: const _AuhtLoginPage(),
+          child: const Scaffold(
+            body: _AuhtLoginPage(),
           ),
         );
       }),
@@ -64,102 +61,127 @@ class _AuhtLoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _EmailField(),
-              SizedBox(height: 16.0),
-              _PasswordField(),
-              SizedBox(height: 16.0),
-              _LoginButton(),
-              Divider(),
-              _GoToRegister(),
-            ],
+    return const CustomScrollView(
+      slivers: [
+        LoginAppBar(),
+        SliverPadding(
+          padding: EdgeInsets.all(16),
+          sliver: SliverToBoxAdapter(
+            child: SizedBox(
+              width: 650,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _EmailField(),
+                  SizedBox(height: 16.0),
+                  _PasswordField(),
+                  SizedBox(height: 8.0),
+                  _ForgotPassword(),
+                  SizedBox(height: 8.0),
+                  _LoginButton(),
+                  SizedBox(height: 16.0),
+                  _RegisterButton(),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        )
+      ],
     );
   }
 }
 
 class _EmailField extends StatelessWidget {
-  const _EmailField();
+  const _EmailField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      initialValue: context.watch<LoginBloc>().state.email,
-      onChanged: (value) {
-        context.read<LoginBloc>().add(EmailChanged(value));
-      },
-      decoration: const InputDecoration(
-        labelText: 'Email',
-        prefixIcon: Icon(Iconsax.sms),
-      ),
+    final LoginBloc bloc = BlocProvider.of<LoginBloc>(context);
+
+    return EmailField(
+      initialValue: bloc.state.email,
+      onChanged: (v) => bloc.add(EmailChanged(v)),
     );
   }
 }
 
 class _PasswordField extends StatelessWidget {
-  const _PasswordField();
+  const _PasswordField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      initialValue: context.watch<LoginBloc>().state.password,
-      onChanged: (value) {
-        context.read<LoginBloc>().add(PasswordChanged(value));
+    final bloc = BlocProvider.of<LoginBloc>(context);
+
+    return BlocBuilder<LoginBloc, LoginState>(
+      buildWhen: (prev, curr) => prev.showPassword != curr.showPassword,
+      builder: (context, state) {
+        return PasswordField(
+          initalValue: state.password,
+          onChanged: (v) => bloc.add(PasswordChanged(v)),
+          obscureText: (v) => bloc.add(ShowPasswordChanged(v)),
+          obscured: state.showPassword,
+        );
       },
-      obscureText: !context.watch<LoginBloc>().state.showPassword,
-      decoration: InputDecoration(
-        labelText: 'Password',
-        prefixIcon: const Icon(Iconsax.password_check),
-        suffixIcon: IconButton(
-          icon: Icon(
-            context.watch<LoginBloc>().state.showPassword
-                ? Icons.visibility
-                : Icons.visibility_off,
-          ),
-          onPressed: () {
-            context.read<LoginBloc>().add(
-                  ShowPasswordChanged(
-                    !context.read<LoginBloc>().state.showPassword,
-                  ),
-                );
+    );
+  }
+}
+
+class _ForgotPassword extends StatelessWidget {
+  const _ForgotPassword({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        BlocBuilder<LoginBloc, LoginState>(
+          buildWhen: (prev, curr) => prev.status != curr.status,
+          builder: (context, state) {
+            return ForgotPasswordButton(
+              enabled: state.status != Status.loading,
+            );
           },
         ),
-      ),
+      ],
     );
   }
 }
 
 class _LoginButton extends StatelessWidget {
-  const _LoginButton();
+  const _LoginButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          context.read<LoginBloc>().add(const LoginSubmitted());
-        },
-        child: const Text('Login'));
+    final bloc = BlocProvider.of<LoginBloc>(context);
+
+    return BlocBuilder<LoginBloc, LoginState>(
+      buildWhen: (prev, curr) => prev.status != curr.status,
+      builder: (context, state) {
+        return LoginButton(
+          enabled: state.status != Status.loading,
+          loading: state.status == Status.loading,
+          onSubmit: () => bloc.add(const LoginSubmitted()),
+        );
+      },
+    );
   }
 }
 
-class _GoToRegister extends StatelessWidget {
-  const _GoToRegister();
+class _RegisterButton extends StatelessWidget {
+  const _RegisterButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: () {
-        context.go('/auth/register');
+    return BlocBuilder<LoginBloc, LoginState>(
+      buildWhen: (prev, curr) => prev.status != curr.status,
+      builder: (context, state) {
+        return RegisterButton(
+          enabled: state.status != Status.loading,
+          onPressed: () => context.push('/auth/register'),
+        );
       },
-      child: const Text("Don't have a account?"),
     );
   }
 }

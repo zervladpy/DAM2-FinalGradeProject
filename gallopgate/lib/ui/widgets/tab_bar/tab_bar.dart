@@ -14,7 +14,7 @@ class GTabBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(tabs.length > 2, 'TabBar must have at least 2 tabs');
+    assert(tabs.length >= 2, 'TabBar must have at least 2 tabs');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: TabBar(

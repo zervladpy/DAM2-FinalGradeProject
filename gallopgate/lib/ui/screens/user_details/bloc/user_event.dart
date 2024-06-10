@@ -16,8 +16,8 @@ class Fetch extends UserEvent {
   List<Object> get props => [id];
 }
 
-class UserDetailFirstNameChangedEvent extends UserEvent {
-  const UserDetailFirstNameChangedEvent(this.firstName);
+class FirstNameChanged extends UserEvent {
+  const FirstNameChanged(this.firstName);
 
   final String firstName;
 
@@ -25,8 +25,8 @@ class UserDetailFirstNameChangedEvent extends UserEvent {
   List<Object> get props => [firstName];
 }
 
-class UserDetailLastNameChangedEvent extends UserEvent {
-  const UserDetailLastNameChangedEvent(this.lastName);
+class LastNameChanged extends UserEvent {
+  const LastNameChanged(this.lastName);
 
   final String lastName;
 
@@ -34,8 +34,8 @@ class UserDetailLastNameChangedEvent extends UserEvent {
   List<Object> get props => [lastName];
 }
 
-class UserDetailEmailChangedEvent extends UserEvent {
-  const UserDetailEmailChangedEvent(this.email);
+class EmailChanged extends UserEvent {
+  const EmailChanged(this.email);
 
   final String email;
 
@@ -43,8 +43,8 @@ class UserDetailEmailChangedEvent extends UserEvent {
   List<Object> get props => [email];
 }
 
-class UserDetailRoleChangedEvent extends UserEvent {
-  const UserDetailRoleChangedEvent(this.role);
+class RoleChanged extends UserEvent {
+  const RoleChanged(this.role);
 
   final Role role;
 
@@ -52,8 +52,17 @@ class UserDetailRoleChangedEvent extends UserEvent {
   List<Object> get props => [role];
 }
 
-class UserDetailSubmittedEvent extends UserEvent {
-  const UserDetailSubmittedEvent();
+class BirthDateChanged extends UserEvent {
+  const BirthDateChanged(this.birthDate);
+
+  final DateTime birthDate;
+
+  @override
+  List<Object> get props => [birthDate];
+}
+
+class Update extends UserEvent {
+  const Update();
 
   @override
   List<Object> get props => [];

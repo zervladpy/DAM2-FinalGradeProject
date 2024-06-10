@@ -1,7 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/ui/screens/auth_register/bloc/register_bloc.dart';
+import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
+import 'package:go_router/go_router.dart';
+import 'widgets/auth_register.library.dart';
 
 class AuthRegisterPage extends StatelessWidget {
   const AuthRegisterPage({super.key});
@@ -12,11 +18,8 @@ class AuthRegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => RegisterBloc(locator.get()),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Register'),
-        ),
-        body: const _AuthRegisterPage(),
+      child: const Scaffold(
+        body: _AuthRegisterPage(),
       ),
     );
   }
@@ -27,145 +30,142 @@ class _AuthRegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _EmailField(),
-              SizedBox(height: 16.0),
-              _PasswordField(),
-              SizedBox(height: 16.0),
-              _RepeatPasswordField(),
-              SizedBox(height: 16.0),
-              _AcceptTermsField(),
-              SizedBox(height: 16.0),
-              _RegisterButton(),
-            ],
-          ),
-        ),
-      ),
+    return BlocConsumer<RegisterBloc, RegisterState>(
+      listenWhen: (prev, curr) => prev.status != curr.status,
+      listener: (context, state) {
+        if (state.status == Status.success) {
+          GSnackbar.success(
+            context: context,
+            message: 'We sended you a confirmation Email',
+          );
+        } else if (state.status == Status.error) {
+          log('Error: ${state.error}');
+          GSnackbar.error(
+            context: context,
+            message: state.error ?? 'An error occured',
+          );
+        }
+      },
+      builder: (context, state) {
+        return const CustomScrollView(
+          slivers: [
+            RegisterAppbar(),
+            SliverPadding(
+              padding: EdgeInsets.all(16.0),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _EmailField(),
+                    SizedBox(height: 16.0),
+                    _PassowrdField(),
+                    SizedBox(height: 16.0),
+                    _RepeatPasswordField(),
+                    SizedBox(height: 16.0),
+                    _RegisterButton(),
+                    SizedBox(height: 16.0),
+                    _HaveAccountButton(),
+                  ],
+                ),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }
 
 class _EmailField extends StatelessWidget {
-  const _EmailField();
+  const _EmailField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void onChanged(String value) {
-      context.read<RegisterBloc>().add(RegisterEmailChanged(value));
-    }
+    final bloc = BlocProvider.of<RegisterBloc>(context);
 
-    return TextFormField(
-      initialValue: context.watch<RegisterBloc>().state.email,
-      onChanged: onChanged,
-      decoration: const InputDecoration(
-        labelText: 'Email',
-      ),
+    return EmailField(
+      initialValue: bloc.state.email,
+      onChanged: (value) => bloc.add(RegisterEmailChanged(value)),
     );
   }
 }
 
-class _PasswordField extends StatelessWidget {
-  const _PasswordField();
+class _PassowrdField extends StatelessWidget {
+  const _PassowrdField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void onChanged(String value) {
-      context.read<RegisterBloc>().add(RegisterPasswordChanged(value));
-    }
+    final bloc = BlocProvider.of<RegisterBloc>(context);
 
-    void onShowPassword() {
-      final newValue = !context.read<RegisterBloc>().state.showPassword;
-
-      context.read<RegisterBloc>().add(RegisterShowPasswordChanged(newValue));
-    }
-
-    return TextFormField(
-      initialValue: context.watch<RegisterBloc>().state.password,
-      obscureText: !context.watch<RegisterBloc>().state.showPassword,
-      onChanged: onChanged,
-      decoration: InputDecoration(
-        labelText: 'Password',
-        suffixIcon: IconButton(
-          onPressed: onShowPassword,
-          icon: const Icon(Icons.visibility),
-        ),
-      ),
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      buildWhen: (prev, curr) => prev.showPassword != curr.showPassword,
+      builder: (context, state) {
+        return PasswordField(
+          initalValue: state.password,
+          onChanged: (value) => bloc.add(RegisterPasswordChanged(value)),
+          obscured: state.showPassword,
+          obscureText: (v) => bloc.add(RegisterShowPasswordChanged(v)),
+        );
+      },
     );
   }
 }
 
 class _RepeatPasswordField extends StatelessWidget {
-  const _RepeatPasswordField();
+  const _RepeatPasswordField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void onChanged(String value) {
-      context.read<RegisterBloc>().add(RegisterRepeatPasswordChanged(value));
-    }
+    final bloc = BlocProvider.of<RegisterBloc>(context);
 
-    void onShowPassword() {
-      final newValue = !context.read<RegisterBloc>().state.showPassword;
-
-      context.read<RegisterBloc>().add(RegisterShowPasswordChanged(newValue));
-    }
-
-    return TextFormField(
-      initialValue: context.watch<RegisterBloc>().state.repeatPassword,
-      obscureText: !context.watch<RegisterBloc>().state.showPassword,
-      onChanged: onChanged,
-      decoration: InputDecoration(
-        labelText: 'Repeat Password',
-        suffixIcon: IconButton(
-          onPressed: onShowPassword,
-          icon: const Icon(Icons.visibility),
-        ),
-      ),
-    );
-  }
-}
-
-class _AcceptTermsField extends StatelessWidget {
-  const _AcceptTermsField();
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Checkbox.adaptive(
-          value: context.watch<RegisterBloc>().state.acceptTerms,
-          onChanged: (value) {
-            context
-                .read<RegisterBloc>()
-                .add(RegisterAcceptTermsChanged(value ?? false));
-          },
-        ),
-        const Text(
-          "Accept termas and conditions",
-        ),
-      ],
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      buildWhen: (prev, curr) => prev.showPassword != curr.showPassword,
+      builder: (context, state) {
+        return RepeatPasswordField(
+          initalValue: state.repeatPassword,
+          onChanged: (value) => bloc.add(RegisterRepeatPasswordChanged(value)),
+          obscured: state.showPassword,
+          obscureText: (v) => bloc.add(RegisterShowPasswordChanged(v)),
+        );
+      },
     );
   }
 }
 
 class _RegisterButton extends StatelessWidget {
-  const _RegisterButton();
+  const _RegisterButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterBloc, RegisterState>(
+      buildWhen: (prev, curr) => prev.status != curr.status,
       builder: (context, state) {
-        return ElevatedButton(
+        return RegisterButton(
+          enabled: state.status != Status.loading,
+          loading: state.status == Status.loading,
           onPressed: () {
             context.read<RegisterBloc>().add(const RegisterSubmitted());
           },
-          child: const Text('Register'),
+        );
+      },
+    );
+  }
+}
+
+class _HaveAccountButton extends StatelessWidget {
+  const _HaveAccountButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      buildWhen: (prev, curr) => prev.status != curr.status,
+      builder: (context, state) {
+        return HaveAccountButton(
+          enabeld: state.status != Status.loading,
+          onPressed: () {
+            context.push('/auth/login');
+          },
         );
       },
     );

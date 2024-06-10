@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/repositories/auth_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
@@ -82,10 +83,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     Emitter<RegisterState> emit,
   ) async {
     emit(state.copyWith(
-      status: RegisterStatus.loading,
+      status: Status.loading,
     ));
-
-    log('state.email, state.password: ${state.email}, ${state.password}');
 
     try {
       final profile = await authRepository.createAccount(
@@ -93,25 +92,26 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         password: state.password,
       );
 
-      log('profile: $profile');
-
       if (profile != null) {
         emit(state.copyWith(
-          status: RegisterStatus.success,
+          status: Status.success,
         ));
       } else {
         emit(state.copyWith(
-          status: RegisterStatus.error,
+          status: Status.error,
           error: 'Failed to create account',
         ));
       }
+    } on AuthException catch (e) {
+      emit(state.copyWith(
+        status: Status.error,
+        error: e.message,
+      ));
     } catch (e) {
       emit(state.copyWith(
-        status: RegisterStatus.error,
-        error: e.toString(),
+        status: Status.error,
+        error: 'An unknown error occurred',
       ));
     }
-
-    log('RegisterBloc: state: $state');
   }
 }

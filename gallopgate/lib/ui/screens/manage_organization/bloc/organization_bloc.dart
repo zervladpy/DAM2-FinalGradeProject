@@ -35,9 +35,9 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
     emit(state.copyWith(status: Status.loading));
 
     try {
-      final organization = await _organizationRepository.fetch(event.id);
+      final organization = await _organizationRepository.read(event.id);
       final creator =
-          await _profileRepository.fetchProfile(organization!.creatorId);
+          await _profileRepository.fetchProfile(organization!.creatorId!);
 
       emit(state.copyWith(
         status: Status.success,

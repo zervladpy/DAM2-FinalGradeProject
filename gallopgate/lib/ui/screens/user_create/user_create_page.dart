@@ -23,7 +23,7 @@ class UserCreatePage extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (_) => CreateUserBloc(
-          organizationId: organizationId,
+          organizationId: organizationId!,
           profileRepository: locator.get(),
           roleRepository: locator.get(),
         )..add(CreateUserInitialize()),

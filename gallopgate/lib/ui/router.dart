@@ -6,11 +6,13 @@ import 'package:gallopgate/ui/screens/auth_onboard/auth_onboard_page.dart';
 import 'package:gallopgate/ui/screens/auth_otp/auth_otp_page.dart';
 import 'package:gallopgate/ui/screens/auth_register/auth_register_page.dart';
 import 'package:gallopgate/ui/screens/auth_reset_password_page/auth_reset_password_page.dart';
+import 'package:gallopgate/ui/screens/category_create/lesson_category_create_page.dart';
 import 'package:gallopgate/ui/screens/error_not_found/error_not_found_page.dart';
 import 'package:gallopgate/ui/screens/horse_create/horse_create_page.dart';
 import 'package:gallopgate/ui/screens/horse_details/horse_details_page.dart';
-import 'package:gallopgate/ui/screens/category_create/lesson_create_page.dart';
-import 'package:gallopgate/ui/screens/category_details/lesson_details_page.dart';
+import 'package:gallopgate/ui/screens/category_details/lesson_category_details_page.dart';
+import 'package:gallopgate/ui/screens/lesson_create/lesson_create_page.dart';
+import 'package:gallopgate/ui/screens/lesson_details/lesson_details_page.dart';
 import 'package:gallopgate/ui/screens/main_calendar/main_calendar_page.dart';
 import 'package:gallopgate/ui/screens/main_home/main_home_page.dart';
 import 'package:gallopgate/ui/screens/main_manage/main_manage_page.dart';
@@ -18,6 +20,7 @@ import 'package:gallopgate/ui/screens/main_schedule/main_schedule_page.dart';
 import 'package:gallopgate/ui/screens/main_settings/main_settings_page.dart';
 import 'package:gallopgate/ui/screens/manage_horses/manage_horses_page.dart';
 import 'package:gallopgate/ui/screens/manage_lessons/manage_lessons_page.dart';
+import 'package:gallopgate/ui/screens/manage_lessons_category/manage_lesson_category_page.dart';
 import 'package:gallopgate/ui/screens/manage_organization/manage_organization_page.dart';
 import 'package:gallopgate/ui/screens/manage_users/manage_users_page.dart';
 import 'package:gallopgate/ui/screens/org_create/org_create_page.dart';
@@ -168,9 +171,32 @@ class ApplicationRouter {
                 ],
               ),
               GoRoute(
+                path: 'lesson-categories',
+                pageBuilder: (context, state) => ManageLessonCategoryPage.page,
+                routes: <GoRoute>[
+                  GoRoute(
+                    path: 'create',
+                    pageBuilder: (context, state) =>
+                        LessonCategoryCreatePage.page,
+                  ),
+                  GoRoute(
+                    path: ':id',
+                    pageBuilder: (context, state) {
+                      String? id = state.pathParameters['id'];
+                      log(id.toString());
+                      if (id == null) {
+                        return ErrorNotFoundPage.page;
+                      } else {
+                        return LessonCategoryDetailsPage.page(id);
+                      }
+                    },
+                  ),
+                ],
+              ),
+              GoRoute(
                 path: 'lessons',
                 pageBuilder: (context, state) => ManageLessonsPage.page,
-                routes: <GoRoute>[
+                routes: [
                   GoRoute(
                     path: 'create',
                     pageBuilder: (context, state) => LessonCreatePage.page,
@@ -179,7 +205,6 @@ class ApplicationRouter {
                     path: ':id',
                     pageBuilder: (context, state) {
                       String? id = state.pathParameters['id'];
-                      log(id.toString());
                       if (id == null) {
                         return ErrorNotFoundPage.page;
                       } else {

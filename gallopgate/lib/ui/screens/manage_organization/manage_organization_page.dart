@@ -33,7 +33,7 @@ class ManageOrganizationPage extends StatelessWidget {
         create: (_) => OrganizationBloc(
           organizationRepository: locator.get(),
           profileRepository: locator.get(),
-        )..add(Fetch(organization.id)),
+        )..add(Fetch(organization.id!)),
         child: _Content(isAdmin: isAdmin),
       ),
     );

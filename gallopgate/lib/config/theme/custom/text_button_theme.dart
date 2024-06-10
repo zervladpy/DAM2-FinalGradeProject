@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gallopgate/config/theme/utils/colors.dart';
 
 class GTextButtonTheme {
   const GTextButtonTheme._();
@@ -10,12 +11,14 @@ class GTextButtonTheme {
   static TextButtonThemeData get light => TextButtonThemeData(
         style: TextButton.styleFrom(
           shape: shape,
+          foregroundColor: GColor.surfaceDark,
         ),
       );
 
   static TextButtonThemeData get dark => TextButtonThemeData(
         style: TextButton.styleFrom(
           shape: shape,
+          foregroundColor: GColor.surfaceLight,
         ),
       );
 }

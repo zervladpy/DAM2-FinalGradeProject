@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gallopgate/ui/widgets/appbar/sliver_appbar.dart';
+import 'package:gallopgate/ui/widgets/text/titles.dart';
 
 class LessonDetailSliverAppbar extends StatelessWidget {
   const LessonDetailSliverAppbar({super.key});
@@ -7,7 +8,7 @@ class LessonDetailSliverAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const GSliverAppBar(
-      title: Text('Lesson Details'),
+      title: GAppbarTitle('Category Details'),
     );
   }
 }

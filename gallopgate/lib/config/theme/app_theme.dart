@@ -4,6 +4,7 @@ import 'package:gallopgate/config/theme/custom/bottom_navigation_theme.dart';
 import 'package:gallopgate/config/theme/custom/eleveated_button_theme.dart';
 import 'package:gallopgate/config/theme/custom/icon_button_theme.dart';
 import 'package:gallopgate/config/theme/custom/navigation_rail_theme.dart';
+import 'package:gallopgate/config/theme/custom/outlined_button_theme.dart';
 import 'package:gallopgate/config/theme/custom/tabbar_theme.dart';
 import 'package:gallopgate/config/theme/custom/text_button_theme.dart';
 import 'package:gallopgate/config/theme/custom/text_input_theme.dart';
@@ -17,6 +18,7 @@ class AppTheme {
         brightness: Brightness.light,
         inputDecorationTheme: GTextInputTheme.light,
         elevatedButtonTheme: GElevatedButtonTheme.light,
+        outlinedButtonTheme: GOutlinedButtonTheme.light,
         textButtonTheme: GTextButtonTheme.light,
         iconButtonTheme: GIconButtonTheme.light,
         navigationBarTheme: GNavigationBarTheme.light,

@@ -23,12 +23,6 @@ class MainManagePage extends StatelessWidget {
         navigate: () => context.push('/managment/organization'),
       ),
       ListTileItem(
-        title: 'Lesssons',
-        subtitle: 'Manage your lessons',
-        leading: const Icon(Iconsax.book),
-        navigate: () => context.push('/managment/lessons'),
-      ),
-      ListTileItem(
         title: 'Users',
         subtitle: 'Manage your users',
         leading: const Icon(Iconsax.user),
@@ -39,6 +33,18 @@ class MainManagePage extends StatelessWidget {
         subtitle: 'Manage your horses',
         leading: const Icon(Iconsax.language_circle),
         navigate: () => context.push('/managment/horses'),
+      ),
+      ListTileItem(
+        title: 'Lesson Categories',
+        subtitle: 'Manage your lessons',
+        leading: const Icon(Iconsax.book),
+        navigate: () => context.push('/managment/lesson-categories'),
+      ),
+      ListTileItem(
+        title: 'Lesssons',
+        subtitle: 'Manage your lessons',
+        leading: const Icon(Iconsax.book),
+        navigate: () => context.push('/managment/lessons'),
       ),
     ];
 

@@ -18,11 +18,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   })  : _repository = repository,
         super(UserState.initial()) {
     on<Fetch>(_initialize);
-    on<UserDetailFirstNameChangedEvent>(_firstNameChanged);
-    on<UserDetailLastNameChangedEvent>(_lastNameChanged);
-    on<UserDetailEmailChangedEvent>(_emailChanged);
-    on<UserDetailRoleChangedEvent>(_roleChanged);
-    on<UserDetailSubmittedEvent>(_submit);
+    on<FirstNameChanged>(_firstNameChanged);
+    on<LastNameChanged>(_lastNameChanged);
+    on<EmailChanged>(_emailChanged);
+    on<RoleChanged>(_roleChanged);
+    on<BirthDateChanged>(_birthDateChanged);
+    on<Update>(_submit);
   }
 
   FutureOr<void> _initialize(
@@ -32,44 +33,56 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(state.copyWith(status: Status.loading));
     try {
       final profile = await _repository.fetchProfile(event.id);
-      emit(state.copyWith(status: Status.success, profile: profile));
+      emit(state.copyWith(
+        status: Status.success,
+        profile: profile,
+        initial: profile,
+      ));
     } catch (e) {
       emit(state.copyWith(status: Status.error, error: e.toString()));
     }
+
+    emit(state.copyWith(status: Status.initial, error: null));
   }
 
   FutureOr<void> _firstNameChanged(
-    UserDetailFirstNameChangedEvent event,
+    FirstNameChanged event,
     Emitter<UserState> emit,
   ) {
     emit(state.copyWith(
         profile: state.profile.copyWith(
       firstName: event.firstName,
     )));
+
+    emit(state.copyWith(edited: state.profile != state.initial));
   }
 
   FutureOr<void> _lastNameChanged(
-    UserDetailLastNameChangedEvent event,
+    LastNameChanged event,
     Emitter<UserState> emit,
   ) {
     emit(state.copyWith(
         profile: state.profile.copyWith(
       lastName: event.lastName,
     )));
+
+    emit(state.copyWith(edited: state.profile != state.initial));
   }
 
   FutureOr<void> _emailChanged(
-    UserDetailEmailChangedEvent event,
+    EmailChanged event,
     Emitter<UserState> emit,
   ) {
     emit(state.copyWith(
         profile: state.profile.copyWith(
       email: event.email,
     )));
+
+    emit(state.copyWith(edited: state.profile != state.initial));
   }
 
   FutureOr<void> _roleChanged(
-    UserDetailRoleChangedEvent event,
+    RoleChanged event,
     Emitter<UserState> emit,
   ) {
     final profileRoles = state.profile.roles;
@@ -88,16 +101,35 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   FutureOr<void> _submit(
-    UserDetailSubmittedEvent event,
+    Update event,
     Emitter<UserState> emit,
   ) async {
     emit(state.copyWith(status: Status.loading));
 
     try {
-      await _repository.updateProfile(state.profile);
-      emit(state.copyWith(status: Status.success));
+      final profile = await _repository.updateProfile(state.profile);
+      emit(state.copyWith(
+        status: Status.success,
+        profile: profile,
+        initial: profile,
+        edited: false,
+      ));
     } catch (e) {
       emit(state.copyWith(status: Status.error, error: e.toString()));
     }
+
+    emit(state.copyWith(status: Status.initial, error: null));
+  }
+
+  FutureOr<void> _birthDateChanged(
+    BirthDateChanged event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(state.copyWith(
+        profile: state.profile.copyWith(
+      birthDate: event.birthDate,
+    )));
+
+    emit(state.copyWith(edited: state.profile != state.initial));
   }
 }

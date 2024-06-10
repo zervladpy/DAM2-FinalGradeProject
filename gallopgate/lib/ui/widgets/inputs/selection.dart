@@ -17,8 +17,6 @@ class Selection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(items.isNotEmpty, 'Selection items cannot be empty');
-
     return Wrap(
       direction: Axis.horizontal,
       alignment: WrapAlignment.start,

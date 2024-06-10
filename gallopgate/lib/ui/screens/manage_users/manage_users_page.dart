@@ -29,7 +29,7 @@ class ManageUsersPage extends StatelessWidget {
       body: BlocProvider(
         create: (_) => ProfilesBloc(
           repository: locator.get(),
-          id: organization.id,
+          id: organization.id!,
         )..add(Fetch()),
         child: _ManageProfilesPage(
           organization: organization,

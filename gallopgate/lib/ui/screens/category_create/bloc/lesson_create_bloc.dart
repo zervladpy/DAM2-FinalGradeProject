@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:gallopgate/common/enums/status.dart';
-import 'package:gallopgate/models/lesson/lesson.dart';
-import 'package:gallopgate/repositories/lecture_repository.dart';
+import 'package:gallopgate/models/lesson_category/lesson_category.dart';
+import 'package:gallopgate/repositories/lesson_category_repository.dart';
 
 part 'lesson_create_event.dart';
 part 'lesson_create_state.dart';
 
 class LessonCreateBloc extends Bloc<LessonCreateEvent, LessonCreateState> {
   final String organizationId;
-  final LectureRepository lectureRepository;
+  final LessonCategoryRepository lectureRepository;
 
   LessonCreateBloc(
     this.organizationId,
@@ -27,7 +27,7 @@ class LessonCreateBloc extends Bloc<LessonCreateEvent, LessonCreateState> {
     Emitter<LessonCreateState> emit,
   ) {
     emit(state.copyWith(
-      lesson: state.lesson.copyWith(title: event.value),
+      lesson: state.category.copyWith(title: event.value),
     ));
   }
 
@@ -36,7 +36,7 @@ class LessonCreateBloc extends Bloc<LessonCreateEvent, LessonCreateState> {
     Emitter<LessonCreateState> emit,
   ) {
     emit(state.copyWith(
-      lesson: state.lesson.copyWith(description: event.value),
+      lesson: state.category.copyWith(description: event.value),
     ));
   }
 
@@ -47,11 +47,7 @@ class LessonCreateBloc extends Bloc<LessonCreateEvent, LessonCreateState> {
     emit(state.copyWith(status: Status.loading));
 
     try {
-      lectureRepository.create(
-        state.lesson.title,
-        state.lesson.description,
-        organizationId,
-      );
+      lectureRepository.create(state.category);
 
       emit(state.copyWith(status: Status.success));
     } catch (e) {

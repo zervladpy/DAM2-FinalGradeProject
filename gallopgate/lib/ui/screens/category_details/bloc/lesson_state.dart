@@ -4,15 +4,15 @@ class LessonState extends Equatable {
   const LessonState._({
     this.status = Status.initial,
     this.creator = Profile.empty,
-    this.lesson = Lesson.empty,
-    this.intitial = Lesson.empty,
+    this.lesson = LessonCategory.empty,
+    this.intitial = LessonCategory.empty,
     this.error,
   });
 
   final Status status;
   final Profile creator;
-  final Lesson intitial;
-  final Lesson lesson;
+  final LessonCategory intitial;
+  final LessonCategory lesson;
   final String? error;
 
   factory LessonState.initial() => const LessonState._();
@@ -20,8 +20,8 @@ class LessonState extends Equatable {
   LessonState copyWith({
     Status? status,
     Profile? creator,
-    Lesson? lesson,
-    Lesson? intitial,
+    LessonCategory? lesson,
+    LessonCategory? intitial,
     String? error,
   }) {
     return LessonState._(

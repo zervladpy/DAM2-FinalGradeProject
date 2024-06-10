@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:gallopgate/common/enums/status.dart';
+import 'package:gallopgate/models/organization/organization.dart';
 import 'package:gallopgate/repositories/organization_repository.dart';
 
 part 'org_create_event.dart';
@@ -35,17 +37,18 @@ class OrgCreateBloc extends Bloc<OrgCreateEvent, OrgCreateState> {
     OrgCreateSubmit event,
     Emitter<OrgCreateState> emit,
   ) async {
-    emit(state.copyWith(status: OrgCreateStatus.loading));
+    emit(state.copyWith(status: Status.loading));
     try {
-      await repository.create(
-        state.name,
-        state.description,
+      final Organization item = Organization(
+        name: state.name,
+        description: state.description,
       );
-      emit(state.copyWith(status: OrgCreateStatus.success));
+
+      await repository.create(item);
+      emit(state.copyWith(status: Status.success));
     } catch (e) {
       log(e.toString());
-      emit(state.copyWith(status: OrgCreateStatus.error, error: e.toString()));
+      emit(state.copyWith(status: Status.error, error: e.toString()));
     }
-    emit(state.copyWith(status: OrgCreateStatus.initial, error: ''));
   }
 }

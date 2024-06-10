@@ -23,7 +23,7 @@ class LoginState extends Equatable {
         emailError: '',
         passwordError: '',
         error: '',
-        showPassword: false,
+        showPassword: true,
       );
 
   LoginState copyWith({

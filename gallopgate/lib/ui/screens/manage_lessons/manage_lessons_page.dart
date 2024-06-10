@@ -1,15 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
-import 'package:gallopgate/models/organization/organization.dart';
-import 'package:gallopgate/ui/screens/manage_lessons/bloc/lessons_bloc.dart';
-import 'package:gallopgate/ui/screens/manage_lessons/widgets/lessons_sliver_appbar.dart';
-import 'package:gallopgate/ui/widgets/buttons/g_icon_button.dart';
-import 'package:gallopgate/ui/widgets/tiles/list_tile.dart';
+import 'package:gallopgate/ui/screens/manage_lessons/bloc/manage_lessons_bloc.dart';
+import 'package:gallopgate/ui/screens/manage_lessons/widgets/manage_lessons.library.dart';
+import 'package:gallopgate/ui/widgets/loading/sliver_linear_loading.dart';
+import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 
 class ManageLessonsPage extends StatelessWidget {
   const ManageLessonsPage({super.key});
@@ -18,90 +18,47 @@ class ManageLessonsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MainBloc mainBloc = context.read<MainBloc>();
-
-    final profile = mainBloc.state.profile;
-    final organization = mainBloc.state.organization;
-
-    final isAdmin = profile.roles.any((role) => role.name == 'admin');
+    final organizationId = context.watch<MainBloc>().state.organization.id;
 
     return Scaffold(
       body: BlocProvider(
-        create: (_) => LessonsBloc(
+        create: (_) => ManageLessonsBloc(
           repository: locator.get(),
-          id: organization.id,
-        )..add(Fetch()),
-        child: _ManageLessonsPage(
-          organization: organization,
-          isAdmin: isAdmin,
-        ),
+        )..add(Fetch(organizationId: organizationId!)),
+        child: const _Content(),
       ),
     );
   }
 }
 
-class _ManageLessonsPage extends StatelessWidget {
-  const _ManageLessonsPage({
-    super.key,
-    required this.organization,
-    required this.isAdmin,
-  });
-
-  final Organization organization;
-  final bool isAdmin;
+class _Content extends StatelessWidget {
+  const _Content({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LessonsBloc, LessonsState>(
-      listener: (context, state) {},
+    final organziation = context.watch<MainBloc>().state.organization;
+    return BlocConsumer<ManageLessonsBloc, ManageLessonsState>(
+      listener: (context, state) {
+        if (state.status == Status.error) {
+          log('Error: ${state.error}');
+          GSnackbar.error(context: context, message: state.error!);
+          context.pop();
+        }
+      },
       builder: (context, state) {
+        if (state.status == Status.loading) {
+          return CustomScrollView(
+            slivers: [
+              ManageLessonsSliverAppabar(organization: organziation),
+              const SliverLinearLoading(),
+            ],
+          );
+        }
+
         return CustomScrollView(
           slivers: [
-            LessonsSliverAppbar(organization: organization, isAdmin: isAdmin),
-            if (state.status == Status.loading)
-              const SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [LinearProgressIndicator()],
-                ),
-              ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Filter',
-                        prefixIcon: Icon(Iconsax.search_normal_1),
-                      ),
-                    )),
-                    const SizedBox(width: 5),
-                    const GIconButton.filled(icon: Iconsax.filter),
-                  ],
-                ),
-              ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverList.separated(
-              itemCount: state.filtered.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 5),
-              itemBuilder: (_, index) {
-                final lesson = state.filtered[index];
-                final item = ListTileItem(
-                  title: lesson.title,
-                  subtitle: lesson.description,
-                  navigate: () => context.push(
-                    '/managment/lessons/${lesson.id}',
-                  ),
-                  leading: const Icon(Iconsax.book),
-                );
-
-                return GListTile(item: item);
-              },
-            ),
+            ManageLessonsSliverAppabar(organization: organziation),
+            const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
           ],
         );
       },
