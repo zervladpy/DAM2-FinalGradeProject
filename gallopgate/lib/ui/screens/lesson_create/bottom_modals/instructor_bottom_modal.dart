@@ -3,39 +3,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/models/horse/horse.dart';
 import 'package:gallopgate/models/profile/profile.dart';
 import 'package:gallopgate/ui/screens/lesson_create/controllers/member/member_cubit.dart';
-import 'package:gallopgate/ui/screens/lesson_create/widgets/appbar/add_instructor_appbar.dart';
-import 'package:gallopgate/ui/screens/lesson_create/widgets/inputs/select_horse.dart';
-import 'package:gallopgate/ui/screens/lesson_create/widgets/inputs/select_profile.dart';
+import 'package:gallopgate/ui/screens/lesson_create/library.dart';
 
-class AddInstructorPage extends StatelessWidget {
-  const AddInstructorPage({
+class InstructorBottomModal extends StatelessWidget {
+  const InstructorBottomModal({
     super.key,
-    required this.title,
     this.profiles = const [],
     this.horses = const [],
+    this.onSubmit,
   });
 
-  final String title;
   final List<Profile> profiles;
   final List<Horse> horses;
+  final void Function(Profile profile, Horse? horse)? onSubmit;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          AddInstructorAppbar(title: title),
-          SliverPadding(
-            padding: const EdgeInsets.all(16.0),
-            sliver: BlocProvider(
-              create: (_) => MemberCubit(),
-              child: _Content(
-                profiles: profiles,
-                horses: horses,
-              ),
-            ),
-          ),
-        ],
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.sizeOf(context).height * 0.3,
+      ),
+      child: BlocProvider(
+        create: (_) => MemberCubit(save: onSubmit),
+        child: _Content(
+          profiles: profiles,
+          horses: horses,
+        ),
       ),
     );
   }
@@ -53,18 +47,16 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Stack(
-        children: [
-          Column(
-            children: [
-              _SelectProfile(profiles: profiles),
-              const SizedBox(height: 16.0),
-              _SelectHorse(horses: horses),
-            ],
-          )
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _SelectProfile(profiles: profiles),
+        const SizedBox(height: 16.0),
+        _SelectHorse(horses: horses),
+        const SizedBox(height: 16.0),
+        const _AddButton(),
+      ],
     );
   }
 }
@@ -119,6 +111,25 @@ class _SelectHorse extends StatelessWidget {
           onSelect: context.read<MemberCubit>().setHorse,
         );
       },
+    );
+  }
+}
+
+class _AddButton extends StatelessWidget {
+  const _AddButton({
+    super.key,
+    this.onPressed,
+  });
+
+  final Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<MemberCubit>();
+
+    return ElevatedButton(
+      onPressed: cubit.submit,
+      child: const Text("Add"),
     );
   }
 }

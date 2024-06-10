@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/config/theme/utils/colors.dart';
+import 'package:gallopgate/models/lesson_member/lesson_member.dart';
+import 'package:gallopgate/models/role/role.dart';
 import 'package:gallopgate/ui/screens/lesson_create/controllers/bloc/lesson_create_bloc.dart';
-import 'package:gallopgate/ui/screens/lesson_create/dialogs/instructor_dialog.dart';
+import 'package:gallopgate/ui/screens/lesson_create/bottom_modals/instructor_bottom_modal.dart';
 import 'package:gallopgate/ui/screens/lesson_create/widgets/appbar/appbar.dart';
+import 'package:gallopgate/ui/screens/lesson_create/widgets/tiles/time_tile.dart';
 import 'package:gallopgate/ui/widgets/buttons/g_icon_button.dart';
 import 'package:gallopgate/ui/widgets/inputs/counter_input.dart';
 import 'package:gallopgate/ui/widgets/inputs/time_input_field.dart';
@@ -14,6 +17,7 @@ import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
 import 'package:gallopgate/ui/widgets/tab_bar/tab_bar.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class LessonCreatePage extends StatelessWidget {
   const LessonCreatePage({super.key});
@@ -79,14 +83,9 @@ class _Content extends StatelessWidget {
                 SizedBox(height: 16.0),
                 _WeekDayField(),
                 SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _StartAtField(),
-                    SizedBox(width: 16.0),
-                    _Duration(),
-                  ],
-                ),
+                _StartAtField(),
+                SizedBox(height: 16.0),
+                _Duration(),
                 SizedBox(height: 16.0),
                 _LessonMembers(),
               ],
@@ -150,14 +149,14 @@ class _StartAtField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Start At'),
-        SizedBox(width: 16.0),
-        TimeInputField(),
-      ],
+    final DateTime date =
+        context.watch<LessonCreateBloc>().state.lesson.startAt ??
+            DateTime.now();
+
+    return TimeTile(
+      title: "Start At",
+      date: date,
+      selectDuration: () {},
     );
   }
 }
@@ -202,17 +201,9 @@ class _Duration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Duration'),
-        const SizedBox(width: 16.0),
-        TimeInputField(
-          time: DateTime(0, 0),
-        )
-      ],
-    );
+    final duration = context.watch<LessonCreateBloc>().state.lesson.duration;
+
+    return TimeTile(title: "Duration", date: DateTime.now());
   }
 }
 
@@ -284,20 +275,19 @@ class _InstructorsPage extends StatelessWidget {
     );
   }
 
-  Future<void> _openModel(BuildContext context) {
-    final organization = context.read<MainBloc>().state.organization;
-    final profiles = context.read<LessonCreateBloc>().state.profiles;
-    final horses = context.read<LessonCreateBloc>().state.horses;
+  Future<void> _openModel(BuildContext context) async {
+    final bloc = context.read<LessonCreateBloc>();
+    final profiles = bloc.state.profiles;
+    final horses = bloc.state.horses;
 
-    return showAdaptiveDialog(
+    showMaterialModalBottomSheet(
       context: context,
-      useSafeArea: true,
-      barrierColor: GColor.primaryLight.withOpacity(0.5),
+      backgroundColor: GColor.surfaceLight,
       builder: (context) {
-        return AddInstructorPage(
-          title: organization.name,
+        return InstructorBottomModal(
           profiles: profiles,
           horses: horses,
+          onSubmit: (profile, horse) {},
         );
       },
     );

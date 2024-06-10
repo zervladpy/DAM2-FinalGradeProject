@@ -4,8 +4,6 @@ import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/ui/screens/org_create/library.dart';
 import 'package:gallopgate/ui/widgets/containers/image_picker_container.dart';
 import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
-import 'package:gallopgate/ui/wrappers/auth_wrapper/cubit/auth_cubit.dart';
-import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class OrgCreatePage extends StatelessWidget {

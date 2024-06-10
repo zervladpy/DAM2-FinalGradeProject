@@ -6,7 +6,9 @@ import 'package:gallopgate/models/profile/profile.dart';
 part 'member_state.dart';
 
 class MemberCubit extends Cubit<MemberState> {
-  MemberCubit() : super(MemberState.initial());
+  final Function(Profile, Horse?)? save;
+
+  MemberCubit({required this.save}) : super(MemberState.initial());
 
   void setProfile(Profile profile) => emit(state.copyWith(profile: profile));
 
@@ -14,8 +16,7 @@ class MemberCubit extends Cubit<MemberState> {
 
   void clear() => emit(MemberState.initial());
 
-  void submit(void Function(Profile, Horse) save) {
-    save(state.profile, state.horse);
-    clear();
+  void submit() {
+    save?.call(state.profile, state.horse);
   }
 }

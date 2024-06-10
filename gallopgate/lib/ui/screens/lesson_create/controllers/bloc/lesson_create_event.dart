@@ -71,7 +71,9 @@ class DurationChanged extends LessonCreateEvent {
 }
 
 class AddLessonMemeber extends LessonCreateEvent {
-  const AddLessonMemeber();
+  final LessonMember newMember;
+
+  const AddLessonMemeber(this.newMember);
 
   @override
   List<Object> get props => [];
