@@ -43,11 +43,6 @@ Este servicio proporcionará las siguientes características básicas:
 
 ## Impulsado por
 
-> Diseñado con la ayuda de:
-
-![Excalidraw](https://img.shields.io/badge/excalidraw-%23000000.svg?style=for-the-badge&logo=excalidraw&logoColor=white)
-![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
-
 > Servidor
 
 ![Supabase](https://img.shields.io/badge/supabase-%23323330.svg?style=for-the-badge&logo=supabase&logoColor=white)
@@ -62,3 +57,8 @@ Este servicio proporcionará las siguientes características básicas:
 ![Git](https://img.shields.io/badge/git-%23F05032.svg?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 ![GitLab](https://img.shields.io/badge/gitlab-%23FCA121.svg?style=for-the-badge&logo=gitlab&logoColor=white)
+
+> Herramientas utilizadas para la gestión y tareas básicas
+
+- Eraser
+- ObsidianArt
