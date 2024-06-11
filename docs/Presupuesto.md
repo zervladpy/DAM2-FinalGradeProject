@@ -78,6 +78,7 @@ Debo incluir que conozco personalmente a alguno de los usuarios de la plataforma
 |    2    |    100    |            -            |     5     |     5     |   APP + MAIL   |  80€/mes  |
 |    3    |    200    |            X            |     5     |     5     | APP, MAIL, SMS | 110€/mes  |
 | Empresa | Ilimitado |            X            | Ilimitado | Ilimitado | APP, MAIL, SMS | +200€/mes |
+
 \* Las acciones Automáticas son procesos que realiza el servidor automáticamente. Como el servicio de recordatorios de clases, eventos o validación de licencias entre otros.
 
 ### Análisis del Mercado
@@ -93,6 +94,7 @@ Como se ha visto en el apartado [Competencia](#competencia) solo habrá un compe
 Durante las primeras etapas del desarrollo de la aplicación como puede ser hasta y incluido la **BETA** no se espera obtener ingresos por parte de las escuelas con el fin de mejorar todo lo posible el manejo de la aplicación antes de dar el salto al negocio.
 
 Después de la fase **BETA** se espera obtener un ingreso superior a **598.90 €** \* que equivale a 12 suscripciones al [tier 1](#tabla-de-precios).
+
 
 > \* Gasto estimado mensual
 
