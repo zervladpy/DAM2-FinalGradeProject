@@ -32,12 +32,12 @@ Este servicio proporcionará las siguientes características básicas:
 
 ##  Tabla de Contenidos
 1. [Estudio Preliminar](docs/preliminary_study.md)
-2. [Análisis](docs/analisis.md)
+2. [Análisis](Análisis.md)
    - [Planificación](docs/planificacion.md)
-   - [Presupuesto](docs/presupuesto.md)
+   - [Presupuesto](Presupuesto.md)
 3. [Diseño](docs/diseno.md)
 4. [Codificación y Pruebas](docs/codificacion_pruebas.md)
-5. [Manuales del Proyecto](docs/manuales.md)
+5. [Manuales del Proyecto](Manuales.md)
    - [Referencias](docs/referencias.md)
 6. [Uso de Git](docs/uso_git.md)
 

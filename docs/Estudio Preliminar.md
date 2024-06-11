@@ -1,5 +1,3 @@
-Aquí está la traducción del texto en formato Markdown:
-
 # Estudio Preliminar
 
 ## Tabla de Contenidos
@@ -21,7 +19,7 @@ La Aplicación de Gestión de Centros Ecuestres nace de la necesidad de agilizar
 ### 1.2 Funcionalidad del Proyecto
 
 La aplicación ofrecerá una variedad de características, incluyendo pero no limitado a:
-1. **Autenticación y Perfiles de Usuario**
+1. **Autentificación y Perfiles de Usuario**
    - Registro seguro de usuarios y funcionalidad de inicio de sesión.
    - Gestión de perfiles de usuario, incluida la edición de información personal y preferencias.
 
@@ -32,8 +30,8 @@ La aplicación ofrecerá una variedad de características, incluyendo pero no li
 
 3. **Gestión del Cuidado de los Caballos**
    - Base de datos para almacenar información sobre cada caballo, incluidos registros de salud, horarios de alimentación y horas de trabajo.
-   - Sistema de seguimiento para monitorear el bienestar y la carga de trabajo de cada caballo.
-   - Alertas para citas veterinarias, vacunaciones y otros eventos importantes relacionados con el cuidado de los caballos.
+   - Sistema de seguimiento para seguimiento el bienestar y la carga de trabajo de cada caballo.
+   - Alertas para citas veterinarias, vacunas y otros eventos importantes relacionados con el cuidado de los caballos.
 
 4. **Gestión de Eventos**
    - Sistema de reservas para eventos como competiciones, clínicas y talleres.
@@ -45,10 +43,10 @@ La aplicación ofrecerá una variedad de características, incluyendo pero no li
    - Función de anuncios para que los centros ecuestres compartan actualizaciones importantes, noticias y promociones con los usuarios.
 
 6. **Tablero de Administración**
-   - Tablero para que los administradores del centro ecuestre monitoreen y administren reservas, cuentas de usuario y pagos.
+   - Tablero para que los administradores del centro ecuestre monitor-icen y administren reservas, cuentas de usuario y pagos.
    - Herramientas de informes para rastrear métricas de uso, ingresos y comentarios de los clientes.
 
-7. **Accesibilidad y Usabilidad**
+7. **Accesibilidad**
    - Diseño de interfaz de usuario intuitivo que sea fácil de navegar para usuarios de todos los niveles de experiencia.
    - Compatibilidad con múltiples dispositivos y tamaños de pantalla, incluidos teléfonos inteligentes, tabletas y computadoras de escritorio.
    - Funciones de accesibilidad para usuarios con discapacidades, como compatibilidad con lectores de pantalla y métodos de entrada alternativos.
