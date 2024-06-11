@@ -1,0 +1,179 @@
+{
+  "main": {
+    "id": "6e035ba780147d2e",
+    "type": "split",
+    "children": [
+      {
+        "id": "f6a2c588d7ddc4c0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b62c709246e0a69f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/Diseño.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f803a3f21e7ba609",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c2d09c69f4cd8d9a",
+    "type": "split",
+    "children": [
+      {
+        "id": "7881137c3a9f3083",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5f73d0f6137efb86",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "08fa2795405c4166",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "959bcec5125ec57d",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "55080d00d2d50667",
+    "type": "split",
+    "children": [
+      {
+        "id": "1bedac394405fbb7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c95f87e960d165ee",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "docs/Diseño.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "5668e3458aa840ec",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "docs/Diseño.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d4ad343dbba5438d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "53690e391ceee9fd",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "docs/Diseño.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false
+    }
+  },
+  "active": "b62c709246e0a69f",
+  "lastOpenFiles": [
+    "docs/Coding Testing.md",
+    "docs/Análisis.md",
+    "docs/Manuales.md",
+    "build/android",
+    "build",
+    "docs/Sin título",
+    "docs/Estudio Preliminar.md",
+    "docs/Diseño.md",
+    "().md",
+    "README.md",
+    "docs/Referencias.md",
+    "docs/Presupuesto.md",
+    "docs/Planificación.md",
+    "gallopgate/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md",
+    "Sin título.canvas",
+    "2024-06-11.md",
+    "gallopgate/build/app/intermediates/assets/debug/flutter_assets/assets/images/logo/png/splash_dark.png",
+    "img/logo/logo_light.png",
+    "img/logo/logo_dark.png"
+  ]
+}

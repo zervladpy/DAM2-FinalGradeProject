@@ -9,20 +9,122 @@
 
 > **Nota** : Puede ser necesario crear una cuenta en [Eraser](https://app.eraser.io/) para poder visualizar el diagrama.
 
+---
 
 ## Diagrama de Arquitectura
 
 - [Arquitectura de Servicios](https://app.eraser.io/workspace/qCiZfe9alVfbK4OC42Rx?elements=P5Tr4Nq2XOY6Owec5c2ZhQ)
 - [Diagramas de Flujo](https://app.eraser.io/workspace/qCiZfe9alVfbK4OC42Rx?elements=Fyqgx8O3vF-tKS-nzId8bg)
 
+---
+
 ## Diagrama de Base de Datos
 
-La base de datos elegida será **No Relacional**
+La base de datos será de tipo **relacional** con el motor de **PostgreSQL**
 
-La aplicación se estructura de la siguiente manera. Para cada `organizacion` se creará un nuevo proyecto de [Firebase](https://firebase.google.com/). Por lo cual se obtendrá un manejo mas fácil y seguro de los datos. 
+### Modelos
 
-- [ER](https://app.eraser.io/workspace/qCiZfe9alVfbK4OC42Rx?elements=krg-UMh6kDz8irDVYkZRlw)
+Generado para el **MVP** del proyecto
 
+ ###### **Usuario**
+
+| Columna    |   Tipo    | NULLABLE | PK  | FK  |
+| ---------- | :-------: | :------: | :-: | :-: |
+| `id`       | `string`  |    🗙    |  ✔  | 🗙  |
+| `email`    | `string`  |    🗙    |  ✔  | 🗙  |
+| `verifyed` | `boolean` |    🗙    | 🗙  | 🗙  |
+| `password` | `string`  |    🗙    | 🗙  | 🗙  |
+
+###### Role
+
+| Columna |   Tipo   | NULLABLE | PK  | FK  |
+| ------- | :------: | :------: | :-: | :-: |
+| `id`    |  `int`   |    🗙    |  ✔  | 🗙  |
+| `name`  | `string` |    🗙    | 🗙  | 🗙  |
+
+###### Organization
+
+| Columna       |   Tipo   | NULLABLE | PK  |         FK          |
+| ------------- | :------: | :------: | :-: | :-----------------: |
+| `id`          | `string` |    🗙    |  ✔  |         🗙          |
+| `created-at`  |  `date`  |    🗙    | 🗙  |         🗙          |
+| `creator-id`  | `string` |    ✔     | 🗙  | [Profile](#profile) |
+| `name`        | `string` |    🗙    | 🗙  |         🗙          |
+| `description` | `string` |    🗙    | 🗙  |         🗙          |
+| `logo-url`    | `string` |    ✔     | 🗙  |         🗙          |
+
+###### Profile
+
+| Columna           |   Tipo    | NULLABLE | PK  |         FK          |
+| ----------------- | :-------: | :------: | :-: | :-----------------: |
+| `id`              | `string`  |    🗙    |  ✔  | [Usuario](#usuario) |
+| `created-at`      |  `date`   |    🗙    | 🗙  |         🗙          |
+| `fist-name`       | `string`  |    ✔     | 🗙  |         🗙          |
+| `last-name`       | `string`  |    ✔     | 🗙  |         🗙          |
+| `birth-date`      | `string`  |    ✔     |  ✔  |         🗙          |
+| `email`           | `boolean` |    🗙    | 🗙  | [Usuario](#usuario) |
+| `avatar-url`      | `string`  |    ✔     | 🗙  |         🗙          |
+| `organization-id` | `string`  |    ✔     | 🗙  |         🗙          |
+###### Profile-Role
+
+| Columna      |   Tipo   | NULLABLE | PK  |         FK          |
+| ------------ | :------: | :------: | :-: | :-----------------: |
+| `role-id`    |  `int`   |    🗙    |  ✔  |    [Role](#role)    |
+| `profile-id` | `string` |    🗙    |  ✔  | [Profile](#profile) |
+
+###### Horse
+
+| Columna           |   Tipo   | NULLABLE | PK  |              FK               |
+| ----------------- | :------: | :------: | :-: | :---------------------------: |
+| `id`              | `string` |    🗙    |  ✔  |              🗙               |
+| `created-at`      |  `date`  |    🗙    | 🗙  |              🗙               |
+| `owner-id`        | `string` |    🗙    | 🗙  |      [Profile](#profile)      |
+| `full-name`       | `string` |    ✔     | 🗙  |              🗙               |
+| `alias`           | `string` |    🗙    | 🗙  |              🗙               |
+| `birth-date`      | `string` |    🗙    | 🗙  |              🗙               |
+| `organization-id` | `string` |    🗙    | 🗙  | [Organization](#organization) |
+
+###### Lesson-Category
+
+| Columna       |   Tipo   | NULLABLE | PK  | FK  |
+| ------------- | :------: | :------: | :-: | :-: |
+| `id`          | `string` |    🗙    |  ✔  | 🗙  |
+| `title`       | `string` |    🗙    | 🗙  | 🗙  |
+| `description` | `string` |    ✔     | 🗙  | 🗙  |
+###### Lesson
+
+| Columna           |   Tipo   | NULLABLE | PK  |                 FK                  |
+| ----------------- | :------: | :------: | :-: | :---------------------------------: |
+| `id`              | `string` |    🗙    |  ✔  |                 🗙                  |
+| `title`           | `string` |    🗙    | 🗙  |                 🗙                  |
+| `description`     | `string` |    ✔     | 🗙  |                 🗙                  |
+| `category-id`     | `string` |    🗙    | 🗙  | [Lesson-Category](#lesson-category) |
+| `capacity`        |  `int`   |    ✔     | 🗙  |                 🗙                  |
+| `week-day`        |  `int`   |    🗙    | 🗙  |                 🗙                  |
+| `start-time`      |  `date`  |    🗙    | 🗙  |                 🗙                  |
+| `duration`        |  `long`  |    🗙    | 🗙  |                 🗙                  |
+| `instructor-id`   | `string` |    🗙    | 🗙  |         [Profile](#profile)         |
+| `organization-id` | `string` |    🗙    | 🗙  |    [Organization](#organization)    |
+###### Lesson-Profile-Horse
+
+| Columna           |   Tipo   | NULLABLE | PK  |              FK               |
+| ----------------- | :------: | :------: | :-: | :---------------------------: |
+| `id`              | `string` |    🗙    |  ✔  |              🗙               |
+| `organization-id` | `string` |    🗙    | 🗙  | [Organization](#organization) |
+| `rider-id`        | `string` |    🗙    | 🗙  |      [Profile](#profile)      |
+| `horse-id`        | `string` |    🗙    | 🗙  |        [Horse](#horse)        |
+
+###### LessonAssistence
+
+| Columna          |   Tipo    | NULLABLE | PK  |         FK          |
+| ---------------- | :-------: | :------: | :-: | :-----------------: |
+| `lesson-id`      | `string`  |    🗙    |  ✔  |  [Lesson](#lesson)  |
+| `profile-id`     | `string`  |    🗙    |  ✔  | [Profile](#profile) |
+| `assitance-date` |  `date`   |    🗙    |  ✔  |         🗙          |
+| `justified`      | `boolean` |    🗙    | 🗙  |         🗙          |
+
+
+---
 
 ## Diseño de la Interfaz de Usuario
 
