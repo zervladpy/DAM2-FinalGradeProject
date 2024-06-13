@@ -95,6 +95,7 @@ Durante las primeras etapas del desarrollo de la aplicación como puede ser hast
 
 Después de la fase **BETA** se espera obtener un ingreso superior a **598.90 €** \* que equivale a 12 suscripciones al [tier 1](#tabla-de-precios).
 
+
 > \* Gasto estimado mensual
 
 ### Financiación
