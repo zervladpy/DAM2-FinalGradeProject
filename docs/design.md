@@ -1,5 +1,0 @@
-# Design
-
-## Table of Contents
-
-
