@@ -1,23 +1,20 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
+import 'package:gallopgate/common/utils/date_utils.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
-import 'package:gallopgate/config/theme/utils/colors.dart';
-import 'package:gallopgate/models/lesson_member/lesson_member.dart';
-import 'package:gallopgate/models/role/role.dart';
-import 'package:gallopgate/ui/screens/lesson_create/controllers/bloc/lesson_create_bloc.dart';
-import 'package:gallopgate/ui/screens/lesson_create/bottom_modals/instructor_bottom_modal.dart';
-import 'package:gallopgate/ui/screens/lesson_create/widgets/appbar/appbar.dart';
-import 'package:gallopgate/ui/screens/lesson_create/widgets/tiles/time_tile.dart';
-import 'package:gallopgate/ui/widgets/buttons/g_icon_button.dart';
-import 'package:gallopgate/ui/widgets/inputs/counter_input.dart';
-import 'package:gallopgate/ui/widgets/inputs/time_input_field.dart';
+import 'package:gallopgate/config/extensions/context.dart';
+import 'package:gallopgate/models/lesson_category/lesson_category.dart';
+import 'package:gallopgate/models/profile/profile.dart';
+import 'package:gallopgate/ui/screens/lesson_create/bloc/bloc/lesson_create_bloc.dart';
+import 'package:gallopgate/ui/screens/lesson_create/library.dart';
+import 'package:gallopgate/ui/screens/org_create/library.dart';
+import 'package:gallopgate/ui/widgets/inputs/text_field/text_form_filed.dart';
 import 'package:gallopgate/ui/widgets/loading/sliver_linear_loading.dart';
 import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
-import 'package:gallopgate/ui/widgets/tab_bar/tab_bar.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class LessonCreatePage extends StatelessWidget {
   const LessonCreatePage({super.key});
@@ -26,24 +23,42 @@ class LessonCreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final organization = context.watch<MainBloc>().state.organization;
-
-    assert(organization.id != null, 'no organization id provided');
+    final bloc = context.watch<MainBloc>();
+    final organization = bloc.state.organization;
+    final creator = bloc.state.profile;
 
     return Scaffold(
       body: BlocProvider(
         create: (_) => LessonCreateBloc(
+          organization: organization,
+          creator: creator,
           lessonRepository: locator.get(),
-          lessonCategoryRepository: locator.get(),
           profileRepository: locator.get(),
-          horseRepository: locator.get(),
-          roleRepository: locator.get(),
-        )..add(Fetch(organizationId: organization.id!)),
-        child: CustomScrollView(
-          slivers: [
-            LessonCreateSliverAppbar(organization: organization),
-            const _Content()
-          ],
+          lessonCategoryRepository: locator.get(),
+        )..add(const Fetch()),
+        child: Builder(
+          builder: (context) {
+            return BlocListener<LessonCreateBloc, LessonCreateState>(
+              listenWhen: (prev, curr) => prev.status != curr.status,
+              listener: (context, state) {
+                if (state.status == Status.success) {
+                  GSnackbar.success(
+                    context: context,
+                    message: 'Lesson ${state.lesson.title} successfully',
+                  );
+                }
+
+                if (state.status == Status.error) {
+                  log(state.error);
+                  GSnackbar.error(
+                    context: context,
+                    message: state.error,
+                  );
+                }
+              },
+              child: const _Content(),
+            );
+          },
         ),
       ),
     );
@@ -55,43 +70,57 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LessonCreateBloc, LessonCreateState>(
-      listenWhen: (prev, curr) => prev.status != curr.status,
-      listener: (context, state) {
-        if (state.status == Status.error) {
-          GSnackbar.error(context: context, message: state.error!);
-        } else if (state.status == Status.success) {
-          GSnackbar.success(context: context, message: 'Lesson created');
-        }
+    final organization = context.watch<MainBloc>().state.organization;
+
+    return BlocBuilder<LessonCreateBloc, LessonCreateState>(
+      builder: (context, state) {
+        return CustomScrollView(
+          slivers: [
+            LessonCreateSliverAppbar(organization: organization),
+            const _LoadingBar(),
+            if (state.status != Status.loading)
+              const SliverPadding(
+                padding: EdgeInsets.all(16.0),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _TitleField(),
+                      SizedBox(height: 16.0),
+                      _CategoryField(),
+                      SizedBox(height: 16.0),
+                      _InstructorSelect(),
+                      SizedBox(height: 16.0),
+                      _StartTime(),
+                      SizedBox(height: 16.0),
+                      _Duration(),
+                      SizedBox(height: 16.0),
+                      _WeekDaySelection(),
+                      SizedBox(height: 16.0),
+                      _CreateLessonButton(),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        );
       },
+    );
+  }
+}
+
+class _LoadingBar extends StatelessWidget {
+  const _LoadingBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LessonCreateBloc, LessonCreateState>(
       buildWhen: (prev, curr) => prev.status != curr.status,
       builder: (context, state) {
-        if (state.status == Status.loading) {
-          return const SliverLinearLoading();
-        }
-
-        return const SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          sliver: SliverToBoxAdapter(
-            child: Column(
-              children: [
-                _TitleField(),
-                SizedBox(height: 16.0),
-                _CategoryField(),
-                SizedBox(height: 16.0),
-                _Capacity(),
-                SizedBox(height: 16.0),
-                _WeekDayField(),
-                SizedBox(height: 16.0),
-                _StartAtField(),
-                SizedBox(height: 16.0),
-                _Duration(),
-                SizedBox(height: 16.0),
-                _LessonMembers(),
-              ],
-            ),
-          ),
-        );
+        return switch (state.status) {
+          Status.loading => const SliverLinearLoading(),
+          _ => const SliverToBoxAdapter(child: SizedBox.shrink()),
+        };
       },
     );
   }
@@ -102,20 +131,26 @@ class _TitleField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<LessonCreateBloc>();
+
     return BlocBuilder<LessonCreateBloc, LessonCreateState>(
       buildWhen: (prev, curr) => prev.lesson.title != curr.lesson.title,
       builder: (context, state) {
-        return TextFormField(
+        return GTextFormField(
           initialValue: state.lesson.title,
-          onChanged: (value) =>
-              context.read<LessonCreateBloc>().add(TitleChanged(title: value)),
-          decoration: const InputDecoration(
-            labelText: 'Title',
-            hintText: 'Enter the lesson title',
-          ),
+          enabled: true,
+          onChanged: (value) => bloc.add(TitleChanged(title: value)),
+          validator: validator,
+          prefixIcon: Iconsax.activity,
         );
       },
     );
+  }
+
+  String? validator(String? value) {
+    if (value == null) return 'required';
+    if (value.isEmpty) return 'required';
+    return null;
   }
 }
 
@@ -124,19 +159,41 @@ class _CategoryField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<LessonCreateBloc>();
+
     return BlocBuilder<LessonCreateBloc, LessonCreateState>(
+      buildWhen: (prev, curr) {
+        if (prev.lesson.category != curr.lesson.category) {
+          return true;
+        }
+
+        if (prev.categories != curr.categories) {
+          return true;
+        }
+
+        return false;
+      },
       builder: (context, state) {
-        return DropdownButtonFormField(
-          decoration: const InputDecoration(labelText: 'Category'),
-          value: null,
-          onChanged: (value) => context
-              .read<LessonCreateBloc>()
-              .add(CategoryChanged(category: value!)),
+        return DropdownButtonFormField<LessonCategory>(
+          decoration: const InputDecoration(
+            labelText: 'Category',
+          ),
+          onChanged: (value) => bloc.add(CategoryChanged(
+            category: value ?? LessonCategory.empty,
+          )),
           items: state.categories
-              .map((category) => DropdownMenuItem(
-                    value: category,
-                    child: Text(category.title),
-                  ))
+              .map(
+                (category) => DropdownMenuItem(
+                  value: category,
+                  child: Row(
+                    children: [
+                      const Icon(Iconsax.category),
+                      const SizedBox(width: 16.0),
+                      Text(category.title),
+                    ],
+                  ),
+                ),
+              )
               .toList(),
         );
       },
@@ -144,55 +201,119 @@ class _CategoryField extends StatelessWidget {
   }
 }
 
-class _StartAtField extends StatelessWidget {
-  const _StartAtField({super.key});
+class _InstructorSelect extends StatelessWidget {
+  const _InstructorSelect({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final DateTime date =
-        context.watch<LessonCreateBloc>().state.lesson.startAt ??
-            DateTime.now();
-
-    return TimeTile(
-      title: "Start At",
-      date: date,
-      selectDuration: () {},
-    );
-  }
-}
-
-class _WeekDayField extends StatelessWidget {
-  const _WeekDayField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final weekdays = [
-      'monday',
-      'tuesday',
-      'wednesday',
-      'thursday',
-      'friday',
-      'saturday',
-      'sunday',
-    ];
+    final bloc = context.watch<LessonCreateBloc>();
 
     return BlocBuilder<LessonCreateBloc, LessonCreateState>(
       builder: (context, state) {
-        return DropdownButtonFormField<String>(
-          decoration: const InputDecoration(labelText: 'Weekday'),
-          value: null,
-          onChanged: (value) => context
-              .read<LessonCreateBloc>()
-              .add(WeekDayChanged(weekDay: weekdays.indexOf(value ?? ''))),
-          items: weekdays
-              .map((weekday) => DropdownMenuItem(
-                    value: weekday,
-                    child: Text(weekday),
-                  ))
-              .toList(),
+        return DropdownButtonFormField<Profile>(
+          decoration: const InputDecoration(
+            labelText: 'Instructor',
+          ),
+          onChanged: (v) => bloc.add(
+            InstructorChanged(instructor: v ?? Profile.empty),
+          ),
+          items: state.instructors.map((v) {
+            return DropdownMenuItem<Profile>(
+              child: Row(
+                children: [
+                  const Icon(Iconsax.user),
+                  const SizedBox(width: 16.0),
+                  Text(v.fullName),
+                ],
+              ),
+            );
+          }).toList(),
         );
       },
     );
+  }
+}
+
+class _CreateLessonButton extends StatelessWidget {
+  const _CreateLessonButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LessonCreateBloc, LessonCreateState>(
+      buildWhen: (prev, curr) => prev.status != curr.status,
+      builder: (context, state) {
+        final isEnabled = state.status != Status.loading;
+        final isLoading = state.status == Status.loading;
+
+        return ElevatedButton(
+          onPressed: isEnabled && !isLoading
+              ? () => context.read<LessonCreateBloc>().add(const Submit())
+              : null,
+          child: const Text("Create"),
+        );
+      },
+    );
+  }
+}
+
+class _StartTime extends StatelessWidget {
+  const _StartTime({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LessonCreateBloc, LessonCreateState>(
+      buildWhen: (prev, curr) => prev.lesson.startAt != curr.lesson.startAt,
+      builder: (context, state) {
+        final hours = state.lesson.startAt?.hour;
+        final minutes = state.lesson.startAt?.minute;
+        return ListTile(
+          leading: const Icon(Iconsax.clock),
+          contentPadding: const EdgeInsets.all(0),
+          title: const Text("Start at"),
+          onTap: () => _showTimeWidget(context, (date) {
+            context.read<LessonCreateBloc>().add(StartAtChanged(startAt: date));
+          }),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                state.lesson.startAt != null
+                    ? '$hours:$minutes'
+                    : GDateUtils.formatTimeToString(DateTime.now()),
+                style: context.textTheme.bodyLarge,
+              ),
+              const SizedBox(width: 8.0),
+              const Icon(Iconsax.arrow_right_3),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _showTimeWidget(
+    BuildContext context,
+    Function(DateTime)? setStartTime,
+  ) async {
+    final now = DateTime.now();
+
+    final time = await showTimePicker(
+      context: context,
+      initialEntryMode: TimePickerEntryMode.input,
+      initialTime: const TimeOfDay(hour: 0, minute: 0),
+    );
+
+    if (time != null && setStartTime != null) {
+      final date = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        time.hour,
+        time.minute,
+      );
+
+      setStartTime(date);
+    }
   }
 }
 
@@ -201,117 +322,94 @@ class _Duration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final duration = context.watch<LessonCreateBloc>().state.lesson.duration;
+    return BlocBuilder<LessonCreateBloc, LessonCreateState>(
+      buildWhen: (prev, curr) => prev.lesson.duration != curr.lesson.duration,
+      builder: (context, state) {
+        final hours = state.lesson.duration ~/ 60;
+        final minutes = state.lesson.duration % 60;
 
-    return TimeTile(title: "Duration", date: DateTime.now());
-  }
-}
-
-class _Capacity extends StatelessWidget {
-  const _Capacity({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text('Capacity'),
-        CounterInputField(),
-      ],
-    );
-  }
-}
-
-class _LessonMembers extends StatelessWidget {
-  const _LessonMembers({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const GTabBar(
-            alignment: TabAlignment.fill,
-            scrollable: false,
-            tabs: ['Instructors', 'Riders'],
+        return ListTile(
+          leading: const Icon(Iconsax.clock),
+          title: const Text("Duration"),
+          contentPadding: const EdgeInsets.all(0),
+          onTap: () => _showTimeWidget(context, (date) {
+            context
+                .read<LessonCreateBloc>()
+                .add(DurationChanged(duration: date));
+          }),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                state.lesson.duration != 0
+                    ? '$hours:$minutes'
+                    : GDateUtils.formatTimeToString(DateTime.now()),
+                style: context.textTheme.bodyLarge,
+              ),
+              const SizedBox(width: 8.0),
+              const Icon(Iconsax.arrow_right_3),
+            ],
           ),
-          const SizedBox(height: 16.0),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height * 0.1,
-              maxHeight: MediaQuery.of(context).size.height * 0.5,
-            ),
-            child: const TabBarView(
-              children: [_InstructorsPage(), _RidersPage()],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _InstructorsPage extends StatelessWidget {
-  const _InstructorsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            const Text('Total: 0'),
-            const Spacer(),
-            GIconButton.filled(
-              icon: Iconsax.add,
-              onPressed: () => _openModel(context),
-            ),
-          ],
-        )
-      ],
-    );
-  }
-
-  Future<void> _openModel(BuildContext context) async {
-    final bloc = context.read<LessonCreateBloc>();
-    final profiles = bloc.state.profiles;
-    final horses = bloc.state.horses;
-
-    showMaterialModalBottomSheet(
-      context: context,
-      backgroundColor: GColor.surfaceLight,
-      builder: (context) {
-        return InstructorBottomModal(
-          profiles: profiles,
-          horses: horses,
-          onSubmit: (profile, horse) {},
         );
       },
     );
   }
+
+  Future<void> _showTimeWidget(
+    BuildContext context,
+    Function(int)? setDuration,
+  ) async {
+    final time = await showTimePicker(
+      context: context,
+      initialEntryMode: TimePickerEntryMode.input,
+      initialTime: const TimeOfDay(hour: 0, minute: 0),
+    );
+
+    if (time != null && setDuration != null) {
+      final duration = time.hour * 60 + time.minute;
+
+      setDuration(duration);
+    }
+  }
 }
 
-class _RidersPage extends StatelessWidget {
-  const _RidersPage({super.key});
+class _WeekDaySelection extends StatelessWidget {
+  const _WeekDaySelection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            const Text('Total: 0'),
-            const Spacer(),
-            GIconButton.filled(
-              icon: Iconsax.add,
-              onPressed: () {},
-            ),
-          ],
-        )
-      ],
+    final List<String> weekdays = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ];
+
+    return DropdownButtonFormField(
+      decoration: const InputDecoration(labelText: 'Week day'),
+      items: weekdays.map((e) {
+        return DropdownMenuItem(
+          value: e,
+          child: Row(
+            children: [
+              const Icon(Iconsax.calendar),
+              const SizedBox(width: 16.0),
+              Text(e),
+            ],
+          ),
+        );
+      }).toList(),
+      onChanged: (value) {
+        if (value == null) return;
+        onChanged(weekdays.indexOf(value), context.read());
+      },
     );
+  }
+
+  void onChanged(int value, LessonCreateBloc bloc) {
+    bloc.add(WeekdayChanged(weekday: value));
   }
 }

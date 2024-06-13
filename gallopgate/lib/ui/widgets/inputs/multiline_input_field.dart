@@ -9,6 +9,7 @@ class MultilineInputField extends StatelessWidget {
     this.maxLength,
     this.onChanged,
     this.validator,
+    this.enabled = false,
   });
 
   final int maxLines;
@@ -17,6 +18,7 @@ class MultilineInputField extends StatelessWidget {
   final String initialValue;
   final Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class MultilineInputField extends StatelessWidget {
       initialValue: initialValue,
       maxLines: maxLines,
       maxLength: maxLength,
+      enabled: enabled,
       decoration: InputDecoration(
         labelText: label,
         contentPadding: const EdgeInsets.symmetric(

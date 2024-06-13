@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:gallopgate/common/interfaces/crud_repository.dart';
 import 'package:gallopgate/models/lesson/lesson.dart';
+import 'package:gallopgate/models/lesson/lesson_dto.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LessonRepository extends CrudRepository<Lesson, String> {
@@ -15,6 +18,7 @@ class LessonRepository extends CrudRepository<Lesson, String> {
 
   @override
   Future<Lesson> create(Lesson model) async {
+    log(model.toJson().toString());
     return await _query
         .insert(model.toJson())
         .select()
@@ -46,12 +50,18 @@ class LessonRepository extends CrudRepository<Lesson, String> {
         .withConverter((rows) => rows.map(Lesson.fromJson).toList());
   }
 
+  Future<List<LessonDto>> readAllDto(String organizationId) async {
+    return await _query
+        .select('id, title, lesson_categories (title)')
+        .eq('organization', organizationId)
+        .withConverter((rows) => rows.map(LessonDto.fromJson).toList());
+  }
+
   @override
   Future<Lesson?> update(Lesson model) {
-    assert(model.id != null, 'Cannot update a model without an id');
     return _query
         .update(model.toJson())
-        .eq('id', model.id!)
+        .eq('id', model.id)
         .select(selectQuery)
         .single()
         .withConverter(Lesson.fromJson);

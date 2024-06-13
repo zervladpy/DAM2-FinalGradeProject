@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:gallopgate/common/utils/json_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'lesson_category.g.dart';
@@ -10,19 +11,27 @@ class LessonCategory extends Equatable {
     required this.title,
     required this.description,
     required this.creatorId,
+    required this.organizationId,
     this.createdAt,
   });
 
-  final String id, title, description, creatorId;
+  @JsonKey(toJson: GJsonUtils.includeIfEmpty)
+  final String id;
+  final String organizationId;
+  final String creatorId;
+  final String title;
+  @JsonKey(toJson: GJsonUtils.includeIfEmpty)
+  final String description;
   final DateTime? createdAt;
 
   static const table = 'lesson_categories';
 
-  static const empty = LessonCategory(
+  static const LessonCategory empty = LessonCategory(
     id: '',
     title: '',
     description: '',
     creatorId: '',
+    organizationId: '',
   );
 
   factory LessonCategory.fromJson(Map<String, dynamic> json) =>
@@ -30,11 +39,22 @@ class LessonCategory extends Equatable {
 
   Map<String, dynamic> toJson() => _$LessonCategoryToJson(this);
 
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        description,
+        creatorId,
+        organizationId,
+        createdAt,
+      ];
+
   LessonCategory copyWith({
     String? id,
     String? title,
     String? description,
     String? creatorId,
+    String? organizationId,
     DateTime? createdAt,
   }) {
     return LessonCategory(
@@ -42,16 +62,8 @@ class LessonCategory extends Equatable {
       title: title ?? this.title,
       description: description ?? this.description,
       creatorId: creatorId ?? this.creatorId,
+      organizationId: organizationId ?? this.organizationId,
       createdAt: createdAt ?? this.createdAt,
     );
   }
-
-  @override
-  List<Object?> get props => [
-        id,
-        title,
-        description,
-        creatorId,
-        createdAt,
-      ];
 }

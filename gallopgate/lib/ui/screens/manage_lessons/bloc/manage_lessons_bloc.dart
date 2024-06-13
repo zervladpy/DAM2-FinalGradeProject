@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:gallopgate/common/enums/status.dart';
-import 'package:gallopgate/models/lesson/lesson.dart';
+import 'package:gallopgate/models/lesson/lesson_dto.dart';
 import 'package:gallopgate/repositories/lesson_repository.dart';
 
 part 'manage_lessons_event.dart';
@@ -26,7 +26,7 @@ class ManageLessonsBloc extends Bloc<ManageLessonsEvent, ManageLessonsState> {
     emit(state.copyWith(status: Status.loading));
 
     try {
-      final lessons = await _repository.readAll(event.organizationId);
+      final lessons = await _repository.readAllDto(event.organizationId);
 
       emit(state.copyWith(
         status: Status.loaded,

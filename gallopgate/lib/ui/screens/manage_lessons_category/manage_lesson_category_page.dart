@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
@@ -53,7 +55,9 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ManageLessonCategoryBloc, ManageLessonCategoryState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        log(state.error ?? "ERROR");
+      },
       builder: (context, state) {
         return CustomScrollView(
           slivers: [

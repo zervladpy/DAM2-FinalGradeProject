@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/config/supabase/supabese_initializer.dart';
-import 'package:gallopgate/ui/router.dart';
+import 'package:gallopgate/ui/router/router.dart';
 
 import 'config/theme/app_theme.dart';
 

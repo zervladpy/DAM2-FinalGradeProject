@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:gallopgate/models/profile/profile.dart';
-import 'package:gallopgate/models/profile/profile_preview_dto.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileRepository {
@@ -14,18 +13,6 @@ class ProfileRepository {
   Stream<Profile?> watch(String id) {
     return query.select().eq('id', id).asStream().map((event) {
       return event.isNotEmpty ? Profile.fromJson(event.first) : null;
-    });
-  }
-
-  Stream<List<ProfilePreviewDto>> watchAll(String organizationId) {
-    return query
-        .select(
-            'id, first_name, last_name, avatar_url, profile_role ( roles (name) )')
-        .eq('organization_id', organizationId)
-        .asStream()
-        .map((event) {
-      log(event.toString());
-      return event.map(ProfilePreviewDto.fromJson).toList();
     });
   }
 
@@ -92,5 +79,21 @@ class ProfileRepository {
         .select('*, profile_role ( roles (id, name))')
         .eq('organization_id', organizationId)
         .withConverter((v) => v.map(Profile.fromJson).toList());
+  }
+
+  Future<List<Profile>> fetchRiders(String organizationId) async {
+    List<Profile> profiles = await fetchProfiles(organizationId);
+
+    return profiles
+        .where((p) => p.roles.map((r) => r.name).contains('rider'))
+        .toList();
+  }
+
+  Future<List<Profile>> fetchInstructors(String organizationId) async {
+    List<Profile> profiles = await fetchProfiles(organizationId);
+
+    return profiles
+        .where((p) => p.roles.map((r) => r.name).contains('instructor'))
+        .toList();
   }
 }

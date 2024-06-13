@@ -4,27 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "f6a2c588d7ddc4c0",
+        "id": "f1c1088264ddaa03",
         "type": "tabs",
         "children": [
           {
-            "id": "b62c709246e0a69f",
+            "id": "f903c2bd3ee36e7f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/Diseño.md",
+                "file": "docs/codificacion_pruebas.md",
                 "mode": "source",
                 "source": false
               }
-            }
-          },
-          {
-            "id": "f803a3f21e7ba609",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
             }
           }
         ]
@@ -77,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 350.5
   },
   "right": {
     "id": "55080d00d2d50667",
@@ -88,12 +80,23 @@
         "type": "tabs",
         "children": [
           {
-            "id": "c95f87e960d165ee",
+            "id": "d4ad343dbba5438d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": false
+              }
+            }
+          },
+          {
+            "id": "8078423f90b5949c",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/Diseño.md",
+                "file": "docs/codificacion_pruebas.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,44 +108,33 @@
             }
           },
           {
-            "id": "5668e3458aa840ec",
+            "id": "96be5222edf3f375",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/Diseño.md",
+                "file": "docs/codificacion_pruebas.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "d4ad343dbba5438d",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true
-              }
-            }
-          },
-          {
-            "id": "53690e391ceee9fd",
+            "id": "91df6272f470ea9a",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/Diseño.md"
+                "file": "docs/codificacion_pruebas.md"
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 582.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -154,26 +146,42 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "b62c709246e0a69f",
+  "active": "5f73d0f6137efb86",
   "lastOpenFiles": [
-    "docs/Coding Testing.md",
-    "docs/Análisis.md",
-    "docs/Manuales.md",
-    "build/android",
-    "build",
-    "docs/Sin título",
-    "docs/Estudio Preliminar.md",
-    "docs/Diseño.md",
+    "img/prototipo2/create_user_screen.png",
+    "img/prototipo2/horse_detail_screen.png",
+    "img/prototipo2/hour_selection.png",
+    "img/prototipo2/lesson_category_details.png",
+    "img/prototipo2/org_details.png",
+    "img/prototipo2/create_lesson_screen.png",
+    "img/prototipo2/user_details_screen.png",
+    "img/prototipo2/users_screen.png",
+    "img/prototipo1/auth_main_screen.png",
+    "docs/codificacion_pruebas.md",
+    "gallopgate/build/app/intermediates/compressed_assets/debug/out/assets/flutter_assets/kernel_blob.bin.jar",
+    "gallopgate/build/app/intermediates/flutter/debug/flutter_assets/shaders/ink_sparkle.frag.spirv",
+    "gallopgate/build/app/intermediates/flutter/debug/flutter_assets/shaders/ink_sparkle.frag.spirv.temp",
+    "gallopgate/build/app/intermediates/flutter/debug/flutter_assets/shaders/ink_sparkle.frag.temp",
+    "gallopgate/build/linux/x64/debug/install_manifest.txt",
+    "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/packages/iconsax/lib/assets/fonts/iconsax.ttf",
+    "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/packages/iconsax/lib/assets/fonts",
+    "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/assets/images/logo/png/splash_light.png",
+    "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/assets/images/logo/png/splash_dark.png",
+    "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/packages/iconsax/lib/assets",
+    "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/assets/images/logo/png",
+    "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/packages/iconsax/lib",
+    "docs/estudio_preliminar.md",
+    "docs/diseno.md",
+    "docs/analisis.md",
+    "docs/uso_git.md",
     "().md",
     "README.md",
     "docs/Referencias.md",
-    "docs/Presupuesto.md",
-    "docs/Planificación.md",
+    "docs/presupuesto.md",
+    "docs/planificación.md",
+    "docs/manuales.md",
     "gallopgate/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md",
     "Sin título.canvas",
-    "2024-06-11.md",
-    "gallopgate/build/app/intermediates/assets/debug/flutter_assets/assets/images/logo/png/splash_dark.png",
-    "img/logo/logo_light.png",
-    "img/logo/logo_dark.png"
+    "2024-06-11.md"
   ]
 }

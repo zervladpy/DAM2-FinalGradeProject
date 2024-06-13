@@ -40,22 +40,24 @@ abstract class GSnackbar {
     final textTheme = context.textTheme;
     final colorScheme = context.colorScheme;
 
-    SnackBar(
-      backgroundColor: colorScheme.error,
-      content: Row(
-        children: [
-          if (icon != null)
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(icon),
-            ),
-          Text(
-            message,
-            style: textTheme.bodyMedium?.copyWith(
-              color: colorScheme.onError,
-            ),
-          )
-        ],
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: colorScheme.error,
+        content: Row(
+          children: [
+            if (icon != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Icon(icon),
+              ),
+            Text(
+              message,
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onError,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

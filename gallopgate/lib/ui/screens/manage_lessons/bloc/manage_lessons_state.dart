@@ -8,14 +8,14 @@ class ManageLessonsState extends Equatable {
   });
 
   final Status status;
-  final List<Lesson> lessons;
+  final List<LessonDto> lessons;
   final String? error;
 
   factory ManageLessonsState.initial() => const ManageLessonsState();
 
   ManageLessonsState copyWith({
     Status? status,
-    List<Lesson>? lessons,
+    List<LessonDto>? lessons,
     String? error,
   }) {
     return ManageLessonsState(

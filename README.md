@@ -1,4 +1,4 @@
-# GallopGate
+# Gallop Gate
 
 <details>
   <summary>Modo Oscuro</summary>
@@ -31,13 +31,13 @@ Este servicio proporcionará las siguientes características básicas:
 > Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
 ##  Tabla de Contenidos
-1. [Estudio Preliminar](docs/preliminary_study.md)
-2. [Análisis](Análisis.md)
+1. [Estudio Preliminar](docs/estudio_preliminar.md)
+2. [Análisis](analisis.md)
    - [Planificación](docs/planificacion.md)
-   - [Presupuesto](Presupuesto.md)
+   - [Presupuesto](presupuesto.md)
 3. [Diseño](docs/diseno.md)
 4. [Codificación y Pruebas](docs/codificacion_pruebas.md)
-5. [Manuales del Proyecto](Manuales.md)
+5. [Manuales del Proyecto](manuales.md)
    - [Referencias](docs/referencias.md)
 6. [Uso de Git](docs/uso_git.md)
 
@@ -60,5 +60,6 @@ Este servicio proporcionará las siguientes características básicas:
 
 > Herramientas utilizadas para la gestión y tareas básicas
 
-- Eraser
-- ObsidianArt
+![Obsidian](https://img.shields.io/badge/Obsidian-%23483699.svg?style=for-the-badge&logo=obsidian&logoColor=white)
+
+Eraser.io
