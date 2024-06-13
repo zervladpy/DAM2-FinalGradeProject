@@ -29,3 +29,7 @@ gallopgate/devtools_options.yaml
 .idea/libraries/Dart_Packages.xml
 .idea/misc.xml
 .idea/libraries/Dart_Packages.xml
+
+.obsidian
+.idea
+.vscode
