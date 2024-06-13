@@ -31,15 +31,15 @@ Este servicio proporcionará las siguientes características básicas:
 > Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
 ##  Tabla de Contenidos
-1. [Estudio Preliminar](docs/estudio_preliminar.md)
-2. [Análisis](analisis.md)
-   - [Planificación](docs/planificacion.md)
-   - [Presupuesto](presupuesto.md)
-3. [Diseño](docs/diseno.md)
-4. [Codificación y Pruebas](docs/codificacion_pruebas.md)
-5. [Manuales del Proyecto](manuales.md)
-   - [Referencias](docs/referencias.md)
-6. [Uso de Git](docs/uso_git.md)
+1. [Estudio Preliminar](./docs/estudio_preliminar.md)
+2. [Análisis](./docs/analisis.md)
+   - [Planificación](./docs/planificacion.md)
+   - [Presupuesto](./docs/presupuesto.md)
+3. [Diseño](./docs/diseno.md)
+4. [Codificación y Pruebas](./docs/codificacion_pruebas.md)
+5. [Manuales del Proyecto](./docs/manuales.md)
+   - [Referencias](./docs/referencias.md)
+6. [Uso de Git](./docs/uso_git.md)
 
 ## Impulsado por
 
