@@ -33,7 +33,7 @@ Este servicio proporcionará las siguientes características básicas:
 ##  Tabla de Contenidos
 1. [Estudio Preliminar](./docs/estudio_preliminar.md)
 2. [Análisis](./docs/analisis.md)
-   - [Planificación](./docs/planificacion.md)
+   - [Planificación](./docs/planificación.md)
    - [Presupuesto](./docs/presupuesto.md)
 3. [Diseño](./docs/diseno.md)
 4. [Codificación y Pruebas](./docs/codificacion_pruebas.md)
