@@ -86,15 +86,15 @@ En este prototipo he incluido:
 
 **Pantalla principal de autentificación**
 
-![main auth](../prototipo1/auth_main_screen.png)
+![main auth](../img/prototipo1/auth_main_screen.png)
 
 **Pantalla de login**
 
-![login](../prototipo1/login_screen.png)
+![login](../img/prototipo1/login_screen.png)
 
 **Pantalla de Registro**
 
-![register](../prototipo1/register_screen.png)
+![register](../img/prototipo1/register_screen.png)
 
 - Servicio de rutas de aplicación como varias pantallas que servirán de base para la organización del desarrollo
 
@@ -117,29 +117,24 @@ En este prototipo se incluyen las funciones:
 
 **Detalles de Organización**
 
-![[org_details.png]]
+![detalles organización](../img/prototipo2/org_details.png)
 
 **Pantalla de ajustes de cuenta**
 
-![account](../prototipo2/account_screen.png)
+![account](../img/prototipo2/account_screen.png)
 
 **Listado de usuarios**
 
-![](../img/prototipo2/users_screen.png)
+![listado usuarios](../img/prototipo2/users_screen.png)
 
 **Añadir usuarios**
 
-![account](../prototipo2/create_user_screen.png)
+![account](../img/prototipo2/create_user_screen.png)
 
 **Como se introduce una hora**
 
-![account](../prototipo2/hour_selection.png)
+![account](../img/prototipo2/hour_selection.png)
 
 **Detalles de Caballos**
 
-
-![account](../prototipo2/horse_detail_screen.png)
-
-**Detalles de organización**
-
-![[org_details.png]]
+![account](../img/prototipo2/horse_detail_screen.png)
