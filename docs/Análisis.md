@@ -1,4 +1,4 @@
-# **MVP** - Analisis
+# **MVP** - Análisis
 
 ## Tabla de Contenidos
 
@@ -6,10 +6,10 @@
 2. [Funcionalidades](#mvp---funcionalidades)
     - [Manejo de Organizaciones](#manejo-de-organizaciones)
     - [Manejo de Usuarios](#manejo-de-usuarios)
-    - [Servicio de Notificationes](#servicio-de-notificationes)
+    - [Servicio de Notificaciones](#servicio-de-notificationes)
     - [Manejo de Horarios](#manejo-de-horarios)
-    - [Maenjo de clases](#manejo-de-clases)
-    - [Siguimiento del estado de los caballos](#siguimiento-del-estado-de-los-caballos)
+    - [Manejo de clases](#manejo-de-clases)
+    - [Seguimiento del estado de los caballos](#siguimiento-del-estado-de-los-caballos)
 3. [Normativa](#normativa)
 
 ## **MVP** - Descripción general 
@@ -20,12 +20,12 @@ En este apartado veremos todas las funcionalidades que se desean implementar en 
 >
 > **Nota:** Las funcionalidades se detallarán de forma mas completa en sus respectivas secciones.
 
-- [**Manejo de Organizaciones**](#manejo-de-organizaciones) : Manejo simple de las organizacines. Principalemente utlizado como clasificación de materiales proporcionados.
-- [**Manejo de Usuarios**](#manejo-de-usuarios) : Un manejo simple de usarios, con roles y permisos.
-- [**Servicio de Notificationes**](#servicio-de-notificationes) : Un servicio basico de alertas, recordatorios y notificaciones.
+- [**Manejo de Organizaciones**](#manejo-de-organizaciones) : Manejo simple de las organizaciones . Principalmente utilizado como clasificación de materiales proporcionados.
+- [**Manejo de Usuarios**](#manejo-de-usuarios) : Un manejo simple de usuarios, con roles y permisos.
+- [**Servicio de Notificaciones**](#servicio-de-notificationes) : Un servicio básico de alertas, recordatorios y notificaciones.
 - [**Manejo de Horarios**](#manejo-de-horarios) : Un manejo de horarios con posicionamiento de clases.
-- [**Maenjo de clases**](#manejo-de-clases)   : Un manejo de afulencia a las clases, siguimiento de asistencia y la posibilidad de recuperar     las clases en otro momento.
-- [**Siguimiento del estado de los caballos**](#siguimiento-del-estado-de-los-caballos) : Se desea implementar un simple pero eficaz monitoreo de los caballos.
+- [**Manejo de clases**](#manejo-de-clases)   : Un manejo de afluencia a las clases, seguimiento de asistencia y la posibilidad de recuperar     las clases en otro momento.
+- [**Seguimiento del estado de los caballos**](#siguimiento-del-estado-de-los-caballos) : Se desea implementar un simple pero eficaz motorización de los caballos.
 
 ## **MVP** - Funcionalidades
 
@@ -35,9 +35,9 @@ En este apartado se detallarán las funcionalidades que se desean implementar en
 
 ### Manejo de Organizaciones
 
-La aplicación deberá permitir la creación de organizaciones, las cuales serán utilizadas basicamente como clasificación de recursos (Usuarios, Clases, Caballos, etc...) bajo el mismo nombre. 
+La aplicación deberá permitir la creación de organizaciones, las cuales serán utilizadas básicamente como clasificación de recursos (Usuarios, Clases, Caballos, etc...) bajo el mismo nombre. 
 
-Una organzación deberá tener los siguientes datos:
+Una organización deberá tener los siguientes datos:
 
 - **Nombre** : Nombre de la organización.
 - **Ubicación** : Ubicación de la organización.
@@ -45,13 +45,13 @@ Una organzación deberá tener los siguientes datos:
 - **Logo** : Imagen de la organización.
 - **Plan de Suscripción** : Un plan de pago elegido por la organización. **(No es parte del MVP)**
 - **Datos de Contacto** : Datos de contacto de la organización.
-- **Anliticas** : Datos relevantes como la cantidad de usuarios totales/activos, etc... **(No es parte del MVP)**
+- **Analítica** : Datos relevantes como la cantidad de usuarios totales/activos, etc... **(No es parte del MVP)**
 
 > **Nota** : En un documento posterior se explicará mas a detalle el servicio de **Clasificación**
 
 ### Manejo de Usuarios
 
-La aplicación debe permitir un acceso restringido a los usarios a la plataforma.
+La aplicación debe permitir un acceso restringido a los usuarios a la plataforma.
 
 Se debe implementar un sistema de roles y permisos:
 - **Roles**:
@@ -60,7 +60,7 @@ Se debe implementar un sistema de roles y permisos:
 
     - **Administrador** : Tendrá el acceso a todas las funcionalidades de la plataforma. Tendrá las restricciones de acceso a los datos de las organizaciones, pero con la posibilidad de solicitarlo a los organizadores para los mantenimientos necesarios.
 
-    - **Organizador** : Tendrá acceso a las funcionalidades de su organización. Como crear nuevos usuarios que pertenecerán solo a dicha organización, creacion del espacio de trabajo y correcta organizacion del centro.
+    - **Organizador** : Tendrá acceso a las funcionalidades de su organización. Como crear nuevos usuarios que pertenecerán solo a dicha organización, creación del espacio de trabajo y correcta organización del centro.
 
     - **Instructor** : Tendrá acceso a modificación de sus pertinentes lecciones, como aceptar nuevos miembros que quieran recuperar una asignatura, o la asignación de los caballos a los jinetes.
 
