@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:gallopgate/models/lesson_category/lesson_category.dart';
+import 'package:gallopgate/common/utils/role_utils.dart';
+import 'package:gallopgate/models/lesson/lesson.dart';
 import 'package:gallopgate/models/organization/organization.dart';
 import 'package:gallopgate/models/profile/profile.dart';
-import 'package:gallopgate/repositories/lesson_category_repository.dart';
+import 'package:gallopgate/repositories/lesson_members_repository.dart';
+import 'package:gallopgate/repositories/lesson_repository.dart';
 import 'package:gallopgate/repositories/organization_repository.dart';
 import 'package:gallopgate/repositories/profile_repository.dart';
 
@@ -15,12 +17,14 @@ part 'main_state.dart';
 class MainBloc extends Bloc<MainEvent, MainState> {
   final ProfileRepository profileRepository;
   final OrganizationRepository organizationRepository;
-  final LessonCategoryRepository lectureRepository;
+  final LessonMembersRepository lessonMembersRepository;
+  final LessonRepository lessonRepository;
 
   MainBloc({
     required this.profileRepository,
     required this.organizationRepository,
-    required this.lectureRepository,
+    required this.lessonMembersRepository,
+    required this.lessonRepository,
   }) : super(MainState.initial()) {
     on<MainEventInitialize>(_onInitialize);
   }
@@ -46,13 +50,34 @@ class MainBloc extends Bloc<MainEvent, MainState> {
 
       if (organization == null) throw Exception('Organization not found');
 
+      final List<Lesson> lessons = await lessonRepository.readAll(
+        organization.id!,
+      );
+
+      if (!GRolesUtils.isAdmin(profile.roles)) {
+        lessons.removeWhere((t) {
+          bool remove = false;
+
+          if (t.instructor.id != profile.id) {
+            remove = true;
+          }
+
+          if (t.lessonMembers.any((e) => e.id == profile.id)) {
+            remove = false;
+          }
+
+          return remove;
+        });
+      }
+
       emit(state.copyWith(
         status: MainStatus.success,
         profile: profile,
         organization: organization,
+        lessons: lessons,
       ));
     } catch (e) {
-      emit(state.copyWith(status: MainStatus.failure));
+      emit(state.copyWith(status: MainStatus.failure, error: e.toString()));
     }
   }
 }

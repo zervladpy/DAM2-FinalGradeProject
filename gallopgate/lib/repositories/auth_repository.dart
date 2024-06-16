@@ -30,7 +30,11 @@ class AuthRepository {
     User? user = client.auth.currentUser;
 
     if (user != null) {
-      currentProfile = await profileRepository.fetchProfile(user.id);
+      try {
+        currentProfile = await profileRepository.fetchProfile(user.id);
+      } catch (e) {
+        await client.auth.signOut();
+      }
     }
 
     return this;

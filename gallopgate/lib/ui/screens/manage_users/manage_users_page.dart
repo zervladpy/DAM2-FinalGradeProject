@@ -6,6 +6,7 @@ import 'package:gallopgate/models/organization/organization.dart';
 import 'package:gallopgate/ui/screens/manage_users/bloc/profiles_bloc.dart';
 import 'package:gallopgate/ui/screens/manage_users/widgets/users_sliver_appbar.dart';
 import 'package:gallopgate/ui/widgets/buttons/g_icon_button.dart';
+import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
 import 'package:gallopgate/ui/widgets/tiles/list_tile.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -53,58 +54,67 @@ class _ManageProfilesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProfilesBloc, ProfilesState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state.status == Status.error) {
+          GSnackbar.error(context: context, message: state.error!);
+        }
+      },
       builder: (context, state) {
-        return CustomScrollView(
-          slivers: [
-            UsersSliverAppbar(organization: organization, isAdmin: isAdmin),
-            if (state.status == Status.loading)
-              const SliverToBoxAdapter(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    LinearProgressIndicator(),
-                  ],
-                ),
-              ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Filter',
-                        prefixIcon: Icon(Iconsax.search_normal_1),
-                      ),
-                    )),
-                    const SizedBox(width: 5),
-                    const GIconButton.filled(icon: Iconsax.filter),
-                  ],
-                ),
-              ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverList.separated(
-              itemCount: state.filtered.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 5.0),
-              itemBuilder: (_, index) {
-                final profile = state.filtered[index];
-                final item = ListTileItem(
-                  title: profile.fullName,
-                  subtitle: profile.email,
-                  leading: const Icon(Iconsax.user),
-                  navigate: () => context.push(
-                    '/managment/users/${profile.id}',
+        return RefreshIndicator(
+          onRefresh: () async {
+            context.read<ProfilesBloc>().add(Fetch());
+          },
+          child: CustomScrollView(
+            slivers: [
+              UsersSliverAppbar(organization: organization, isAdmin: isAdmin),
+              if (state.status == Status.loading)
+                const SliverToBoxAdapter(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      LinearProgressIndicator(),
+                    ],
                   ),
-                );
-                return GListTile(item: item);
-              },
-            )
-          ],
+                ),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Filter',
+                          prefixIcon: Icon(Iconsax.search_normal_1),
+                        ),
+                      )),
+                      const SizedBox(width: 5),
+                      const GIconButton.filled(icon: Iconsax.filter),
+                    ],
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverList.separated(
+                itemCount: state.filtered.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 5.0),
+                itemBuilder: (_, index) {
+                  final profile = state.filtered[index];
+                  final item = ListTileItem(
+                    title: profile.fullName,
+                    subtitle: profile.email,
+                    leading: const Icon(Iconsax.user),
+                    navigate: () => context.push(
+                      '/managment/users/${profile.id}',
+                    ),
+                  );
+                  return GListTile(item: item);
+                },
+              )
+            ],
+          ),
         );
       },
     );

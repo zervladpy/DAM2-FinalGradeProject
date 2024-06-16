@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:gallopgate/common/interfaces/crud_repository.dart';
 import 'package:gallopgate/models/organization/organization.dart';
@@ -15,8 +14,6 @@ class OrganizationRepository extends CrudRepository<Organization, String> {
 
   @override
   Future<Organization> create(Organization model) async {
-    log(model.toJson().toString());
-
     return await _query
         .insert(model.toJson())
         .select()

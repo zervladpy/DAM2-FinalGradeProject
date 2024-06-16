@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -223,7 +222,6 @@ class _UpdateButton extends StatelessWidget {
     return BlocBuilder<OrganizationBloc, OrganizationState>(
       buildWhen: (previous, current) => previous.edited != current.edited,
       builder: (context, state) {
-        log(state.edited.toString());
         return ElevatedButton(
           onPressed: state.edited
               ? () => context.read<OrganizationBloc>().add(const Update())

@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:gallopgate/config/theme/utils/colors.dart';
 import 'package:gallopgate/models/organization/organization.dart';
+import 'package:gallopgate/ui/router/router.library.dart';
 import 'package:gallopgate/ui/widgets/appbar/sliver_appbar.dart';
 import 'package:gallopgate/ui/widgets/buttons/g_icon_button.dart';
 import 'package:gallopgate/ui/widgets/text/titles.dart';
@@ -30,13 +29,18 @@ class ScheduleSliverAppbar extends StatelessWidget {
             label: notificationCount > 0
                 ? Text(notificationCount.toString())
                 : null,
-            child: const Icon(
-              Iconsax.notification,
-              color: GColor.primaryLight,
+            child: const GIconButton(
+              icon: Iconsax.notification,
             ),
           ),
         ),
-        if (isAdimin) const GIconButton.filled(icon: Iconsax.add),
+        if (isAdimin)
+          GIconButton.filled(
+            icon: Iconsax.add,
+            onPressed: () {
+              context.push('/managment/lessons/create');
+            },
+          ),
       ],
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

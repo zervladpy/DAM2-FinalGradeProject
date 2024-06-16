@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'router.library.dart';
 
 class ApplicationRouter {
@@ -48,6 +46,10 @@ class ApplicationRouter {
               GoRoute(
                 path: 'rest-password',
                 pageBuilder: (context, state) => AuthResetPasswordPage.page,
+              ),
+              GoRoute(
+                path: 'terms',
+                pageBuilder: (context, state) => AuthTermsPage.page,
               ),
             ],
           )
@@ -152,7 +154,6 @@ class ApplicationRouter {
                     path: ':id',
                     pageBuilder: (context, state) {
                       String? id = state.pathParameters['id'];
-                      log(id.toString());
                       if (id == null) {
                         return ErrorNotFoundPage.page;
                       } else {

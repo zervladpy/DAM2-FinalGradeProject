@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -18,10 +17,9 @@ class AuthCubit extends Cubit<AuthState> {
     Stream<AuthStatus> authStream,
     this.repository,
   ) : super(const AuthState.unauthenticated()) {
-    _authStreamSubscription = authStream.listen((status) {
-      log(status.toString());
+    _authStreamSubscription = authStream.listen((status) async {
       if (status == AuthStatus.authenticated) {
-        _authenticate();
+        await _authenticate();
       } else {
         emit(const AuthState.unauthenticated());
       }

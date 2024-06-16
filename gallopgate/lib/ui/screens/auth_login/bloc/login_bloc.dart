@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:gallopgate/common/enums/status.dart';
@@ -66,9 +64,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         error: e.message.toString(),
       ));
     } catch (e) {
-      log(e.toString());
+      emit(state.copyWith(status: Status.error));
     }
-
-    emit(state.copyWith(status: Status.error));
   }
 }

@@ -4,6 +4,7 @@ import 'package:gallopgate/models/lesson_category/lesson_category.dart';
 import 'package:gallopgate/models/lesson_member/lesson_member.dart';
 import 'package:gallopgate/models/organization/organization.dart';
 import 'package:gallopgate/models/profile/profile.dart';
+import 'package:gallopgate/models/profile/profile_dto.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,9 +15,10 @@ class Lesson extends Equatable {
   const Lesson({
     required this.id,
     required this.title,
-    required this.organization,
+    this.organization,
     required this.category,
     required this.creator,
+    required this.instructor,
     this.capacity = 0,
     this.startAt,
     this.weekday = 0,
@@ -28,13 +30,19 @@ class Lesson extends Equatable {
   final String id;
   final String title;
   @JsonKey(toJson: _getOrganizationId, includeIfNull: false)
-  final Organization organization;
+  final Organization? organization;
   @JsonKey(toJson: _getCategoryId, includeIfNull: false)
   final LessonCategory category;
-  @JsonKey(toJson: _getProfileId, includeIfNull: false)
-  final Profile creator;
+  @JsonKey(toJson: GJsonUtils.getProfileDtoId, includeIfNull: false)
+  final ProfileDto creator;
+  @JsonKey(toJson: GJsonUtils.getProfileDtoId, includeIfNull: false)
+  final ProfileDto instructor;
   final int capacity;
-  @JsonKey(name: 'start_h', toJson: GJsonUtils.toTime, includeIfNull: false)
+  @JsonKey(
+      name: 'start_h',
+      toJson: GJsonUtils.toTime,
+      fromJson: GJsonUtils.fromTime,
+      includeIfNull: false)
   final DateTime? startAt;
   final int weekday;
   final int duration;
@@ -48,7 +56,8 @@ class Lesson extends Equatable {
     title: '',
     organization: Organization.empty,
     category: LessonCategory.empty,
-    creator: Profile.empty,
+    creator: ProfileDto.empty,
+    instructor: ProfileDto.empty,
   );
 
   Lesson copyWith({
@@ -56,7 +65,8 @@ class Lesson extends Equatable {
     String? title,
     Organization? organization,
     LessonCategory? category,
-    Profile? creator,
+    ProfileDto? creator,
+    ProfileDto? instructor,
     int? capacity,
     DateTime? startAt,
     int? weekday,
@@ -69,6 +79,7 @@ class Lesson extends Equatable {
       organization: organization ?? this.organization,
       category: category ?? this.category,
       creator: creator ?? this.creator,
+      instructor: instructor ?? this.instructor,
       capacity: capacity ?? this.capacity,
       startAt: startAt ?? this.startAt,
       weekday: weekday ?? this.weekday,
@@ -85,6 +96,7 @@ class Lesson extends Equatable {
         category,
         creator,
         capacity,
+        instructor,
         startAt,
         weekday,
         duration,
@@ -93,7 +105,11 @@ class Lesson extends Equatable {
 
   factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LessonToJson(this);
+  Map<String, dynamic> toJson() {
+    final json = _$LessonToJson(this);
+
+    return json;
+  }
 
   static _getOrganizationId(Organization? organization) => organization?.id;
 

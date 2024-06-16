@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +27,6 @@ class AuthWrapper extends StatelessWidget {
         return BlocListener<AuthCubit, AuthState>(
           listenWhen: (prev, curr) => prev.status != curr.status,
           listener: (context, state) {
-            log(state.status.toString());
             if (state.status == AuthStatus.authenticated) {
               if (state.profile.organizationId != null) {
                 context.go('/home');

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
@@ -55,58 +53,61 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ManageLessonCategoryBloc, ManageLessonCategoryState>(
-      listener: (context, state) {
-        log(state.error ?? "ERROR");
-      },
+      listener: (context, state) {},
       builder: (context, state) {
-        return CustomScrollView(
-          slivers: [
-            LessonsSliverAppbar(organization: organization, isAdmin: isAdmin),
-            if (state.status == Status.loading)
-              const SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [LinearProgressIndicator()],
-                ),
-              ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Filter',
-                        prefixIcon: Icon(Iconsax.search_normal_1),
-                      ),
-                    )),
-                    const SizedBox(width: 5),
-                    const GIconButton.filled(icon: Iconsax.filter),
-                  ],
-                ),
-              ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverList.separated(
-              itemCount: state.filtered.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 5),
-              itemBuilder: (_, index) {
-                final lesson = state.filtered[index];
-                final item = ListTileItem(
-                  title: lesson.title,
-                  subtitle: lesson.description,
-                  navigate: () => context.push(
-                    '/managment/lesson-categories/${lesson.id}',
+        return RefreshIndicator(
+          onRefresh: () async {
+            context.read<ManageLessonCategoryBloc>().add(Fetch());
+          },
+          child: CustomScrollView(
+            slivers: [
+              LessonsSliverAppbar(organization: organization, isAdmin: isAdmin),
+              if (state.status == Status.loading)
+                const SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [LinearProgressIndicator()],
                   ),
-                  leading: const Icon(Iconsax.book),
-                );
+                ),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Filter',
+                          prefixIcon: Icon(Iconsax.search_normal_1),
+                        ),
+                      )),
+                      const SizedBox(width: 5),
+                      const GIconButton.filled(icon: Iconsax.filter),
+                    ],
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverList.separated(
+                itemCount: state.filtered.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 5),
+                itemBuilder: (_, index) {
+                  final lesson = state.filtered[index];
+                  final item = ListTileItem(
+                    title: lesson.title,
+                    subtitle: lesson.description,
+                    navigate: () => context.push(
+                      '/managment/lesson-categories/${lesson.id}',
+                    ),
+                    leading: const Icon(Iconsax.book),
+                  );
 
-                return GListTile(item: item);
-              },
-            ),
-          ],
+                  return GListTile(item: item);
+                },
+              ),
+            ],
+          ),
         );
       },
     );

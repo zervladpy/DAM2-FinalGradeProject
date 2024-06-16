@@ -17,12 +17,17 @@ class MainSettingsPage extends StatelessWidget {
     final profile = context.watch<MainBloc>().state.profile;
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SettingsSliverAppbar(profile: profile),
-          const SliverToBoxAdapter(child: SizedBox(height: 8.0)),
-          const _MainSettingsPage(),
-        ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<MainBloc>().add(MainEventInitialize(profile.id));
+        },
+        child: CustomScrollView(
+          slivers: [
+            SettingsSliverAppbar(profile: profile),
+            const SliverToBoxAdapter(child: SizedBox(height: 8.0)),
+            const _MainSettingsPage(),
+          ],
+        ),
       ),
     );
   }

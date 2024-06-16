@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
@@ -67,41 +65,44 @@ class _Content extends StatelessWidget {
 
         final canEdit = isAdmin || (state.profile.id == currentProfile.id);
 
-        log(canEdit.toString());
-
         return Stack(
           children: [
-            CustomScrollView(
-              slivers: [
-                ProfileSliverAppbar(organization: organization),
-                const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  sliver: SliverToBoxAdapter(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            ImagePickerContainer(
-                                onSelect: canEdit ? () {} : null),
-                            const SizedBox(width: 16.0),
-                            Expanded(child: _NameFiled(editable: canEdit)),
-                          ],
-                        ),
-                        const SizedBox(height: 16.0),
-                        _LastNameField(editable: canEdit),
-                        const SizedBox(height: 16.0),
-                        _BirthDateField(editable: canEdit),
-                        const SizedBox(height: 16.0),
-                        _RolesFieldSelection(editable: isAdmin),
-                      ],
+            RefreshIndicator(
+              onRefresh: () async {
+                context.read<UserBloc>().add(Fetch(id: state.profile.id));
+              },
+              child: CustomScrollView(
+                slivers: [
+                  ProfileSliverAppbar(organization: organization),
+                  const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              ImagePickerContainer(
+                                  onSelect: canEdit ? () {} : null),
+                              const SizedBox(width: 16.0),
+                              Expanded(child: _NameFiled(editable: canEdit)),
+                            ],
+                          ),
+                          const SizedBox(height: 16.0),
+                          _LastNameField(editable: canEdit),
+                          const SizedBox(height: 16.0),
+                          _BirthDateField(editable: canEdit),
+                          const SizedBox(height: 16.0),
+                          _RolesFieldSelection(editable: isAdmin),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
             if (canEdit)
               const Positioned(
@@ -198,8 +199,6 @@ class _BirthDateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(editable.toString());
-
     return DateField(
       label: "Birth Date",
       editable: editable,

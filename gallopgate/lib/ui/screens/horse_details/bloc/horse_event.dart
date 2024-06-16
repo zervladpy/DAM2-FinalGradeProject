@@ -50,3 +50,10 @@ class OwnerChanged extends HorseEvent {
   @override
   List<Object?> get props => [ownerId];
 }
+
+class Refresh extends HorseEvent {
+  const Refresh();
+
+  @override
+  List<Object> get props => [];
+}

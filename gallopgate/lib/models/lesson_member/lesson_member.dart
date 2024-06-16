@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:gallopgate/models/horse/horse.dart';
-import 'package:gallopgate/models/lesson/lesson.dart';
+import 'package:gallopgate/models/lesson/lesson_dto.dart';
 import 'package:gallopgate/models/profile/profile.dart';
 import 'package:gallopgate/models/role/role.dart';
 
@@ -14,33 +14,29 @@ class LessonMember extends Equatable {
     this.id,
     required this.profile,
     required this.lesson,
-    required this.role,
-    this.horse,
+    required this.horse,
   });
 
   final String? id;
   @JsonKey(toJson: _getProfileId, includeIfNull: false)
   final Profile profile;
   @JsonKey(toJson: _getHorseId, includeIfNull: false)
-  final Horse? horse;
-  @JsonKey(toJson: _getLessonId, includeIfNull: false)
-  final Lesson lesson;
-  @JsonKey(toJson: _getRoleId, includeIfNull: false)
-  final Role role;
+  final Horse horse;
+  final String lesson;
 
   static const table = 'lesson_members';
 
   static const LessonMember empty = LessonMember(
     profile: Profile.empty,
-    lesson: Lesson.empty,
-    role: Role.empty,
+    horse: Horse.empty,
+    lesson: '',
   );
 
   LessonMember copyWith({
     String? id,
     Profile? profile,
     Horse? horse,
-    Lesson? lesson,
+    String? lesson,
     Role? role,
   }) {
     return LessonMember(
@@ -48,12 +44,11 @@ class LessonMember extends Equatable {
       profile: profile ?? this.profile,
       horse: horse ?? this.horse,
       lesson: lesson ?? this.lesson,
-      role: role ?? this.role,
     );
   }
 
   @override
-  List<Object?> get props => [id, profile, horse, lesson, role];
+  List<Object?> get props => [id, profile, horse, lesson];
 
   factory LessonMember.fromJson(Map<String, dynamic> json) =>
       _$LessonMemberFromJson(json);
@@ -64,7 +59,5 @@ class LessonMember extends Equatable {
 
   static String? _getHorseId(Horse? horse) => horse?.id;
 
-  static String? _getLessonId(Lesson? lesson) => lesson?.id;
-
-  static int? _getRoleId(Role? role) => role?.id;
+  static String? _getLessonId(LessonDto? lesson) => lesson?.id;
 }

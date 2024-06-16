@@ -48,11 +48,16 @@ class _ExploreContent extends StatelessWidget {
       buildWhen: (curr, prev) => curr.status != prev.status,
       builder: (context, state) {
         if (state.status == Status.loading) {
-          return const CustomScrollView(
-            slivers: [
-              OrgExploreAppbar(),
-              SliverLinearLoading(),
-            ],
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<OrgExploreBloc>().add(const OrgExploreFetch());
+            },
+            child: const CustomScrollView(
+              slivers: [
+                OrgExploreAppbar(),
+                SliverLinearLoading(),
+              ],
+            ),
           );
         }
 

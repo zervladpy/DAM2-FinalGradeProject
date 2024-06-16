@@ -38,7 +38,7 @@ class MainWrapper extends StatelessWidget {
           state.matchedLocation,
         );
 
-    final String profileId = locator.get<AuthRepository>().currentProfile!.id!;
+    final String profileId = locator.get<AuthRepository>().currentProfile!.id;
 
     return MultiBlocProvider(
       providers: [
@@ -54,7 +54,8 @@ class MainWrapper extends StatelessWidget {
           create: (context) => MainBloc(
             profileRepository: locator.get(),
             organizationRepository: locator.get(),
-            lectureRepository: locator.get(),
+            lessonMembersRepository: locator.get(),
+            lessonRepository: locator.get(),
           )..add(MainEventInitialize(profileId)),
         )
       ],
@@ -73,7 +74,6 @@ class _MainWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final useNavigationRail = MediaQuery.of(context).size.width > 600;
     final isAdmin = context.watch<MainBloc>().state.profile.roles.map((e) {
-      log(e.name);
       return e.name;
     }).contains('admin');
     final navigationItems = _navigationItems(isAdmin);
@@ -86,6 +86,7 @@ class _MainWrapper extends StatelessWidget {
         }
 
         if (state.status == MainStatus.failure) {
+          log('MainStatus.failure ${state.error}');
           return const ErrorNotFoundPage();
         }
 

@@ -19,6 +19,7 @@ class EmailField extends StatelessWidget {
       initialValue: initialValue,
       onChanged: onChanged,
       validator: validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: const InputDecoration(
         labelText: 'Email',
         prefixIcon: Icon(Iconsax.sms),

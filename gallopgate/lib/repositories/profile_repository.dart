@@ -17,9 +17,34 @@ class ProfileRepository {
   }
 
   Future<Profile?> currentProfile() async {
-    return client.auth.currentUser != null
-        ? await fetchProfile(client.auth.currentUser!.id)
-        : null;
+    final auth = client.auth;
+
+    if (auth.currentUser == null) {
+      try {
+        auth.signOut();
+        return null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    if (auth.currentUser?.id == null) {
+      try {
+        auth.signOut();
+        return null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    try {
+      final profile = await fetchProfile(client.auth.currentUser!.id);
+
+      return profile;
+    } catch (e) {
+      await auth.signOut();
+      return null;
+    }
   }
 
   Future<Profile?> fetchProfile(String id) async {
@@ -35,7 +60,7 @@ class ProfileRepository {
     Profile res = await client
         .from(Profile.table)
         .update(profile.toJson())
-        .eq('id', profile.id!)
+        .eq('id', profile.id)
         .select()
         .single()
         .withConverter(Profile.fromJson);

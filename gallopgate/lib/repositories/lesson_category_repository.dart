@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:gallopgate/models/lesson_category/lesson_category.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -13,7 +11,6 @@ class LessonCategoryRepository {
   final SupabaseQueryBuilder _query;
 
   Future<LessonCategory> create(LessonCategory model) async {
-    log(model.toJson().toString());
     return await _query
         .insert(model.toJson())
         .select()
@@ -32,7 +29,6 @@ class LessonCategoryRepository {
         .maybeSingle()
         .withConverter((row) {
       if (row == null) return null;
-      log(row.toString());
       return LessonCategory.fromJson(row);
     });
   }

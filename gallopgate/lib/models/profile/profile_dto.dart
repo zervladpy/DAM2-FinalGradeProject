@@ -8,21 +8,29 @@ part 'profile_dto.g.dart';
 class ProfileDto extends Equatable {
   const ProfileDto({
     required this.id,
-    required this.name,
-    required this.email,
+    required this.firstName,
     required this.lastName,
+    required this.email,
     required this.avatarUrl,
   });
 
   final String id;
-  final String name;
+  final String firstName;
   final String lastName;
   final String email;
   final String avatarUrl;
+
+  static const empty = ProfileDto(
+    id: '',
+    firstName: '',
+    email: '',
+    lastName: '',
+    avatarUrl: '',
+  );
 
   factory ProfileDto.fromJson(Map<String, dynamic> json) =>
       _$ProfileDtoFromJson(json);
 
   @override
-  List<Object> get props => [id, name, email, lastName, avatarUrl];
+  List<Object> get props => [id, firstName, email, lastName, avatarUrl];
 }

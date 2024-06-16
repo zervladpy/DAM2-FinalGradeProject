@@ -53,45 +53,51 @@ class _ManageHorsesPage extends StatelessWidget {
     return BlocConsumer<HorsesBloc, HorsesState>(
       listener: (context, state) {},
       builder: (context, state) {
-        return CustomScrollView(
-          slivers: [
-            HorsesSliverAppbar(organization: organization, isAdmin: isAdmin),
-            if (state.status == Status.loading) const SliverLinearLoading(),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Filter',
-                        prefixIcon: Icon(Iconsax.search_normal_1),
-                      ),
-                    )),
-                    const SizedBox(width: 5),
-                    const GIconButton.filled(icon: Iconsax.filter),
-                  ],
+        return RefreshIndicator(
+          onRefresh: () async {
+            context.read<HorsesBloc>().add(Fetch());
+          },
+          child: CustomScrollView(
+            slivers: [
+              HorsesSliverAppbar(organization: organization, isAdmin: isAdmin),
+              if (state.status == Status.loading) const SliverLinearLoading(),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Filter',
+                          prefixIcon: Icon(Iconsax.search_normal_1),
+                        ),
+                      )),
+                      const SizedBox(width: 5),
+                      const GIconButton.filled(icon: Iconsax.filter),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverList.separated(
-              itemCount: state.filtered.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 5.0),
-              itemBuilder: (_, index) {
-                final Horse horse = state.filtered[index];
-                final item = ListTileItem(
-                  leading: const Icon(Iconsax.activity),
-                  title: horse.fullName,
-                  subtitle: horse.alias,
-                  navigate: () => context.push('/managment/horses/${horse.id}'),
-                );
-                return GListTile(item: item);
-              },
-            ),
-          ],
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverList.separated(
+                itemCount: state.filtered.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 5.0),
+                itemBuilder: (_, index) {
+                  final Horse horse = state.filtered[index];
+                  final item = ListTileItem(
+                    leading: const Icon(Iconsax.activity),
+                    title: horse.fullName,
+                    subtitle: horse.alias,
+                    navigate: () =>
+                        context.push('/managment/horses/${horse.id}'),
+                  );
+                  return GListTile(item: item);
+                },
+              ),
+            ],
+          ),
         );
       },
     );

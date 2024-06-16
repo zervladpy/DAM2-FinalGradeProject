@@ -7,34 +7,39 @@ class MainState extends Equatable {
     this.status,
     this.profile,
     this.organization,
-    this.lectures,
+    this.lessons,
+    this.error,
   );
 
   final MainStatus status;
   final Profile profile;
   final Organization organization;
-  final List<LessonCategory> lectures;
+  final List<Lesson> lessons;
+  final String error;
 
   factory MainState.initial() => const MainState._(
         MainStatus.initial,
         Profile.empty,
         Organization.empty,
         [],
+        '',
       );
 
   MainState copyWith({
     MainStatus? status,
     Profile? profile,
     Organization? organization,
-    List<LessonCategory>? lectures,
+    List<Lesson>? lessons,
+    String? error,
   }) =>
       MainState._(
         status ?? this.status,
         profile ?? this.profile,
         organization ?? this.organization,
-        lectures ?? this.lectures,
+        lessons ?? this.lessons,
+        error ?? this.error,
       );
 
   @override
-  List<Object> get props => [status, profile, organization, lectures];
+  List<Object> get props => [status, profile, organization, lessons, error];
 }

@@ -20,10 +20,12 @@ abstract class GSnackbar {
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Icon(icon),
               ),
-            Text(
-              message,
-              style: textTheme.bodyMedium?.copyWith(
-                color: GColor.surfaceDark,
+            Flexible(
+              child: Text(
+                message,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: GColor.surfaceDark,
+                ),
               ),
             )
           ],
@@ -50,10 +52,12 @@ abstract class GSnackbar {
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Icon(icon),
               ),
-            Text(
-              message,
-              style: textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onError,
+            Flexible(
+              child: Text(
+                message,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onError,
+                ),
               ),
             )
           ],

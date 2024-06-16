@@ -6,8 +6,6 @@ class NavigationState extends Equatable {
   final int index;
 
   factory NavigationState.initial(int index) {
-    log('NavigationState.initial($index)');
-
     return NavigationState._(index);
   }
 

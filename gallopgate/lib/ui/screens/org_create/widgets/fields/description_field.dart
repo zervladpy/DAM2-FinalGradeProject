@@ -20,6 +20,7 @@ class DescriptionTextField extends StatelessWidget {
       initialValue: '',
       maxLength: 250,
       maxLines: 5,
+      enabled: true,
       onChanged: onChanged,
       validator: validator,
     );

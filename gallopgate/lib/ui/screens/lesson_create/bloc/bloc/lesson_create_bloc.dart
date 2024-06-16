@@ -7,6 +7,7 @@ import 'package:gallopgate/models/lesson/lesson.dart';
 import 'package:gallopgate/models/lesson_category/lesson_category.dart';
 import 'package:gallopgate/models/organization/organization.dart';
 import 'package:gallopgate/models/profile/profile.dart';
+import 'package:gallopgate/models/profile/profile_dto.dart';
 import 'package:gallopgate/repositories/lesson_category_repository.dart';
 import 'package:gallopgate/repositories/lesson_repository.dart';
 import 'package:gallopgate/repositories/profile_repository.dart';
@@ -38,6 +39,7 @@ class LessonCreateBloc extends Bloc<LessonCreateEvent, LessonCreateState> {
     on<StartAtChanged>(_startAtChanged);
     on<WeekdayChanged>(_weekdayChanged);
     on<DurationChanged>(_durationChanged);
+    on<InstructorChanged>(_instructorChanged);
     on<Submit>(_submit);
   }
 
@@ -59,7 +61,13 @@ class LessonCreateBloc extends Bloc<LessonCreateEvent, LessonCreateState> {
         categories: result[1] as List<LessonCategory>,
         lesson: state.lesson.copyWith(
           organization: organization,
-          creator: creator,
+          creator: ProfileDto(
+            id: creator.id,
+            firstName: creator.firstName,
+            lastName: creator.lastName,
+            email: creator.email,
+            avatarUrl: creator.avatarUrl,
+          ),
         ),
       ));
     } catch (e) {
@@ -125,11 +133,42 @@ class LessonCreateBloc extends Bloc<LessonCreateEvent, LessonCreateState> {
     try {
       final lesson = await _lessonRepository.create(state.lesson);
 
-      emit(state.copyWith(status: Status.loaded, lesson: lesson));
+      emit(state.copyWith(
+          status: Status.success,
+          lesson: Lesson(
+            id: lesson.id,
+            title: lesson.title,
+            organization: organization,
+            category: state.lesson.category,
+            creator: ProfileDto(
+              id: creator.id,
+              firstName: creator.firstName,
+              lastName: creator.lastName,
+              email: creator.email,
+              avatarUrl: creator.avatarUrl,
+            ),
+            instructor: state.lesson.instructor,
+          )));
     } catch (e) {
       emit(state.copyWith(status: Status.error, error: e.toString()));
     }
 
     emit(state.copyWith(status: Status.initial, error: ''));
+  }
+
+  FutureOr<void> _instructorChanged(
+    InstructorChanged event,
+    Emitter<LessonCreateState> emit,
+  ) {
+    emit(state.copyWith(
+        lesson: state.lesson.copyWith(
+      instructor: ProfileDto(
+        id: event.instructor.id,
+        firstName: event.instructor.firstName,
+        lastName: event.instructor.lastName,
+        email: event.instructor.email,
+        avatarUrl: event.instructor.avatarUrl,
+      ),
+    )));
   }
 }

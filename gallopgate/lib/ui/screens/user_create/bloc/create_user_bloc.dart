@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -44,10 +43,7 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
         status: Status.loaded,
         roles: roles,
       ));
-
-      log('Roles: $roles');
     } catch (e) {
-      log('Error: $e');
       emit(state.copyWith(status: Status.error));
     }
   }
@@ -96,20 +92,19 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
 
     try {
       Profile profile = Profile(
-          id: null,
-          avatarUrl: '',
-          firstName: state.firstName,
-          lastName: state.lastName,
-          email: state.email,
-          roles: state.selectedRoles,
-          organizationId: organizationId,
-          createdAt: DateTime.now(),
-          );
+        id: '',
+        avatarUrl: '',
+        firstName: state.firstName,
+        lastName: state.lastName,
+        email: state.email,
+        roles: state.selectedRoles,
+        organizationId: organizationId,
+        createdAt: DateTime.now(),
+      );
 
       await profileRepository.createProfile(profile);
       emit(state.copyWith(status: Status.success));
     } catch (e) {
-      log('Error: $e');
       emit(state.copyWith(status: Status.error, error: e.toString()));
     }
 

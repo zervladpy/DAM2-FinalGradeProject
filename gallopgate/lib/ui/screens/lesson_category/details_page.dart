@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/common/utils/role_utils.dart';
@@ -57,44 +56,51 @@ class _Contnet extends StatelessWidget {
       listener: _listener,
       buildWhen: _listen,
       builder: (contex, state) {
-        return CustomScrollView(
-          slivers: [
-            GSliverAppBar(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const GAppbarTitle('Lesson Category'),
-                  GAppbarSubtitle(organization.name),
+        return RefreshIndicator(
+          onRefresh: () async {
+            context
+                .read<LessonCategoryBloc>()
+                .add(Initialize(id: state.category.id));
+          },
+          child: CustomScrollView(
+            slivers: [
+              GSliverAppBar(
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const GAppbarTitle('Lesson Category'),
+                    GAppbarSubtitle(organization.name),
+                  ],
+                ),
+                actions: [
+                  _DeleteButton(isAdmin: isAdmin),
                 ],
               ),
-              actions: [
-                _DeleteButton(isAdmin: isAdmin),
-              ],
-            ),
-            if (state.status == Status.loading) const SliverLinearLoading(),
-            if (state.status != Status.loading)
-              SliverPadding(
-                padding: const EdgeInsets.all(16.0),
-                sliver: SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _TitleField(
-                        enabled: isAdmin && state.status != Status.loading,
-                      ),
-                      const SizedBox(height: 16.0),
-                      _DescriptionField(
-                        enabled: isAdmin && state.status != Status.loading,
-                      ),
-                      const SizedBox(height: 16.0),
-                      _UpdateButton(
-                        enabled: isAdmin && state.status != Status.loading,
-                      ),
-                    ],
+              if (state.status == Status.loading) const SliverLinearLoading(),
+              if (state.status != Status.loading)
+                SliverPadding(
+                  padding: const EdgeInsets.all(16.0),
+                  sliver: SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _TitleField(
+                          enabled: isAdmin && state.status != Status.loading,
+                        ),
+                        const SizedBox(height: 16.0),
+                        _DescriptionField(
+                          enabled: isAdmin && state.status != Status.loading,
+                        ),
+                        const SizedBox(height: 16.0),
+                        _UpdateButton(
+                          enabled: isAdmin && state.status != Status.loading,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-          ],
+                )
+            ],
+          ),
         );
       },
     );

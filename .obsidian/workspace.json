@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/codificacion_pruebas.md",
+                "file": "docs/manuales.md",
                 "mode": "source",
                 "source": false
               }
@@ -96,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/codificacion_pruebas.md",
+                "file": "docs/manuales.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/codificacion_pruebas.md",
+                "file": "docs/manuales.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/codificacion_pruebas.md"
+                "file": "docs/manuales.md"
               }
             }
           }
@@ -146,8 +146,16 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "5f73d0f6137efb86",
+  "active": "f903c2bd3ee36e7f",
   "lastOpenFiles": [
+    "gallopgate/lib/models/lesson/lesson.g.dart",
+    "docs/codificacion_pruebas.md",
+    "docs/manuales.md",
+    "docs/Análisis.md",
+    "docs/presupuesto.md",
+    "docs/planificación.md",
+    "docs/referencias.md",
+    "docs/uso_git.md",
     "img/prototipo2/create_user_screen.png",
     "img/prototipo2/horse_detail_screen.png",
     "img/prototipo2/hour_selection.png",
@@ -157,7 +165,6 @@
     "img/prototipo2/user_details_screen.png",
     "img/prototipo2/users_screen.png",
     "img/prototipo1/auth_main_screen.png",
-    "docs/codificacion_pruebas.md",
     "gallopgate/build/app/intermediates/compressed_assets/debug/out/assets/flutter_assets/kernel_blob.bin.jar",
     "gallopgate/build/app/intermediates/flutter/debug/flutter_assets/shaders/ink_sparkle.frag.spirv",
     "gallopgate/build/app/intermediates/flutter/debug/flutter_assets/shaders/ink_sparkle.frag.spirv.temp",
@@ -166,20 +173,15 @@
     "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/packages/iconsax/lib/assets/fonts/iconsax.ttf",
     "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/packages/iconsax/lib/assets/fonts",
     "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/assets/images/logo/png/splash_light.png",
-    "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/assets/images/logo/png/splash_dark.png",
     "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/packages/iconsax/lib/assets",
     "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/assets/images/logo/png",
     "gallopgate/build/linux/x64/debug/bundle/data/flutter_assets/packages/iconsax/lib",
     "docs/estudio_preliminar.md",
     "docs/diseno.md",
     "docs/analisis.md",
-    "docs/uso_git.md",
     "().md",
     "README.md",
     "docs/Referencias.md",
-    "docs/presupuesto.md",
-    "docs/planificación.md",
-    "docs/manuales.md",
     "gallopgate/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md",
     "Sin título.canvas",
     "2024-06-11.md"

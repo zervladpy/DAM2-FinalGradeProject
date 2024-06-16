@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gallopgate/common/enums/data_validation.dart';
 import 'package:gallopgate/common/enums/status.dart';
+import 'package:gallopgate/common/validators/validator.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/config/extensions/context.dart';
 import 'package:gallopgate/config/theme/utils/colors.dart';
@@ -99,10 +103,25 @@ class _EmailField extends StatelessWidget {
   Widget build(BuildContext context) {
     final LoginBloc bloc = BlocProvider.of<LoginBloc>(context);
 
-    return EmailField(
-      initialValue: bloc.state.email,
-      onChanged: (v) => bloc.add(EmailChanged(v)),
+    return BlocBuilder<LoginBloc, LoginState>(
+      buildWhen: (prev, curr) => prev.email != curr.email,
+      builder: (context, state) {
+        return EmailField(
+          initialValue: state.email,
+          onChanged: (v) => bloc.add(EmailChanged(v)),
+          validator: validator,
+        );
+      },
     );
+  }
+
+  String? validator(String? value) {
+    log('EmailField.validator: $value');
+    return switch (GValidator.email(value)) {
+      DataValidation.required => 'Email is required',
+      DataValidation.emailInvalidFormat => 'Invalid email',
+      _ => null,
+    };
   }
 }
 
@@ -121,9 +140,17 @@ class _PasswordField extends StatelessWidget {
           onChanged: (v) => bloc.add(PasswordChanged(v)),
           obscureText: (v) => bloc.add(ShowPasswordChanged(v)),
           obscured: state.showPassword,
+          validator: validator,
         );
       },
     );
+  }
+
+  String? validator(String? value) {
+    return switch (GValidator.password(value)) {
+      DataValidation.required => 'Password is required',
+      _ => null,
+    };
   }
 }
 

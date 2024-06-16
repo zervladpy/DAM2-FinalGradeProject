@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
@@ -28,8 +26,6 @@ class LessonCategoryCreatePage extends StatelessWidget {
 
     final event = Initialize(creator: creator, organization: organization);
 
-    log(isAdmin.toString());
-
     return Scaffold(
       body: BlocProvider(
         create: (_) => CreateLessonCategoryBloc(
@@ -57,7 +53,6 @@ class _LessonCreatePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<CreateLessonCategoryBloc, CreateLessonCategoryState>(
       listener: (context, state) {
-        log(state.status.toString());
         if (state.status == Status.success) {
           GSnackbar.success(
             context: context,
@@ -65,7 +60,6 @@ class _LessonCreatePage extends StatelessWidget {
           );
           context.pop();
         } else if (state.status == Status.error) {
-          log(state.error.toString());
           GSnackbar.error(
             context: context,
             message: state.error,

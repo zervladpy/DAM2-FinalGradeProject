@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/common/utils/date_utils.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/config/extensions/context.dart';
 import 'package:gallopgate/models/lesson_category/lesson_category.dart';
 import 'package:gallopgate/models/profile/profile.dart';
+import 'package:gallopgate/ui/router/router.library.dart';
 import 'package:gallopgate/ui/screens/lesson_create/bloc/bloc/lesson_create_bloc.dart';
 import 'package:gallopgate/ui/screens/lesson_create/library.dart';
 import 'package:gallopgate/ui/screens/org_create/library.dart';
@@ -46,6 +46,8 @@ class LessonCreatePage extends StatelessWidget {
                     context: context,
                     message: 'Lesson ${state.lesson.title} successfully',
                   );
+
+                  context.replace('/managment/lessons/${state.lesson.id}');
                 }
 
                 if (state.status == Status.error) {
@@ -181,20 +183,18 @@ class _CategoryField extends StatelessWidget {
           onChanged: (value) => bloc.add(CategoryChanged(
             category: value ?? LessonCategory.empty,
           )),
-          items: state.categories
-              .map(
-                (category) => DropdownMenuItem(
-                  value: category,
-                  child: Row(
-                    children: [
-                      const Icon(Iconsax.category),
-                      const SizedBox(width: 16.0),
-                      Text(category.title),
-                    ],
-                  ),
-                ),
-              )
-              .toList(),
+          items: state.categories.map((category) {
+            return DropdownMenuItem(
+              value: category,
+              child: Row(
+                children: [
+                  const Icon(Iconsax.category),
+                  const SizedBox(width: 16.0),
+                  Text(category.title),
+                ],
+              ),
+            );
+          }).toList(),
         );
       },
     );
@@ -214,14 +214,15 @@ class _InstructorSelect extends StatelessWidget {
           decoration: const InputDecoration(
             labelText: 'Instructor',
           ),
-          onChanged: (v) => bloc.add(
-            InstructorChanged(instructor: v ?? Profile.empty),
-          ),
+          onChanged: (value) => bloc.add(InstructorChanged(
+            instructor: value ?? Profile.empty,
+          )),
           items: state.instructors.map((v) {
-            return DropdownMenuItem<Profile>(
+            return DropdownMenuItem(
+              value: v,
               child: Row(
                 children: [
-                  const Icon(Iconsax.user),
+                  const Icon(Iconsax.category),
                   const SizedBox(width: 16.0),
                   Text(v.fullName),
                 ],

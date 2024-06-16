@@ -24,6 +24,7 @@ class PasswordField extends StatelessWidget {
       onChanged: onChanged,
       validator: validator,
       obscureText: obscured,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: 'Password',
         prefixIcon: const Icon(Iconsax.password_check),

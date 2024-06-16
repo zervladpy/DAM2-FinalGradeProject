@@ -25,6 +25,7 @@ class HorseBloc extends Bloc<HorseEvent, HorseState> {
     on<NameChanged>(_nameChanged);
     on<AliasChanged>(_aliasChanged);
     on<OwnerChanged>(_ownerChanged);
+    on<Refresh>(_refresh);
     on<Update>(_update);
   }
 
@@ -106,6 +107,30 @@ class HorseBloc extends Bloc<HorseEvent, HorseState> {
     try {
       await _horseRepository.update(state.horse);
       emit(state.copyWith(status: Status.success, initial: state.horse));
+    } catch (e) {
+      emit(state.copyWith(status: Status.error, error: e.toString()));
+    }
+
+    emit(state.copyWith(status: Status.initial, error: null));
+  }
+
+  FutureOr<void> _refresh(
+    Refresh event,
+    Emitter<HorseState> emit,
+  ) async {
+    emit(state.copyWith(status: Status.loading));
+
+    if (state.horse.id == null) {
+      return emit(state.copyWith(status: Status.initial));
+    }
+
+    try {
+      final horse = await _horseRepository.read(state.horse.id!);
+      emit(state.copyWith(
+        status: Status.loaded,
+        horse: horse,
+        initial: horse,
+      ));
     } catch (e) {
       emit(state.copyWith(status: Status.error, error: e.toString()));
     }

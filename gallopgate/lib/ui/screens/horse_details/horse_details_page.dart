@@ -79,33 +79,38 @@ class _HorseDetailsPage extends StatelessWidget {
           );
         }
 
-        return CustomScrollView(
-          slivers: [
-            HorseSliverAppbar(organization: organization),
-            const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              sliver: SliverList.list(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ImagePickerContainer(onSelect: isAdmin ? () {} : null),
-                      const SizedBox(width: 16.0),
-                      Expanded(child: _AliasField(editable: isAdmin)),
-                    ],
-                  ),
-                  const SizedBox(height: 16.0),
-                  _NameField(editable: isAdmin),
-                  const SizedBox(height: 16.0),
-                  const _OwnerField(),
-                  const SizedBox(height: 16.0),
-                  if (isAdmin) const _UpdateButton(),
-                ],
-              ),
-            )
-          ],
+        return RefreshIndicator(
+          onRefresh: () async {
+            context.read<HorseBloc>().add(const Refresh());
+          },
+          child: CustomScrollView(
+            slivers: [
+              HorseSliverAppbar(organization: organization),
+              const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                sliver: SliverList.list(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ImagePickerContainer(onSelect: isAdmin ? () {} : null),
+                        const SizedBox(width: 16.0),
+                        Expanded(child: _AliasField(editable: isAdmin)),
+                      ],
+                    ),
+                    const SizedBox(height: 16.0),
+                    _NameField(editable: isAdmin),
+                    const SizedBox(height: 16.0),
+                    const _OwnerField(),
+                    const SizedBox(height: 16.0),
+                    if (isAdmin) const _UpdateButton(),
+                  ],
+                ),
+              )
+            ],
+          ),
         );
       },
     );

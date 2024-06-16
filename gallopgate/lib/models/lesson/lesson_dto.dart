@@ -19,13 +19,20 @@ class LessonDto extends Equatable {
   @JsonKey(name: 'lesson_categories', fromJson: _getCategoryTitle)
   final String categoryTitle;
 
+  static const LessonDto empty = LessonDto(
+    id: '',
+    title: '',
+    categoryTitle: '',
+  );
+
   factory LessonDto.fromJson(Map<String, dynamic> json) =>
       _$LessonDtoFromJson(json);
 
   @override
   List<Object> get props => [id, title, categoryTitle];
 
-  static String _getCategoryTitle(Map<String, dynamic> json) {
+  static String _getCategoryTitle(Map<String, dynamic>? json) {
+    if (json == null) return '';
     return json['title'];
   }
 }

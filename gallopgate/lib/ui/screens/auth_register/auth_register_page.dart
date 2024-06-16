@@ -1,8 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gallopgate/common/enums/data_validation.dart';
 import 'package:gallopgate/common/enums/status.dart';
+import 'package:gallopgate/common/validators/validator.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
 import 'package:gallopgate/ui/screens/auth_register/bloc/register_bloc.dart';
 import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
@@ -39,7 +39,6 @@ class _AuthRegisterPage extends StatelessWidget {
             message: 'We sended you a confirmation Email',
           );
         } else if (state.status == Status.error) {
-          log('Error: ${state.error}');
           GSnackbar.error(
             context: context,
             message: state.error ?? 'An error occured',
@@ -62,6 +61,8 @@ class _AuthRegisterPage extends StatelessWidget {
                     _PassowrdField(),
                     SizedBox(height: 16.0),
                     _RepeatPasswordField(),
+                    SizedBox(height: 16.0),
+                    TermsField(),
                     SizedBox(height: 16.0),
                     _RegisterButton(),
                     SizedBox(height: 16.0),
@@ -87,7 +88,16 @@ class _EmailField extends StatelessWidget {
     return EmailField(
       initialValue: bloc.state.email,
       onChanged: (value) => bloc.add(RegisterEmailChanged(value)),
+      validator: validator,
     );
+  }
+
+  String? validator(String? value) {
+    return switch (GValidator.email(value)) {
+      DataValidation.required => 'Email is required',
+      DataValidation.emailInvalidFormat => 'Email is invalid',
+      _ => null,
+    };
   }
 }
 
@@ -106,9 +116,19 @@ class _PassowrdField extends StatelessWidget {
           onChanged: (value) => bloc.add(RegisterPasswordChanged(value)),
           obscured: state.showPassword,
           obscureText: (v) => bloc.add(RegisterShowPasswordChanged(v)),
+          validator: validtor,
         );
       },
     );
+  }
+
+  String? validtor(String? value) {
+    return switch (GValidator.password(value)) {
+      DataValidation.required => 'Password is required',
+      DataValidation.passwordTooShort => 'Password is too short',
+      DataValidation.passwordTooLong => 'Password is too long',
+      _ => null,
+    };
   }
 }
 
@@ -127,9 +147,18 @@ class _RepeatPasswordField extends StatelessWidget {
           onChanged: (value) => bloc.add(RegisterRepeatPasswordChanged(value)),
           obscured: state.showPassword,
           obscureText: (v) => bloc.add(RegisterShowPasswordChanged(v)),
+          validator: (value) => validtor(value, bloc.state.password),
         );
       },
     );
+  }
+
+  String? validtor(String? value, String? password) {
+    return switch (GValidator.repeatPassword(value, password)) {
+      DataValidation.required => 'Password is required',
+      DataValidation.passwordNoMatch => 'Passwords do not match',
+      _ => null,
+    };
   }
 }
 

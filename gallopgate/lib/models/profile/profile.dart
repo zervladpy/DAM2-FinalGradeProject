@@ -1,6 +1,6 @@
-import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
+import 'package:gallopgate/common/utils/json_utils.dart';
 import 'package:gallopgate/models/role/role.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -20,7 +20,8 @@ class Profile extends Equatable {
     this.birthDate,
   });
 
-  final String? id;
+  @JsonKey(toJson: GJsonUtils.includeIfEmpty)
+  final String id;
   final String firstName, lastName, email, avatarUrl;
   final String? organizationId;
   final DateTime? createdAt;
@@ -72,7 +73,6 @@ class Profile extends Equatable {
       );
 
   factory Profile.fromJson(Map<String, dynamic> json) {
-    log('Profile.fromJson: $json');
     return _$ProfileFromJson(json);
   }
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gallopgate/common/enums/status.dart';
@@ -49,11 +47,18 @@ class _OrgDetailsPage extends StatelessWidget {
       buildWhen: (prev, curr) => prev.status != curr.status,
       builder: (context, state) {
         if (state.status == Status.loading) {
-          return const CustomScrollView(
-            slivers: [
-              OrgDetailsAppBar(),
-              SliverLinearLoading(),
-            ],
+          return RefreshIndicator(
+            onRefresh: () async {
+              context
+                  .read<OrgDetailsBloc>()
+                  .add(OrgDetailsFetch(state.item.id!));
+            },
+            child: const CustomScrollView(
+              slivers: [
+                OrgDetailsAppBar(),
+                SliverLinearLoading(),
+              ],
+            ),
           );
         }
 
@@ -144,7 +149,5 @@ class _ApplyButton extends StatelessWidget {
     );
   }
 
-  void _onApply(BuildContext context) {
-    log('Apply button pressed');
-  }
+  void _onApply(BuildContext context) {}
 }
