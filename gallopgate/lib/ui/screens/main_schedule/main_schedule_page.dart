@@ -11,7 +11,7 @@ import 'package:gallopgate/ui/screens/main_schedule/bloc/schedule_bloc.dart';
 import 'package:gallopgate/ui/screens/main_schedule/widgets/schedule_sliver_appbar.dart';
 import 'package:gallopgate/ui/screens/main_schedule/widgets/schedule_tabbar.dart';
 import 'package:gallopgate/ui/widgets/loading/sliver_linear_loading.dart';
-import 'package:gallopgate/ui/widgets/tiles/list_tile.dart';
+import 'package:gallopgate/ui/widgets/text/titles.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -123,10 +123,9 @@ class WeekDaySchedulePage extends StatelessWidget {
   Widget build(BuildContext context) {
     lessons.sort((a, b) => a.startAt!.compareTo(b.startAt!));
 
-    return ListView.separated(
+    return ListView.builder(
       itemCount: lessons.length,
       shrinkWrap: true,
-      separatorBuilder: (_, index) => const SizedBox(height: 16.0),
       itemBuilder: (context, index) {
         final lesson = lessons[index];
         return _LessonListTile(lesson: lesson);
@@ -150,46 +149,69 @@ class _LessonListTile extends StatelessWidget {
       Duration(minutes: lesson.duration),
     ));
 
-    return GListTile(
-      item: ListTileItem(
-        leading: Column(
+    return InkWell(
+      onTap: () {
+        context.push('/managment/lessons/${lesson.id}');
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: const BoxDecoration(),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: GColor.surfaceDark.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 4.0,
-              ),
-              child: Text(
-                start,
-                style: context.textTheme.bodyMedium,
-              ),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: GColor.surfaceDark.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 4.0,
+                      ),
+                      child: Text(
+                        start,
+                        style: context.textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(height: 4.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: GColor.surfaceDark.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 4.0,
+                      ),
+                      child: Text(
+                        end,
+                        style: context.textTheme.bodyMedium,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 16.0),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GAppbarTitle(lesson.title),
+                    GAppbarSubtitle(lesson.category.title)
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(height: 4.0),
-            Container(
-              decoration: BoxDecoration(
-                color: GColor.surfaceDark.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 4.0,
-              ),
-              child: Text(
-                end,
-                style: context.textTheme.bodyMedium,
-              ),
-            ),
+            const Column(
+              children: [
+                Icon(Iconsax.book_1),
+              ],
+            )
           ],
         ),
-        title: lesson.title,
-        subtitle: lesson.category.title,
-        navigate: () => context.push('/managment/lessons/${lesson.id}'),
-        trailing: const Icon(Iconsax.book_1),
       ),
     );
   }

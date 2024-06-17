@@ -20,7 +20,15 @@ class LessonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    final List<String> days = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ];
 
     final member = getMemeber(profile!, lesson.lessonMembers);
 
@@ -85,6 +93,19 @@ class LessonCard extends StatelessWidget {
                 )),
                 style: context.textTheme.bodyLarge,
               ),
+            ],
+          ),
+          const SizedBox(height: 16.0),
+          Row(
+            children: [
+              const Icon(Iconsax.teacher),
+              const SizedBox(
+                width: 8.0,
+              ),
+              Text(
+                '${lesson.instructor.firstName} ${lesson.instructor.lastName}',
+                style: context.textTheme.bodyLarge,
+              )
             ],
           ),
           const SizedBox(height: 16),

@@ -25,6 +25,8 @@ class MemberGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final editor = context.read<MainBloc>().state.profile;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -45,27 +47,21 @@ class MemberGrid extends StatelessWidget {
             ),
           ],
         ),
-        GridView.builder(
+        ListView.builder(
           itemCount: members.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 400,
-            childAspectRatio: 3.5,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-          ),
           itemBuilder: (context, index) {
             return MemberGridItem(
-              member: members[index],
-              showEditDialog: (member) {
-                _openMemberDialog(
-                  context: context,
-                  bloc: context.read(),
-                  memeber: member,
-                );
-              },
-            );
+                member: members[index],
+                showEditDialog: (member) {
+                  _openMemberDialog(
+                    context: context,
+                    bloc: context.read(),
+                    memeber: member,
+                  );
+                },
+                isAdmin: GRolesUtils.isAdmin(editor.roles));
           },
         ),
         const SizedBox(height: 48.0)
@@ -99,8 +95,10 @@ class MemberGridItem extends StatelessWidget {
     super.key,
     required this.member,
     this.showEditDialog,
+    this.isAdmin = false,
   });
 
+  final bool isAdmin;
   final LessonMember member;
   final void Function(
     LessonMember? memeber,
@@ -111,50 +109,42 @@ class MemberGridItem extends StatelessWidget {
     final profile = member.profile;
     final horse = member.horse;
 
-    return Container(
-        width: 400,
-        height: 50,
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: context.theme.dividerColor,
-            width: 1,
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Iconsax.user),
-                      const SizedBox(width: 8),
-                      Text(profile.fullName),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Icon(Iconsax.activity),
-                      const SizedBox(width: 8),
-                      Text(horse.alias ?? horse.fullName),
-                    ],
-                  ),
-                ],
-              ),
+    return InkWell(
+      onTap: isAdmin ? () => showEditDialog?.call(member) : null,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Iconsax.user),
+                    const SizedBox(width: 8),
+                    Text(profile.fullName),
+                  ],
+                ),
+                const SizedBox(height: 16.0),
+                Row(
+                  children: [
+                    const Icon(Iconsax.activity),
+                    const SizedBox(width: 8),
+                    Text(horse.alias ?? horse.fullName),
+                  ],
+                ),
+              ],
             ),
-            if (showEditDialog != null)
-              GIconButton(
-                icon: Iconsax.edit,
-                onPressed: () => showEditDialog?.call(member),
-              ),
-          ],
-        ));
+          ),
+          const Padding(
+            padding: EdgeInsets.only(right: 8.0),
+            child: Icon(Iconsax.edit),
+          )
+        ],
+      ),
+    );
   }
 }
 

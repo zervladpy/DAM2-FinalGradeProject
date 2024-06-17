@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:gallopgate/config/theme/utils/colors.dart';
 import 'package:gallopgate/ui/router/router.library.dart';
 

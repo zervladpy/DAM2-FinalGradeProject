@@ -15,7 +15,6 @@ import 'package:gallopgate/ui/widgets/loading/sliver_linear_loading.dart';
 import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:intl/intl.dart';
 
 class LessonCreatePage extends StatelessWidget {
   const LessonCreatePage({super.key});
@@ -267,8 +266,6 @@ class _StartTime extends StatelessWidget {
     return BlocBuilder<LessonCreateBloc, LessonCreateState>(
       buildWhen: (prev, curr) => prev.lesson.startAt != curr.lesson.startAt,
       builder: (context, state) {
-        final hours = state.lesson.startAt?.hour;
-        final minutes = state.lesson.startAt?.minute;
         return ListTile(
           leading: const Icon(Iconsax.clock),
           contentPadding: const EdgeInsets.all(0),
@@ -328,9 +325,6 @@ class _Duration extends StatelessWidget {
     return BlocBuilder<LessonCreateBloc, LessonCreateState>(
       buildWhen: (prev, curr) => prev.lesson.duration != curr.lesson.duration,
       builder: (context, state) {
-        final hours = state.lesson.duration ~/ 60;
-        final minutes = state.lesson.duration % 60;
-
         return ListTile(
           leading: const Icon(Iconsax.clock),
           title: const Text("Duration"),
