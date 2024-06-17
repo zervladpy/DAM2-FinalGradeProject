@@ -7,7 +7,6 @@ import 'package:gallopgate/models/lesson_member/lesson_member.dart';
 import 'package:gallopgate/ui/screens/lesson/controllers/lesson/lesson_bloc.dart';
 import 'package:gallopgate/ui/screens/lesson/controllers/member/member_cubit.dart';
 import 'package:gallopgate/ui/screens/org_create/library.dart';
-import 'package:gallopgate/ui/widgets/buttons/g_icon_button.dart';
 import 'package:gallopgate/ui/widgets/inputs/dropdowns/horse_dropdown.dart';
 import 'package:gallopgate/ui/widgets/inputs/dropdowns/profile_dropdown.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';

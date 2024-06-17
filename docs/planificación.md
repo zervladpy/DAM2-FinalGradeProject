@@ -59,13 +59,13 @@ Documentar la manera en la que los profesores tengan acceso a la plataforma.
 | ----------------------------- | ---------- | ---------- | ---------- |
 | Diagramas de Flujo            | 15-04-2024 | 16-04-2024 | [X]        |
 | Diseño de ER                  | 10-04-2024 | 15-04-2024 | [X]        |
-| Diseño de UI                  | 25-04-2024 | 10-05-2024 | [-]        |
-| Dessarrollo de Accesso a API  | 15-05-2024 | 17-05-2024 | [-]        |
-| Desarrollo de Casos de Uso    | 17-05-2024 | 20-05-2024 | [-]        |
-| Desarrollo de Controladores   | 20-05-2024 | 25-05-2024 | [-]        |
-| Desarrollo de Frontend        | 20-05-2024 | 31-05-2024 | [ ]        |
-| Implementación del Desarrollo | 01-06-2024 | 05-06-2024 | [ ]        |
-| Pruebas                       | 05-06-2024 | 10-06-2024 | [ ]        |
-| Documentación                 | 10-06-2024 | 12-06-2024 | [ ]        |
+| Diseño de UI                  | 25-04-2024 | 10-05-2024 | [X]        |
+| Dessarrollo de Accesso a API  | 15-05-2024 | 17-05-2024 | [X]        |
+| Desarrollo de Casos de Uso    | 17-05-2024 | 20-05-2024 | [X]        |
+| Desarrollo de Controladores   | 20-05-2024 | 25-05-2024 | [X]        |
+| Desarrollo de Frontend        | 20-05-2024 | 31-05-2024 | [X ]       |
+| Implementación del Desarrollo | 01-06-2024 | 05-06-2024 | [X ]       |
+| Pruebas                       | 05-06-2024 | 10-06-2024 | [X ]       |
+| Documentación                 | 10-06-2024 | 12-06-2024 | [X ]       |
 | Entrega                       | 18-06-2024 | 20-06-2024 | [ ]        |
 

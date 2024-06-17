@@ -84,17 +84,12 @@ En este prototipo he incluido:
 
 - El servicio de autentificacíon con las principales funcionalidades de registro y login. 
 
-**Pantalla principal de autentificación**
 
-![main auth](../img/prototipo1/auth_main_screen.png)
-
-**Pantalla de login**
-
-![login](../img/prototipo1/login_screen.png)
-
-**Pantalla de Registro**
-
-![register](../img/prototipo1/register_screen.png)
+|      **Pantalla principal de autentificación**<br>       |          **Términos y Condiciones**<br>          |
+| :------------------------------------------------------: | :----------------------------------------------: |
+| ![main auth](../img/prototipo1/auth_main_screen.png)<br> | ![main auth](../img/prototipo1/terms_screen.png) |
+|               **Pantalla de Registro**<br>               |              **Pantalla de login**               |
+|  ![register](../img/prototipo1/register_screen.png)<br>  | ![login](../img/prototipo1/login_screen.png)<br> |
 
 - Servicio de rutas de aplicación como varias pantallas que servirán de base para la organización del desarrollo
 
@@ -115,26 +110,21 @@ En este prototipo se incluyen las funciones:
 
 > Algunas pantallas implementadas
 
-**Detalles de Organización**
+|                **Detalles de Organización**                 |               **Pantalla de ajustes de cuenta**               |
+| :---------------------------------------------------------: | :-----------------------------------------------------------: |
+|      ![account](../img/prototipo2/account_screen.png)       |  ![detalles organización](../img/prototipo2/org_details.png)  |
+|                     **Añadir usuarios**                     |                  **Listado de usuarios**<br>                  |
+|    ![account](../img/prototipo2/create_user_screen.png)     |  ![listado usuarios](../img/prototipo2/users_screen.png)<br>  |
+|             **Como se introduce una hora**<br>              |                 **Detalles de Caballos**<br>                  |
+|      ![account](../img/prototipo2/hour_selection.png)       |   ![account](../img/prototipo2/horse_detail_screen.png)<br>   |
+|                     **Pantalla Inicio**                     |                    **Pantalla Calendario**                    |
+|    ![pantalla inicio](../img/prototipo2/main_screen.png)    | ![pantalla calendario](../img/prototipo2/calendar_screen.png) |
+|                    **Pantalla Horario**                     |                  **Indicador de Actualizar**                  |
+|  ![pantalla inicio](../img/prototipo2/schedule_screen.png)  |    ![pantalla inicio](../img/prototipo2/refresh_page.png)     |
+|                 **Añadir miembro a clase**                  |                                                               |
+| ![pantalla inicio](../img/prototipo2/add_member_dialog.png) |                                                               |
 
-![detalles organización](../img/prototipo2/org_details.png)
 
-**Pantalla de ajustes de cuenta**
 
-![account](../img/prototipo2/account_screen.png)
 
-**Listado de usuarios**
 
-![listado usuarios](../img/prototipo2/users_screen.png)
-
-**Añadir usuarios**
-
-![account](../img/prototipo2/create_user_screen.png)
-
-**Como se introduce una hora**
-
-![account](../img/prototipo2/hour_selection.png)
-
-**Detalles de Caballos**
-
-![account](../img/prototipo2/horse_detail_screen.png)
