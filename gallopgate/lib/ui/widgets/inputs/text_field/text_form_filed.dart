@@ -31,6 +31,7 @@ class GTextFormField extends StatelessWidget {
       enabled: enabled,
       obscureText: onscured,
       decoration: InputDecoration(
+        labelText: label,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
         suffix: trailing,
       ),

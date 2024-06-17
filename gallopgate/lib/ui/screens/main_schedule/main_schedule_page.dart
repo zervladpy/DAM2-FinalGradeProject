@@ -125,6 +125,7 @@ class WeekDaySchedulePage extends StatelessWidget {
 
     return ListView.separated(
       itemCount: lessons.length,
+      shrinkWrap: true,
       separatorBuilder: (_, index) => const SizedBox(height: 16.0),
       itemBuilder: (context, index) {
         final lesson = lessons[index];
@@ -152,7 +153,7 @@ class _LessonListTile extends StatelessWidget {
     return GListTile(
       item: ListTileItem(
         leading: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               decoration: BoxDecoration(

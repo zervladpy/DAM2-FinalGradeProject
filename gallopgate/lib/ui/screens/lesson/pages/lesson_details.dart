@@ -3,6 +3,7 @@ import 'package:gallopgate/common/enums/status.dart';
 import 'package:gallopgate/common/utils/date_utils.dart';
 import 'package:gallopgate/common/utils/role_utils.dart';
 import 'package:gallopgate/config/dependency_injection/locator_intializer.dart';
+import 'package:gallopgate/config/extensions/context.dart';
 import 'package:gallopgate/models/profile/profile.dart';
 import 'package:gallopgate/ui/router/router.library.dart';
 import 'package:gallopgate/ui/screens/lesson/controllers/lesson/lesson_bloc.dart';
@@ -269,6 +270,7 @@ class _StartAtField extends StatelessWidget {
       buildWhen: _listenWhen,
       builder: (context, state) {
         return GListTile(
+          contentPadding: const EdgeInsets.only(left: 8.0),
           item: ListTileItem(
             leading: const Icon(Iconsax.clock),
             title: 'Start At',
@@ -281,9 +283,14 @@ class _StartAtField extends StatelessWidget {
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(GDateUtils.formatTimeToString(
-                  state.lesson.startAt ?? DateTime.now(),
-                )),
+                Text(
+                  state.lesson.startAt != null
+                      ? GDateUtils.formatTimeToString(
+                          state.lesson.startAt!,
+                        )
+                      : 'Select',
+                  style: context.textTheme.bodyLarge,
+                ),
                 const SizedBox(width: 8.0),
                 const Icon(Iconsax.arrow_right_3),
               ],
@@ -348,6 +355,7 @@ class _DurationField extends StatelessWidget {
         );
 
         return GListTile(
+          contentPadding: const EdgeInsets.only(left: 8.0),
           item: ListTileItem(
             leading: const Icon(Iconsax.clock),
             title: 'Duration',
@@ -356,7 +364,12 @@ class _DurationField extends StatelessWidget {
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(GDateUtils.formatTimeToString(time)),
+                Text(
+                  state.lesson.startAt != null
+                      ? GDateUtils.formatTimeToString(time)
+                      : 'Select',
+                  style: context.textTheme.bodyLarge,
+                ),
                 const SizedBox(width: 8.0),
                 const Icon(Iconsax.arrow_right_3),
               ],

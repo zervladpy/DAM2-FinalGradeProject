@@ -29,6 +29,12 @@ class MainCalendarPage extends StatelessWidget {
               organization: organization,
               isAdmin: isAdmin,
             ),
+            const SliverPadding(
+              padding: EdgeInsets.all(16.0),
+              sliver: SliverToBoxAdapter(
+                child: _MainCalendarPage(),
+              ),
+            ),
           ],
         ),
       ),
@@ -45,29 +51,24 @@ class _MainCalendarPage extends StatelessWidget {
     final firstDate = DateTime.now().subtract(const Duration(days: 365));
     final lastDate = DateTime.now().add(const Duration(days: 365));
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TableCalendar(
-              startingDayOfWeek: StartingDayOfWeek.monday,
-              focusedDay: initalDate,
-              firstDay: firstDate,
-              lastDay: lastDate,
-              headerStyle: const HeaderStyle(
-                titleCentered: true,
-                formatButtonVisible: false,
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            const Text("Events: "),
-            const SizedBox(height: 8.0),
-            const Text("No events")
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TableCalendar(
+          startingDayOfWeek: StartingDayOfWeek.monday,
+          focusedDay: initalDate,
+          firstDay: firstDate,
+          lastDay: lastDate,
+          headerStyle: const HeaderStyle(
+            titleCentered: true,
+            formatButtonVisible: false,
+          ),
         ),
-      ),
+        const SizedBox(height: 16.0),
+        const Text("Events: "),
+        const SizedBox(height: 8.0),
+        const Text("No events")
+      ],
     );
   }
 }

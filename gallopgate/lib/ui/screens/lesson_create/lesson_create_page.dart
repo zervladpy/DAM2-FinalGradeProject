@@ -15,6 +15,7 @@ import 'package:gallopgate/ui/widgets/loading/sliver_linear_loading.dart';
 import 'package:gallopgate/ui/widgets/snackbars/snackbar.dart';
 import 'package:gallopgate/ui/wrappers/main_wrapper/main_bloc/main_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 class LessonCreatePage extends StatelessWidget {
   const LessonCreatePage({super.key});
@@ -139,6 +140,7 @@ class _TitleField extends StatelessWidget {
       buildWhen: (prev, curr) => prev.lesson.title != curr.lesson.title,
       builder: (context, state) {
         return GTextFormField(
+          label: 'Title',
           initialValue: state.lesson.title,
           enabled: true,
           onChanged: (value) => bloc.add(TitleChanged(title: value)),
@@ -279,8 +281,8 @@ class _StartTime extends StatelessWidget {
             children: [
               Text(
                 state.lesson.startAt != null
-                    ? '$hours:$minutes'
-                    : GDateUtils.formatTimeToString(DateTime.now()),
+                    ? GDateUtils.formatTimeToString(state.lesson.startAt!)
+                    : 'Select',
                 style: context.textTheme.bodyLarge,
               ),
               const SizedBox(width: 8.0),
@@ -342,9 +344,11 @@ class _Duration extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                state.lesson.duration != 0
-                    ? '$hours:$minutes'
-                    : GDateUtils.formatTimeToString(DateTime.now()),
+                state.lesson.startAt != null
+                    ? GDateUtils.formatTimeToString(
+                        DateTime(0, 0, 0, 0, state.lesson.duration),
+                      )
+                    : 'Select',
                 style: context.textTheme.bodyLarge,
               ),
               const SizedBox(width: 8.0),
